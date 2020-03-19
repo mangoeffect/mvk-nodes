@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+src/.vs/ProjectSettings.json
+src/.vs/slnx.sqlite
+src/.vs/src/v15/Browse.VC.opendb
+src/.vs/src/v15/Browse.VC.db
