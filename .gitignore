@@ -36,3 +36,4 @@ src/.vs/src/v15/Browse.VC.opendb
 src/.vs/src/v15/Browse.VC.db
 *.ipch
 src/.vs/src/v15/.suo
+src/.vs/launch.vs.json
