@@ -1,0 +1,16 @@
+//
+// Created by haomi on 3/20/2020.
+//
+
+#ifndef CMAKE_PROJECT_TEMPLATE_OPENCVINFO_H
+#define CMAKE_PROJECT_TEMPLATE_OPENCVINFO_H
+namespace mv
+{
+    class OpenCVInfo
+    {
+    public:
+        void Print();
+    };
+
+}// namespace mv
+#endif //CMAKE_PROJECT_TEMPLATE_OPENCVINFO_H
