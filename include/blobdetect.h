@@ -14,10 +14,10 @@ namespace mv
     struct BlobInfo
     {
     public:
-        float area;                                 //area
-        std::vector<cv::Point> outline;             //outline
-        float radius;                               //radius
-        cv::Point center;                           //cenpter point's coordinate
+        float area;                                 //面积
+        std::vector<cv::Point> outline;             //轮廓
+        float radius;                               //质心半径
+        cv::Point center;                           //质心坐标
     };//BlobInfo
 
     struct BlobDetectResult
@@ -35,19 +35,8 @@ namespace mv
 
         static Ptr<BlobDetect> create(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
-        // Workflow
-        void Init(cv::Mat& input_image);                               // input image
-        void SetParams();                                              // default value
-        void SetParams(std::string name, float value);                // set value by param name
-        void Run();                                                    // run detection processing
-
-        // class members for user
-        cv::Mat input_image;
-        BlobDetectResult result;
-
     private:
-        void ParseKeyPoint();                                          // parse keypoints to result
-        //
+        BlobDetectResult result;
         std::vector<cv::KeyPoint> keypoints;
         Params params;
     };//BlobDetect

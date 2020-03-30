@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
+
 project(blobdetect C CXX)
 
 set(SOURCE_FILES blobdetect.h blobdetect.cpp samples.cpp)

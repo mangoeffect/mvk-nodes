@@ -1,5 +1,5 @@
 //
-// Created by haomi on 3/20/2020.
+// Created by mango on 3/20/2020.
 //
 
 #ifndef CMAKE_PROJECT_TEMPLATE_OPENCVINFO_H

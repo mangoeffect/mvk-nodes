@@ -4,8 +4,10 @@
 
 #include "blobdetect.h"
 
+#include <iostream>
+
 int main()
 {
-
+    std::cout<<"blob detection"<<std::endl;
     return 0;
 }

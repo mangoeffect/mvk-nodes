@@ -2,10 +2,12 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
+      <config projectName="machine-vision-library" targetName="blobdetect" />
       <config projectName="machine-vision-library" targetName="libinfosample" />
-      <config projectName="machine-vision-library" targetName="gmock_main" />
       <config projectName="machine-vision-library" targetName="libinfo_tests" />
+      <config projectName="machine-vision-library" targetName="gmock_main" />
       <config projectName="machine-vision-library" targetName="gtest" />
+      <config projectName="machine-vision-library" targetName="blobdetectsample" />
       <config projectName="machine-vision-library" targetName="gtest_main" />
       <config projectName="machine-vision-library" targetName="libinfo" />
       <config projectName="machine-vision-library" targetName="gmock" />
@@ -19,13 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ae60c9dd-346f-470e-8907-c7075945e1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/opencvinfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/opencvinfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/cmake/GTest/GTestConfigVersion.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/lib/cmake/GTest/GTestConfigVersion.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libinfo/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/libinfo/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libinfo/opencvinfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/libinfo/opencvinfo.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libinfo/opencvinfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/libinfo/opencvinfo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libinfo/samples.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/libinfo/samples.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/blobdetect/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/blobdetect/blobdetect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/blobdetect.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/blobdetect/blobdetect.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/blobdetect.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/blobdetect/samples.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/samples.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +81,16 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.libinfosample">
+    <configuration name="blobdetect" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="machine-vision-library" TARGET_NAME="blobdetect" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="blobdetectsample" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="machine-vision-library" TARGET_NAME="blobdetectsample" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="machine-vision-library" RUN_TARGET_NAME="blobdetectsample">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="machine-vision-library" TARGET_NAME="gmock" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -119,6 +131,8 @@
       <item itemvalue="CMake Application.gmock_main" />
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
+      <item itemvalue="CMake Application.blobdetect" />
+      <item itemvalue="CMake Application.blobdetectsample" />
       <item itemvalue="CMake Application.libinfo" />
       <item itemvalue="CMake Application.libinfo_tests" />
       <item itemvalue="CMake Application.libinfosample" />
@@ -141,7 +155,8 @@
       <workItem from="1584754406379" duration="151000" />
       <workItem from="1584755279282" duration="1668000" />
       <workItem from="1584774145225" duration="157000" />
-      <workItem from="1585375551430" duration="3907000" />
+      <workItem from="1585375551430" duration="7876000" />
+      <workItem from="1585553017213" duration="5962000" />
     </task>
     <servers />
   </component>
@@ -161,22 +176,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1584774278853" />
-    <state width="740" height="208" key="GridCell.Tab.0.bottom" timestamp="1584773098228">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="930" height="208" key="GridCell.Tab.0.bottom" timestamp="1585392626545">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="740" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584773098228" />
-    <state width="740" height="208" key="GridCell.Tab.0.center" timestamp="1584773098228">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="930" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1585392626545" />
+    <state width="930" height="208" key="GridCell.Tab.0.center" timestamp="1585392626545">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="740" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584773098228" />
-    <state width="740" height="208" key="GridCell.Tab.0.left" timestamp="1584773098228">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="930" height="208" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1585392626545" />
+    <state width="930" height="208" key="GridCell.Tab.0.left" timestamp="1585392626545">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="740" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584773098228" />
-    <state width="740" height="208" key="GridCell.Tab.0.right" timestamp="1584773098228">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="930" height="208" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1585392626545" />
+    <state width="930" height="208" key="GridCell.Tab.0.right" timestamp="1585392626545">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="740" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584773098228" />
+    <state width="930" height="208" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1585392626545" />
     <state x="277" y="54" key="SettingsEditor" timestamp="1585376135467">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
