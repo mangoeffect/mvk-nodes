@@ -21,13 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ae60c9dd-346f-470e-8907-c7075945e1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/opencvinfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/opencvinfo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/cmake/GTest/GTestConfigVersion.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/lib/cmake/GTest/GTestConfigVersion.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/blobdetect/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/blobdetect/blobdetect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/blobdetect.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/blobdetect/blobdetect.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/blobdetect.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/blobdetect/samples.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/samples.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +151,7 @@
       <workItem from="1584755279282" duration="1668000" />
       <workItem from="1584774145225" duration="157000" />
       <workItem from="1585375551430" duration="7876000" />
-      <workItem from="1585553017213" duration="5962000" />
+      <workItem from="1585553017213" duration="7638000" />
     </task>
     <servers />
   </component>

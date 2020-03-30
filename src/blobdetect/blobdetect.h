@@ -17,12 +17,13 @@ namespace mv
         float area;                                 //area
         std::vector<cv::Point> outline;             //outline
         float radius;                               //radius
-        cv::Point center;                           //cenpter point's coordinate
+        cv::Point location;                         //center point's coordinate
+        float confidence;                           //blob detection confidence
     };//BlobInfo
 
     struct BlobDetectResult
     {
-        std::vector<BlobInfo> bloblist;
+        std::vector<BlobInfo> blobList;
     };//BlobDetectResult
 
     class BlobDetect: public SimpleBlobDetector
@@ -36,19 +37,27 @@ namespace mv
         static Ptr<BlobDetect> create(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
         // Workflow
-        void Init(cv::Mat& input_image);                               // input image
+        // 1.
+        void Init(cv::Mat& inputImage);                               // input image
+        // 2.
         void SetParams();                                              // default value
-        void SetParams(std::string name, float value);                // set value by param name
+        void SetParams(std::string name, float value);                 // set value by param name
+        // 3. detection
+        // ....
+
         void Run();                                                    // run detection processing
 
         // class members for user
-        cv::Mat input_image;
+        cv::Mat inputImage;
         BlobDetectResult result;
 
     private:
+        // 4.
+        virtual void FindBlobs(InputArray image, InputArray binaryImage, BlobDetectResult& blobResult);
         void ParseKeyPoint();                                          // parse keypoints to result
+
         //
-        std::vector<cv::KeyPoint> keypoints;
+        std::vector<cv::KeyPoint> keyPoints;
         Params params;
     };//BlobDetect
 }//namespace mv

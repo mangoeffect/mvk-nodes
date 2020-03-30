@@ -7,12 +7,12 @@
 
 void mv::BlobDetect::Run()
 {
-    if(input_image.empty())
+    if(inputImage.empty())
     {
         throw "Input image is empty.";
         return;
     }
-    this->detect(input_image, keypoints);
+    this->detect(inputImage, keyPoints);
 }//Run
 
 void mv::BlobDetect::SetParams(std::string name, float value)
