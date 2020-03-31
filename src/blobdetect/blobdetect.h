@@ -26,19 +26,17 @@ namespace mv
         std::vector<BlobInfo> blobList;
     };//BlobDetectResult
 
-    class BlobDetect: public SimpleBlobDetector
+    class BlobDetect: protected SimpleBlobDetector
     {
     public:
         explicit BlobDetect(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
-        virtual void read( const FileNode& fn ) CV_OVERRIDE;
-        virtual void write( FileStorage& fs ) const CV_OVERRIDE;
+        static Ptr<BlobDetect> CreateInstance(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
-        static Ptr<BlobDetect> create(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
         // Workflow
         // 1.
-        void Init(cv::Mat& inputImage);                               // input image
+        void Init(cv::Mat& inputImage);                                // input image
         // 2.
         void SetParams();                                              // default value
         void SetParams(std::string name, float value);                 // set value by param name
@@ -50,13 +48,17 @@ namespace mv
         // class members for user
         cv::Mat inputImage;
         BlobDetectResult result;
-
+    protected:
+        struct Center
+        {
+            Point2d location;
+            double radius;
+            double confidence;
+        };
     private:
-        // 4.
-        virtual void FindBlobs(InputArray image, InputArray binaryImage, BlobDetectResult& blobResult);
-        void ParseKeyPoint();                                          // parse keypoints to result
+        void FindBlobs(InputArray image, InputArray binaryImage, std::vector<Center> &centers) const;
+        void Detect( InputArray image, InputArray mask=noArray() );
 
-        //
         std::vector<cv::KeyPoint> keyPoints;
         Params params;
     };//BlobDetect

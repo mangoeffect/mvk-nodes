@@ -2,15 +2,15 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="machine-vision-library" targetName="blobdetect" />
-      <config projectName="machine-vision-library" targetName="libinfosample" />
-      <config projectName="machine-vision-library" targetName="libinfo_tests" />
-      <config projectName="machine-vision-library" targetName="gmock_main" />
-      <config projectName="machine-vision-library" targetName="gtest" />
-      <config projectName="machine-vision-library" targetName="blobdetectsample" />
-      <config projectName="machine-vision-library" targetName="gtest_main" />
       <config projectName="machine-vision-library" targetName="libinfo" />
+      <config projectName="machine-vision-library" targetName="libinfosample" />
+      <config projectName="machine-vision-library" targetName="gtest_main" />
+      <config projectName="machine-vision-library" targetName="libinfo_tests" />
+      <config projectName="machine-vision-library" targetName="blobdetect" />
+      <config projectName="machine-vision-library" targetName="gtest" />
+      <config projectName="machine-vision-library" targetName="gmock_main" />
       <config projectName="machine-vision-library" targetName="gmock" />
+      <config projectName="machine-vision-library" targetName="blobdetectsample" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -152,6 +152,7 @@
       <workItem from="1584774145225" duration="157000" />
       <workItem from="1585375551430" duration="7876000" />
       <workItem from="1585553017213" duration="7638000" />
+      <workItem from="1585621279623" duration="7724000" />
     </task>
     <servers />
   </component>
