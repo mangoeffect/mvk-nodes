@@ -13,12 +13,11 @@ namespace mv
     // Single blob info
     struct BlobInfo
     {
-    public:
-        float area;                                 //area
-        std::vector<cv::Point> outline;             //outline
-        float radius;                               //radius
-        cv::Point location;                         //center point's coordinate
-        float confidence;                           //blob detection confidence
+        cv::Point2d location;                        //center point's coordinate
+        std::vector<cv::Point2d> outline;            //outline
+        double area;                                 //area
+        double radius;                               //radius
+        double confidence;                           //blob detection confidence
     };//BlobInfo
 
     struct BlobDetectResult
@@ -45,18 +44,19 @@ namespace mv
 
         void Run();                                                    // run detection processing
 
+        // --------------debug---------------------------
+        void PrintResultInfo() const;                                        // print result information of detection
+        void PrintParameter() const;
+
+
+
         // class members for user
         cv::Mat inputImage;
         BlobDetectResult result;
     protected:
-        struct Center
-        {
-            Point2d location;
-            double radius;
-            double confidence;
-        };
+
     private:
-        void FindBlobs(InputArray image, InputArray binaryImage, std::vector<Center> &centers) const;
+        void FindBlobs(InputArray image, InputArray binaryImage, std::vector<BlobInfo> &centers) const;
         void Detect( InputArray image, InputArray mask=noArray() );
 
         std::vector<cv::KeyPoint> keyPoints;

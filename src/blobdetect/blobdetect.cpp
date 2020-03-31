@@ -2,6 +2,7 @@
 // Created by mango on 3/28/2020.
 //
 
+#include <iostream>
 #include "blobdetect.h"
 #include "opencv2/imgproc.hpp"
 #ifdef DEBUG_BLOB_DETECTOR
@@ -12,10 +13,11 @@ void mv::BlobDetect::Run()
 {
     if(inputImage.empty())
     {
-        throw "Input image is empty.";
-        return;
+//        throw "Input image is empty.";
+        CV_Error(Error::StsNullPtr, "Input image is empty!");
+//        return;
     }
-    this->Detect(inputImage, keyPoints);
+    this->Detect(inputImage);
 }//Run
 
 void mv::BlobDetect::SetParams(std::string name, float value)
@@ -96,15 +98,16 @@ void mv::BlobDetect::Detect(const _InputArray &image, const _InputArray &mask)
         CV_Error(Error::StsUnsupportedFormat, "Blob detector only supports 8-bit images!");
     }
 
-    std::vector < std::vector<Center> > centers;
+    std::vector < std::vector<BlobInfo> > centers;
+
     for (double thresh = params.minThreshold; thresh < params.maxThreshold; thresh += params.thresholdStep)
     {
         Mat binarizedImage;
         threshold(grayscaleImage, binarizedImage, thresh, 255, THRESH_BINARY);
 
-        std::vector < Center > curCenters;
+        std::vector < BlobInfo > curCenters;
         FindBlobs(grayscaleImage, binarizedImage, curCenters);
-        std::vector < std::vector<Center> > newCenters;
+        std::vector < std::vector<BlobInfo> > newCenters;
         for (size_t i = 0; i < curCenters.size(); i++)
         {
             bool isNew = true;
@@ -128,11 +131,13 @@ void mv::BlobDetect::Detect(const _InputArray &image, const _InputArray &mask)
                 }
             }
             if (isNew)
-                newCenters.push_back(std::vector<Center> (1, curCenters[i]));
+                newCenters.push_back(std::vector<BlobInfo> (1, curCenters[i]));
         }
         std::copy(newCenters.begin(), newCenters.end(), std::back_inserter(centers));
     }
 
+    // parse centers to result
+    result.blobList.clear();
     for (size_t i = 0; i < centers.size(); i++)
     {
         if (centers[i].size() < params.minRepeatability)
@@ -146,6 +151,10 @@ void mv::BlobDetect::Detect(const _InputArray &image, const _InputArray &mask)
         }
         sumPoint *= (1. / normalizer);
         KeyPoint kpt(sumPoint, (float)(centers[i][centers[i].size() / 2].radius) * 2.0f);
+        // parse centers to result
+        BlobInfo bi = centers[i][centers[i].size() / 2];
+        bi.location = sumPoint;
+        result.blobList.push_back(bi);
         keyPoints.push_back(kpt);
     }
 
@@ -156,7 +165,7 @@ void mv::BlobDetect::Detect(const _InputArray &image, const _InputArray &mask)
 }//Detect
 
 void mv::BlobDetect::FindBlobs(const _InputArray &_image, const _InputArray &_binaryImage,
-                               std::vector<Center> &centers) const
+                               std::vector<BlobInfo> &centers) const
 {
     Mat image = _image.getMat(), binaryImage = _binaryImage.getMat();
     CV_UNUSED(image);
@@ -177,7 +186,7 @@ imshow("contours", contoursImage );
 
     for (size_t contourIdx = 0; contourIdx < contours.size(); contourIdx++)
     {
-        Center center;
+        BlobInfo center;
         center.confidence = 1;
         Moments moms = moments(contours[contourIdx]);
         if (params.filterByArea)
@@ -245,14 +254,19 @@ imshow("contours", contoursImage );
             if (binaryImage.at<uchar> (cvRound(center.location.y), cvRound(center.location.x)) != params.blobColor)
                 continue;
         }
-
+        // area
+        center.area = moms.m00;
         //compute blob radius
         {
             std::vector<double> dists;
+            //get blob outline
+            center.outline.clear();
             for (size_t pointIdx = 0; pointIdx < contours[contourIdx].size(); pointIdx++)
             {
                 Point2d pt = contours[contourIdx][pointIdx];
                 dists.push_back(norm(center.location - pt));
+                // save blob outline
+                center.outline.push_back(pt);
             }
             std::sort(dists.begin(), dists.end());
             center.radius = (dists[(dists.size() - 1) / 2] + dists[dists.size() / 2]) / 2.;
@@ -308,3 +322,34 @@ void mv::BlobDetect::SetParams()
     const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params();
     params = parameters;
 }//SetParams
+
+void mv::BlobDetect::Init(cv::Mat &_inputImage)
+{
+    inputImage = _inputImage;
+}//Init
+
+void mv::BlobDetect::PrintResultInfo() const
+{
+    if(result.blobList.empty())
+        std::cout<<"The result is empty."<<std::endl;
+
+    std::cout<<"Blob num: "<<result.blobList.size()<<std::endl;
+    int i = 0;
+    for (const auto& r: result.blobList)
+    {
+        ++i;
+        std::cout<<i
+                <<": location:("<<r.location.x<<","<<r.location.y
+                <<") radius: "<<r.radius
+                <<" area: "<<r.area <<std::endl;
+    }
+}//PrintResultInfo
+
+void mv::BlobDetect::PrintParameter() const
+{
+    std::cout<<"Parameter:"<<std::endl;
+    std::cout<<"maxConvexity:"<<params.maxConvexity<<std::endl;
+    std::cout<<"minConvexity:"<<params.minConvexity<<std::endl;
+    std::cout<<"maxConvexity:"<<params.maxConvexity<<std::endl;
+    std::cout<<"maxConvexity:"<<params.maxConvexity<<std::endl;
+}//PrintParameter
