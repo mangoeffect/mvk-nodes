@@ -18,7 +18,7 @@ int main()
     blobdetect->SetParams();
     blobdetect->Run();
     blobdetect->PrintResultInfo();
-
+    blobdetect->PrintParameter();
 
     blobdetect.release();
     return 0;

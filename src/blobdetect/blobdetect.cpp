@@ -348,8 +348,30 @@ void mv::BlobDetect::PrintResultInfo() const
 void mv::BlobDetect::PrintParameter() const
 {
     std::cout<<"Parameter:"<<std::endl;
+    std::cout<<"thresholdStep:"<<params.thresholdStep<<std::endl;
+    std::cout<<"minThreshold:"<<params.minThreshold<<std::endl;
+    std::cout<<"maxThreshold:"<<params.maxThreshold<<std::endl;
+
+    std::cout<<"minDistBetweenBlobs:"<<params.minDistBetweenBlobs<<std::endl;
+    std::cout<<"minRepeatability:"<<params.minRepeatability<<std::endl;
+
+
+    std::cout<<"filterByConvexity:"<<params.filterByConvexity<<std::endl;
     std::cout<<"maxConvexity:"<<params.maxConvexity<<std::endl;
     std::cout<<"minConvexity:"<<params.minConvexity<<std::endl;
-    std::cout<<"maxConvexity:"<<params.maxConvexity<<std::endl;
-    std::cout<<"maxConvexity:"<<params.maxConvexity<<std::endl;
+
+    std::cout<<"filterByInertia:"<<params.filterByInertia<<std::endl;
+    std::cout<<"maxInertiaRatio:"<<params.maxInertiaRatio<<std::endl;
+    std::cout<<"minInertiaRatio:"<<params.minInertiaRatio<<std::endl;
+
+    std::cout<<"filterByCircularity:"<<params.filterByCircularity<<std::endl;
+    std::cout<<"maxCircularity:"<<params.maxCircularity<<std::endl;
+    std::cout<<"minCircularity:"<<params.minCircularity<<std::endl;
+
+    std::cout<<"filterByArea:"<<params.filterByArea<<std::endl;
+    std::cout<<"maxArea:"<<params.maxArea<<std::endl;
+    std::cout<<"minArea:"<<params.minArea<<std::endl;
+
+    std::cout<<"filterByColor:"<<params.filterByColor<<std::endl;
+    std::cout<<"blobColor:"<<params.blobColor<<std::endl;
 }//PrintParameter
