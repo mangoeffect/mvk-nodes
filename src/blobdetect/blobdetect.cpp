@@ -5,6 +5,8 @@
 #include <iostream>
 #include "blobdetect.h"
 #include "opencv2/imgproc.hpp"
+#include "opencv2/opencv.hpp"
+
 #ifdef DEBUG_BLOB_DETECTOR
 #include "opencv2/highgui.hpp"
 #endif
@@ -194,6 +196,8 @@ imshow("contours", contoursImage );
     {
         BlobInfo center;
         center.confidence = 1;
+
+
         Moments moms = moments(contours[contourIdx]);
         if (params.filterByArea)
         {
@@ -265,19 +269,18 @@ imshow("contours", contoursImage );
         //compute blob radius
         {
             std::vector<double> dists;
-            //get blob outline
-            center.outline.clear();
             for (size_t pointIdx = 0; pointIdx < contours[contourIdx].size(); pointIdx++)
             {
                 Point2d pt = contours[contourIdx][pointIdx];
                 dists.push_back(norm(center.location - pt));
-                // save blob outline
-                center.outline.push_back(pt);
             }
             std::sort(dists.begin(), dists.end());
             center.radius = (dists[(dists.size() - 1) / 2] + dists[dists.size() / 2]) / 2.;
         }
-
+        //get blob outline
+        center.outline.clear();
+        // save blob outline
+        center.outline.assign(contours[contourIdx].begin(), contours[contourIdx].end());
         centers.push_back(center);
 #ifdef DEBUG_BLOB_DETECTOR
         circle( keypointsImage, center.location, 1, Scalar(0,0,255), 1 );
@@ -381,3 +384,23 @@ void mv::BlobDetect::PrintParameter() const
     std::cout<<"filterByColor:"<<params.filterByColor<<std::endl;
     std::cout<<"blobColor:"<<params.blobColor<<std::endl;
 }//PrintParameter
+
+void mv::BlobDetect::DrawOutline() const
+{
+    cv::Mat img = inputImage.clone();
+    if(img.channels() == 1)
+        cv::cvtColor(img, img, cv::COLOR_GRAY2BGR);
+    for (int i = 0; i < result.blobList.size(); ++i)
+    {
+        for (int j = 0; j < result.blobList[i].outline.size(); ++j)
+        {
+           int x = result.blobList[i].outline[j].x;
+           int y = result.blobList[i].outline[j].y;
+           img.at<cv::Vec3b>(y,x)[0] = 0;
+           img.at<cv::Vec3b>(y,x)[1] = 255;
+           img.at<cv::Vec3b>(y,x)[2] = 0;
+        }
+    }
+    cv::imshow("outline", img);
+    cv::waitKey(0);
+}//DrawOutline

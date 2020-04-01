@@ -47,6 +47,7 @@ namespace mv
         // --------------debug---------------------------
         void PrintResultInfo() const;                                        // print result information of detection
         void PrintParameter() const;
+        void DrawOutline() const;
 
 
 
