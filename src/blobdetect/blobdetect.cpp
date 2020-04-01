@@ -144,16 +144,22 @@ void mv::BlobDetect::Detect(const _InputArray &image, const _InputArray &mask)
             continue;
         Point2d sumPoint(0, 0);
         double normalizer = 0;
+        double sumArea = 0;
         for (size_t j = 0; j < centers[i].size(); j++)
         {
             sumPoint += centers[i][j].confidence * centers[i][j].location;
             normalizer += centers[i][j].confidence;
+            sumArea += centers[i][j].area;
         }
         sumPoint *= (1. / normalizer);
+        sumArea *= (1./centers[i].size());
+        normalizer *= (1./centers[i].size());
         KeyPoint kpt(sumPoint, (float)(centers[i][centers[i].size() / 2].radius) * 2.0f);
         // parse centers to result
         BlobInfo bi = centers[i][centers[i].size() / 2];
         bi.location = sumPoint;
+        bi.area = sumArea;
+        bi.confidence = normalizer;
         result.blobList.push_back(bi);
         keyPoints.push_back(kpt);
     }
