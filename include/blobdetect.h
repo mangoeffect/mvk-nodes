@@ -13,31 +13,53 @@ namespace mv
     // Single blob info
     struct BlobInfo
     {
-    public:
-        float area;                                 //面积
-        std::vector<cv::Point> outline;             //轮廓
-        float radius;                               //质心半径
-        cv::Point center;                           //质心坐标
+        cv::Point2d location;                        //center point's coordinate
+        std::vector<cv::Point2d> outline;            //outline
+        double area;                                 //area
+        double radius;                               //radius
+        double confidence;                           //blob detection confidence
     };//BlobInfo
 
     struct BlobDetectResult
     {
-        std::vector<BlobInfo> bloblist;
+        std::vector<BlobInfo> blobList;
     };//BlobDetectResult
 
-    class BlobDetect: public SimpleBlobDetector
+    class BlobDetect: protected SimpleBlobDetector
     {
     public:
         explicit BlobDetect(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
-        virtual void read( const FileNode& fn ) CV_OVERRIDE;
-        virtual void write( FileStorage& fs ) const CV_OVERRIDE;
+        static Ptr<BlobDetect> CreateInstance(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
 
-        static Ptr<BlobDetect> create(const SimpleBlobDetector::Params &parameters = SimpleBlobDetector::Params());
+
+        // Workflow
+        // 1.
+        void Init(cv::Mat& inputImage);                                // input image
+        // 2.
+        void SetParams();                                              // default value
+        void SetParams(std::string name, float value);                 // set value by param name
+        // 3. detection
+        // ....
+
+        void Run();                                                    // run detection processing
+
+        // --------------debug---------------------------
+        void PrintResultInfo() const;                                        // print result information of detection
+        void PrintParameter() const;
+
+
+
+        // class members for user
+        cv::Mat inputImage;
+        BlobDetectResult result;
+    protected:
 
     private:
-        BlobDetectResult result;
-        std::vector<cv::KeyPoint> keypoints;
+        void FindBlobs(InputArray image, InputArray binaryImage, std::vector<BlobInfo> &centers) const;
+        void Detect( InputArray image, InputArray mask=noArray() );
+
+        std::vector<cv::KeyPoint> keyPoints;
         Params params;
     };//BlobDetect
 }//namespace mv
