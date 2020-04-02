@@ -25,8 +25,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ae60c9dd-346f-470e-8907-c7075945e1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/blobdetect.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/blobdetect.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/caliper/caliper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/caliper/caliper.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/caliper/caliper.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/caliper/caliper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/debugtool/plot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/debugtool/plot.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +80,7 @@
       <recent name="F:\Code\machine-vision-algorithms-library\src\libinfo\opencvinfo" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.blobdetectsample">
+  <component name="RunManager" selected="CMake Application.debugtoolsample">
     <configuration name="blobdetect" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="machine-vision-library" TARGET_NAME="blobdetect" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -183,7 +184,7 @@
       <workItem from="1585621279623" duration="20035000" />
       <workItem from="1585706862193" duration="22132000" />
       <workItem from="1585789313826" duration="16076000" />
-      <workItem from="1585818715778" duration="1461000" />
+      <workItem from="1585818715778" duration="8270000" />
     </task>
     <servers />
   </component>
@@ -203,26 +204,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1584774278853" />
-    <state width="1877" height="152" key="GridCell.Tab.0.bottom" timestamp="1585750924925">
+    <state width="1877" height="152" key="GridCell.Tab.0.bottom" timestamp="1585830412029">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="111" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585725192845" />
-    <state width="1877" height="152" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1585750924925" />
-    <state width="1877" height="152" key="GridCell.Tab.0.center" timestamp="1585750924925">
+    <state width="1877" height="152" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1585830412029" />
+    <state width="1877" height="152" key="GridCell.Tab.0.center" timestamp="1585830412029">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="111" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585725192845" />
-    <state width="1877" height="152" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1585750924925" />
-    <state width="1877" height="152" key="GridCell.Tab.0.left" timestamp="1585750924925">
+    <state width="1877" height="152" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1585830412029" />
+    <state width="1877" height="152" key="GridCell.Tab.0.left" timestamp="1585830412029">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="111" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585725192845" />
-    <state width="1877" height="152" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1585750924925" />
-    <state width="1877" height="152" key="GridCell.Tab.0.right" timestamp="1585750924925">
+    <state width="1877" height="152" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1585830412029" />
+    <state width="1877" height="152" key="GridCell.Tab.0.right" timestamp="1585830412029">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="111" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585725192845" />
-    <state width="1877" height="152" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1585750924925" />
+    <state width="1877" height="152" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1585830412029" />
     <state x="277" y="54" key="SettingsEditor" timestamp="1585376135467">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -231,9 +232,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="490" y="154" width="540" height="524" key="StructurePopup/0.0.1536.824@0.0.1536.824" timestamp="1585728133326" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1585790271965">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1585826409086">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1585790271965" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1585826409086" />
   </component>
 </project>

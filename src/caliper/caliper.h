@@ -15,23 +15,34 @@ namespace mv
     class Caliper
     {
     public:
-        explicit Caliper(const cv::Point2d center, const size_t len, const double k, const size_t filterSize = 1);
-        static cv::Ptr<Caliper> CreateInstance(const cv::Point2d center, const size_t len, const double k, const size_t filterSize = 1);
+        explicit Caliper(const cv::Point2d center, const size_t len, const double k);
+        static cv::Ptr<Caliper> CreateInstance(const cv::Point2d center, const size_t len, const double k);
         void Init(cv::Mat inputImage);
         void SetParam();
-        void SetParam(const std::string name, const double value);
+        void SetParam(const std::string& name, const int& value);
         void Run();
 
 
     private:
+        //1. 搜索
         void SearchCaliperPath();           //搜索卡尺路径，保存路径点集以供分析
+        //2. 滤波
         void DifferenceFilter(const size_t& _filterSize);                //一维差分滤波处理卡尺路径像素值
+        //3. 查找边缘点
+        void FindExtremePoint();            //查找极值点
+        //4. 筛选边缘点
+        void ExtremePointRating();          //极值点评分
 
-
+        // ----------必须参数--初始化时设置-----------------------------
         cv::Point2d center;                 //卡尺中心点坐标
         size_t len;                         //卡尺长度
+        double k;                           //arctan(angle)
         double angle;                       //卡尺与x轴夹角
+
+        //-------------调试参数-SetParam函数设置------------------------------
         size_t  filterSize;                 //滤波核半宽
+        size_t  contrastThreshold;          //对比度阈值
+        size_t  polarity;                   //搜索方向的极性:黑到白1、白到黑0
 
         //-------------坐标系说明------------------------------
         //0---------------------x轴--------------------------->
@@ -49,20 +60,21 @@ namespace mv
 
         //-------------卡尺直线方程---------------------------
         // y = kx + b
-        double k;                            //arctan(angle)
+
         int b;
         std::vector<cv::Point2d> path;       //卡尺路径点集
-        std::vector<int> pathPixelValue;  //卡尺路径点集对应像素值
+        std::vector<int> pathPixelValue;     //卡尺路径点集对应像素值
         std::vector<int> pathPixelValueAfterFilter;  //卡尺路径点集对应像素值(滤波处理后）
     public:
         cv::Mat inputImage;
         //-------------卡尺结果-------------------------------
-        //保留前、中、后三个点
+        //保留前、中、后三个点,极性最强点(最强点属于三个点之一）,如果找不到统一默认为输入的center坐标点
         struct result
         {
             cv::Point2d front;
             cv::Point2d center;
             cv::Point2d back;
+            cv::Point2d peak;
         };
     };//Caliper
 }//namespace mv

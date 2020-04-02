@@ -6,23 +6,24 @@
 
 #include <cmath>
 
-mv::Caliper::Caliper(const cv::Point2d _center, const size_t _len, const double _k, const size_t _filterSize)
-: center(_center) , len(_len), k(_k), filterSize(_filterSize)
+mv::Caliper::Caliper(const cv::Point2d _center, const size_t _len, const double _k)
+: center(_center) , len(_len), k(_k)
 {
 
 }//Caliper
 
 void mv::Caliper::Init(cv::Mat _inputImage)
 {
+    SetParam();
     if(_inputImage.channels() > 1)
         cv::cvtColor(_inputImage, inputImage, cv::COLOR_BGR2GRAY);
     else
         inputImage = _inputImage;
 }//Init
 
-cv::Ptr<mv::Caliper> mv::Caliper::CreateInstance(const cv::Point2d center, const size_t len, const double k, const size_t filterSize)
+cv::Ptr<mv::Caliper> mv::Caliper::CreateInstance(const cv::Point2d center, const size_t len, const double k)
 {
-    return  cv::makePtr<mv::Caliper>(center, len, k, filterSize);
+    return  cv::makePtr<mv::Caliper>(center, len, k);
 }//CreateInstance
 
 void mv::Caliper::SearchCaliperPath()
@@ -76,7 +77,40 @@ void mv::Caliper::DifferenceFilter(const size_t &_filterSize)
 
 void mv::Caliper::Run()
 {
-    SearchCaliperPath();
-    DifferenceFilter(filterSize);
+    //1. 搜索
+    SearchCaliperPath();           //搜索卡尺路径，保存路径点集以供分析
+    //2. 滤波
+    DifferenceFilter(filterSize);  //一维差分滤波处理卡尺路径像素值
+    //3. 查找边缘点
+    FindExtremePoint();            //查找极值点
+    //4. 筛选边缘点
+    ExtremePointRating();          //极值点评分
 }//Run
 
+void mv::Caliper::SetParam()
+{
+    // 默认值
+    filterSize = 2;
+    contrastThreshold = 5;
+    polarity = 1; // 黑到白
+}//SetParam
+
+void mv::Caliper::SetParam(const std::string &name, const int &value)
+{
+    if(name.empty())
+        return;
+    if("filterSize" == name)
+    {
+        filterSize = value;
+    }else if("contrastThreshold" == name)
+    {
+        contrastThreshold = value;
+    } else if("polarity" == name)
+    {
+        polarity = value;
+    } else
+    {
+        std::string s = "Not found parameter '" + name + "' in Caliper.";
+        throw s;
+    }
+}
