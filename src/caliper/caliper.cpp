@@ -1,5 +1,5 @@
 //
-// Created by $mango on 4/2/2020.
+// Created by mango on 4/2/2020.
 //
 
 #include "caliper.h"
@@ -51,11 +51,13 @@ void mv::Caliper::SearchCaliperPath()
     }
 }//SearchCaliperPath
 
+
+//差分滤波
 void mv::Caliper::DifferenceFilter(const size_t &_filterSize)
 {
     //1. 构造滤波核: [-1,-1...0...1,1]
     std::vector<int> filter(2 * _filterSize + 1, 1);
-    for (int i = 0; i < _filterSize; ++i)
+    for (size_t i = 0; i < _filterSize; ++i)
     {
         filter[i] = -1;
     }
@@ -64,10 +66,10 @@ void mv::Caliper::DifferenceFilter(const size_t &_filterSize)
     //2. 滤波核滑动滤波，逐一相乘求和（省去反转的一维卷积）
     pathPixelValueAfterFilter.clear();
     pathPixelValueAfterFilter.assign(pathPixelValue.begin(), pathPixelValue.end());
-    for (int j = _filterSize; j < pathPixelValue.size() - _filterSize; ++j)
+    for (size_t j = _filterSize; j < pathPixelValue.size() - _filterSize; ++j)
     {
         int sum = 0.0;
-        for (int i = 0; i < filter.size(); ++i)
+        for (size_t i = 0; i < filter.size(); ++i)
         {
             sum += pathPixelValue.at(j - _filterSize + i) * filter.at(i);
         }

@@ -3,10 +3,12 @@
 //
 
 #include "opencvinfo.h"
+#include "opencv2/opencv.hpp"
 
 int main()
 {
     mv::OpenCVInfo op;
     op.Print();
+
     return 0;
 }

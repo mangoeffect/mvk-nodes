@@ -9,7 +9,7 @@ link_libraries(${OpenCV_LIBS})
 add_library(caliper SHARED STATIC ${SOURCE_FILES})
 
 add_executable(calipersample samples.cpp)
-target_link_libraries(calipersample caliper plot)
+target_link_libraries(calipersample caliper)
 
 install(TARGETS caliper DESTINATION ${DIVISIBLE_INSTALL_LIB_DIR})
 install(FILES caliper.h DESTINATION ${DIVISIBLE_INSTALL_INCLUDE_DIR})

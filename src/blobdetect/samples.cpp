@@ -19,7 +19,7 @@ int main()
     int s = cv::getTickCount();
     blobdetect->Run();
     int e = cv::getTickCount();
-    std::cout<<"BlobDetect cost time: "<< static_cast<double >(e -  s) /cv::getTickFrequency()<<"ms" <<std::endl;
+    std::cout<<"BlobDetect cost time: "<< static_cast<double >(e -  s) /cv::getTickFrequency() * 1000<<"ms" <<std::endl;
     blobdetect->PrintResultInfo();
 
 //    blobdetect->PrintParameter();
@@ -31,7 +31,7 @@ int main()
     s = cv::getTickCount();
     sblobdetect->detect(img, kps);
     e = cv::getTickCount();
-    std::cout<<"SimpleBlobDetector cost time: "<< static_cast<double >(e -  s) /cv::getTickFrequency()<<"ms" <<std::endl;
+    std::cout<<"SimpleBlobDetector cost time: "<< static_cast<double >(e -  s) /cv::getTickFrequency() * 1000<<"ms" <<std::endl;
     std::cout<<"keypoints size: "<<kps.size()<<std::endl;
     for(int i = 0; i < kps.size(); ++i)
     {
