@@ -5,7 +5,10 @@ project(machine-vision-library)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
 
-set(OpenCV_DIR "D:\\opencv_mingw_build_with_qt")
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set(OpenCV_DIR "D:\\opencv_mingw_build_with_qt")
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 find_package(OpenCV REQUIRED)
