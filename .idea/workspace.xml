@@ -2,19 +2,21 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="machine-vision-library" targetName="gmock_main" />
-      <config projectName="machine-vision-library" targetName="libinfosample" />
-      <config projectName="machine-vision-library" targetName="gtest_main" />
-      <config projectName="machine-vision-library" targetName="libinfo_tests" />
       <config projectName="machine-vision-library" targetName="blobdetect" />
+      <config projectName="machine-vision-library" targetName="libinfosample" />
+      <config projectName="machine-vision-library" targetName="linefit" />
       <config projectName="machine-vision-library" targetName="gtest" />
+      <config projectName="machine-vision-library" targetName="blobdetectsample" />
+      <config projectName="machine-vision-library" targetName="gtest_main" />
       <config projectName="machine-vision-library" targetName="libinfo" />
       <config projectName="machine-vision-library" targetName="gmock" />
-      <config projectName="machine-vision-library" targetName="debugtool" />
-      <config projectName="machine-vision-library" targetName="blobdetectsample" />
-      <config projectName="machine-vision-library" targetName="debugtoolsample" />
       <config projectName="machine-vision-library" targetName="caliper" />
+      <config projectName="machine-vision-library" targetName="libinfo_tests" />
+      <config projectName="machine-vision-library" targetName="gmock_main" />
+      <config projectName="machine-vision-library" targetName="debugtoolsample" />
       <config projectName="machine-vision-library" targetName="calipersample" />
+      <config projectName="machine-vision-library" targetName="debugtool" />
+      <config projectName="machine-vision-library" targetName="linefitsample" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -25,10 +27,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ae60c9dd-346f-470e-8907-c7075945e1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/caliper.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/caliper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/caliper/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/caliper/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libinfo/samples.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/libinfo/samples.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt.user" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,6 +147,16 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="linefit" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="machine-vision-library" TARGET_NAME="linefit" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="linefitsample" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="machine-vision-library" TARGET_NAME="linefitsample" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="machine-vision-library" RUN_TARGET_NAME="linefitsample">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="CMake Application.gmock" />
       <item itemvalue="CMake Application.gmock_main" />
@@ -161,6 +171,8 @@
       <item itemvalue="CMake Application.libinfo" />
       <item itemvalue="CMake Application.libinfo_tests" />
       <item itemvalue="CMake Application.libinfosample" />
+      <item itemvalue="CMake Application.linefit" />
+      <item itemvalue="CMake Application.linefitsample" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -189,6 +201,7 @@
       <workItem from="1586225647366" duration="3095000" />
       <workItem from="1586242239649" duration="1822000" />
       <workItem from="1586244345316" duration="997000" />
+      <workItem from="1586525065145" duration="492000" />
     </task>
     <servers />
   </component>

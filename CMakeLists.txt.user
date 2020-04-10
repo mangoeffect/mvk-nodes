@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2020-04-08T22:56:08. -->
+<!-- Written by QtCreator 4.11.0, 2020-04-10T19:14:17. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -67,9 +67,9 @@
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 5.14.0 MinGW 64-bit</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 5.14.0 MinGW 64-bit</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.qt5.5140.win64_mingw73_kit</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">1</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">1</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <valuelist type="QVariantList" key="CMake.Configuration">
      <value type="QString">CMAKE_BUILD_TYPE:STRING=Debug</value>
@@ -328,7 +328,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Release/src/blobdetect</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Debug/src/blobdetect</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.1">
     <value type="QString" key="Analyzer.Perf.CallgraphMode">dwarf</value>
@@ -403,7 +403,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Release/src/caliper</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Debug/src/caliper</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.2">
     <value type="QString" key="Analyzer.Perf.CallgraphMode">dwarf</value>
@@ -478,7 +478,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Release/src/debugtool</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Debug/src/debugtool</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.3">
     <value type="QString" key="Analyzer.Perf.CallgraphMode">dwarf</value>
@@ -553,7 +553,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Release/test</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Debug/test</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
     <value type="QString" key="Analyzer.Perf.CallgraphMode">dwarf</value>
@@ -628,7 +628,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Release/src/libinfo</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">F:/Code/build-machine-vision-algorithms-library-Desktop_Qt_5_14_0_MinGW_64_bit-Debug/src/libinfo</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">5</value>
   </valuemap>
