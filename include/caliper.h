@@ -11,6 +11,26 @@
 
 namespace mv
 {
+    struct ExtremPointInfo
+    {
+        ExtremPointInfo(const cv::Point2d& _pt, const int& _ps, const int& _value) : pt(_pt), ps(_ps), value(_value), score(0) {}
+        cv::Point2d pt;                  //极值点像素坐标
+        int ps;                          //极值点在路径中的位置
+        int value;                       //极值
+        double score;                    //得分
+    };
+
+    // 以得分为条件比较极值点，用于排序
+    static bool CompareExtremPointInfoBysocre(const ExtremPointInfo& ep1, const ExtremPointInfo& ep2)
+    {
+        return ep1.score > ep2.score;
+    }
+
+    // 以位置顺序为条件比较极值点，用于排序
+    static bool CompareExtremPointInfoByPs(const ExtremPointInfo& ep1, const ExtremPointInfo& ep2)
+    {
+        return  ep1.ps > ep2.ps;
+    }
 
     class Caliper
     {
@@ -42,7 +62,7 @@ namespace mv
         //-------------调试参数-SetParam函数设置------------------------------
         size_t  filterSize;                 //滤波核半宽
         size_t  contrastThreshold;          //对比度阈值
-        size_t  polarity;                   //搜索方向的极性:黑到白1、白到黑0
+        int  polarity;                      //搜索方向的极性:黑到白1、白到黑-1,不考虑0
 
         //-------------坐标系说明------------------------------
         //0---------------------x轴--------------------------->
@@ -65,17 +85,20 @@ namespace mv
         std::vector<cv::Point2d> path;       //卡尺路径点集
         std::vector<int> pathPixelValue;     //卡尺路径点集对应像素值
         std::vector<int> pathPixelValueAfterFilter;  //卡尺路径点集对应像素值(滤波处理后）
+
+        std::vector<ExtremPointInfo> extremePoints;      //极值点
     public:
         cv::Mat inputImage;
         //-------------卡尺结果-------------------------------
         //保留前、中、后三个点,极性最强点(最强点属于三个点之一）,如果找不到统一默认为输入的center坐标点
-        struct result
+        struct Result
         {
             cv::Point2d front;
             cv::Point2d center;
             cv::Point2d back;
             cv::Point2d peak;
-        };
+        } result;
     };//Caliper
+
 }//namespace mv
 #endif //MACHINE_VISION_LIBRARY_CALIPER_H

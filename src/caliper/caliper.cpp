@@ -5,6 +5,7 @@
 #include "caliper.h"
 
 #include <cmath>
+#include <algorithm>
 
 mv::Caliper::Caliper(const cv::Point2d _center, const size_t _len, const double _k)
 : center(_center) , len(_len), k(_k)
@@ -30,20 +31,20 @@ void mv::Caliper::SearchCaliperPath()
 {
     CV_Assert(!inputImage.empty() && inputImage.channels() == 1);
     //1. 初始化卡尺路径直线方程
-    angle = std::tan(k);
+    angle = std::atan(k);
     // b = y - kx
     b = center.y - k * center.x;
     //2. 求取搜索起始点
     min_x = center.x - len * std::cos(angle) * 0.5;
     if (min_x < 0) return;
-    max_x = center.x - len * std::cos(angle) * 0.5;
+    max_x = center.x + len * std::cos(angle) * 0.5;
 
     //3. 从起始点搜索，保存卡尺路径点集
     path.clear();
     pathPixelValue.clear();
     // y = kx + b;
     double y = 0;
-    for (int i = min_x; i < max_x; ++i)
+    for (int i = static_cast<int>(min_x); i < static_cast<int>(max_x); ++i)
     {
         y = i * k + b;
         path.push_back(cv::Point2d(i, y));
@@ -94,7 +95,7 @@ void mv::Caliper::SetParam()
     // 默认值
     filterSize = 2;
     contrastThreshold = 5;
-    polarity = 1; // 黑到白
+    polarity = 0; // 黑到白
 }//SetParam
 
 void mv::Caliper::SetParam(const std::string &name, const int &value)
@@ -116,3 +117,116 @@ void mv::Caliper::SetParam(const std::string &name, const int &value)
         throw s;
     }
 }
+
+// 求取极值点
+void mv::Caliper::FindExtremePoint()
+{
+    // 1. 检查搜索路径像素数据是否为空
+    if(pathPixelValueAfterFilter.empty())
+        return;
+    // 2. 遍历滤波后的数据，查找极值点
+    extremePoints.clear();
+    switch (polarity)
+    {
+        // 不考虑极性
+        case 0 :
+            for(size_t i = 1; i < pathPixelValueAfterFilter.size() - 1; ++i)
+            {
+                // 两边异号为极值点
+                if (size_t(std::abs(pathPixelValueAfterFilter.at(i))) >= contrastThreshold
+                    && (0 > (pathPixelValueAfterFilter.at(i) - pathPixelValueAfterFilter.at(i - 1)) *
+                        (pathPixelValueAfterFilter.at(i + 1) - pathPixelValueAfterFilter.at(i)))
+                  )
+                {
+                    extremePoints.push_back(ExtremPointInfo(path.at(i), i, pathPixelValueAfterFilter.at(i)));
+                }
+            }
+            break;
+        // 黑到白
+        case 1 :
+            for(size_t i = 1; i < pathPixelValueAfterFilter.size() - 1; ++i)
+            {
+                // 两边异号为极值点
+                if (pathPixelValueAfterFilter.at(i) > 0
+                    && size_t(std::abs(pathPixelValueAfterFilter.at(i))) >= contrastThreshold
+                    && (0 > (pathPixelValueAfterFilter.at(i) - pathPixelValueAfterFilter.at(i - 1)) *
+                        (pathPixelValueAfterFilter.at(i + 1) - pathPixelValueAfterFilter.at(i)))
+                  )
+                {
+                    extremePoints.push_back(ExtremPointInfo(path.at(i), i, pathPixelValueAfterFilter.at(i)));
+                }
+            }
+            break;
+        // 白到黑
+        case -1:
+            for(size_t i = 1; i < pathPixelValueAfterFilter.size() - 1; ++i)
+            {
+                // 两边异号为极值点
+                if (pathPixelValueAfterFilter.at(i) < 0
+                    && size_t(std::abs(pathPixelValueAfterFilter.at(i))) >= contrastThreshold
+                    && (0 > (pathPixelValueAfterFilter.at(i) - pathPixelValueAfterFilter.at(i - 1)) *
+                        (pathPixelValueAfterFilter.at(i + 1) - pathPixelValueAfterFilter.at(i)))
+                  )
+                {
+                    extremePoints.push_back(ExtremPointInfo(path.at(i), i, pathPixelValueAfterFilter.at(i)));
+                }
+            }
+            break;
+        default:
+            CV_Assert(false);
+            break;
+    }
+
+}//FindExtremePoint
+
+// 极值点评分
+void mv::Caliper::ExtremePointRating()
+{
+    if(extremePoints.empty())
+        return;
+
+    // 评分： value * (1 - |i - 0.5 * le| / 0.5 * len)
+    int halfLen = static_cast<int>(path.size() / 2);
+    for(auto& e: extremePoints)
+    {
+        e.score = e.value * (1 - static_cast<double>(std::abs(e.ps - halfLen)) / halfLen);
+    }
+
+    //按评分排序：降序
+    sort(extremePoints.begin(), extremePoints.end(), CompareExtremPointInfoBysocre);
+
+    std::cout<<"epf:"<<extremePoints.size()<<std::endl;
+    for(auto& e: extremePoints)
+    {
+        std::cout<<e.pt.x<<","<<e.pt.y <<std::endl;
+    }
+
+    result.peak = extremePoints.at(0).pt;
+    if(extremePoints.size() == 1)
+    {
+        result.center = result.front = result.back = extremePoints.at(0).pt;
+        return;
+    }
+    if(extremePoints.size() == 2)
+    {
+       int a =  std::abs(extremePoints.at(0).ps - halfLen);
+       int b =  std::abs(extremePoints.at(1).ps - halfLen);
+       if(a > b)
+       {
+           result.front = result.back = extremePoints.at(0).pt;
+           result.center = extremePoints.at(1).pt;
+       }else
+       {
+
+       }
+    }else
+    {
+       std::vector<ExtremPointInfo> epf(extremePoints.begin(), extremePoints.begin() + 3);
+
+       sort(epf.begin(), epf.end(), CompareExtremPointInfoByPs);//降序
+       result.back = epf.at(0).pt;
+       result.center = epf.at(1).pt;
+       result.front = epf.at(2).pt;
+    }
+
+}//ExtremePointRating
