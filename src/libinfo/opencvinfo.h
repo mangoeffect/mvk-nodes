@@ -10,7 +10,13 @@ namespace mv
     {
     public:
         void Print();
-    };
+    };//
+
+    class MVLInfo
+    {
+    private:
+        
+    };//MVLInfo
 
 }// namespace mv
 #endif //CMAKE_PROJECT_TEMPLATE_OPENCVINFO_H

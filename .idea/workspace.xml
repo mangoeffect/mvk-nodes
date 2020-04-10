@@ -2,21 +2,21 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="machine-vision-library" targetName="blobdetect" />
-      <config projectName="machine-vision-library" targetName="libinfosample" />
-      <config projectName="machine-vision-library" targetName="linefit" />
-      <config projectName="machine-vision-library" targetName="blobdetectsample" />
-      <config projectName="machine-vision-library" targetName="gtest" />
-      <config projectName="machine-vision-library" targetName="gtest_main" />
-      <config projectName="machine-vision-library" targetName="libinfo" />
-      <config projectName="machine-vision-library" targetName="caliper" />
-      <config projectName="machine-vision-library" targetName="gmock" />
       <config projectName="machine-vision-library" targetName="gmock_main" />
-      <config projectName="machine-vision-library" targetName="libinfo_tests" />
-      <config projectName="machine-vision-library" targetName="debugtoolsample" />
-      <config projectName="machine-vision-library" targetName="calipersample" />
-      <config projectName="machine-vision-library" targetName="debugtool" />
       <config projectName="machine-vision-library" targetName="linefitsample" />
+      <config projectName="machine-vision-library" targetName="libinfo_tests" />
+      <config projectName="machine-vision-library" targetName="blobdetectsample" />
+      <config projectName="machine-vision-library" targetName="blobdetect" />
+      <config projectName="machine-vision-library" targetName="linefit" />
+      <config projectName="machine-vision-library" targetName="debugtoolsample" />
+      <config projectName="machine-vision-library" targetName="debugtool" />
+      <config projectName="machine-vision-library" targetName="caliper" />
+      <config projectName="machine-vision-library" targetName="calipersample" />
+      <config projectName="machine-vision-library" targetName="gtest_main" />
+      <config projectName="machine-vision-library" targetName="libinfosample" />
+      <config projectName="machine-vision-library" targetName="gtest" />
+      <config projectName="machine-vision-library" targetName="gmock" />
+      <config projectName="machine-vision-library" targetName="libinfo" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -27,8 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ae60c9dd-346f-470e-8907-c7075945e1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/blobdetect/samples.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/blobdetect/samples.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/caliper/samples.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/caliper/samples.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libinfo/opencvinfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/libinfo/opencvinfo.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/lib/googletest/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/test/lib/googletest/.clang-format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/lib/googletest/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/test/lib/googletest/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/lib/googletest/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/lib/googletest/.travis.yml" afterDir="false" />
@@ -433,6 +432,9 @@
       <item itemvalue="CMake Application.linefitsample" />
     </list>
   </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",KIND" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -460,7 +462,8 @@
       <workItem from="1586242239649" duration="1822000" />
       <workItem from="1586244345316" duration="997000" />
       <workItem from="1586525065145" duration="492000" />
-      <workItem from="1586529686108" duration="1087000" />
+      <workItem from="1586529686108" duration="1552000" />
+      <workItem from="1586531258591" duration="1864000" />
     </task>
     <servers />
   </component>
@@ -489,42 +492,42 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586243813299" />
-    <state width="1878" height="276" key="GridCell.Tab.0.bottom" timestamp="1586530793666">
+    <state width="1878" height="341" key="GridCell.Tab.0.bottom" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586530793666" />
-    <state width="1878" height="276" key="GridCell.Tab.0.center" timestamp="1586530793666">
+    <state width="1878" height="341" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
+    <state width="1878" height="341" key="GridCell.Tab.0.center" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586530793666" />
-    <state width="1878" height="276" key="GridCell.Tab.0.left" timestamp="1586530793665">
+    <state width="1878" height="341" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
+    <state width="1878" height="341" key="GridCell.Tab.0.left" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586530793665" />
-    <state width="1878" height="276" key="GridCell.Tab.0.right" timestamp="1586530793666">
+    <state width="1878" height="341" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
+    <state width="1878" height="341" key="GridCell.Tab.0.right" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586530793666" />
-    <state width="1878" height="341" key="GridCell.Tab.1.bottom" timestamp="1586530606474">
+    <state width="1878" height="341" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
+    <state width="1878" height="341" key="GridCell.Tab.1.bottom" timestamp="1586531238040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1878" height="341" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586530606474" />
-    <state width="1878" height="341" key="GridCell.Tab.1.center" timestamp="1586530606474">
+    <state width="1878" height="341" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238040" />
+    <state width="1878" height="341" key="GridCell.Tab.1.center" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1878" height="341" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586530606474" />
-    <state width="1878" height="341" key="GridCell.Tab.1.left" timestamp="1586530606474">
+    <state width="1878" height="341" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
+    <state width="1878" height="341" key="GridCell.Tab.1.left" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1878" height="341" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586530606474" />
-    <state width="1878" height="341" key="GridCell.Tab.1.right" timestamp="1586530606474">
+    <state width="1878" height="341" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
+    <state width="1878" height="341" key="GridCell.Tab.1.right" timestamp="1586531238039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1878" height="341" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586530606474" />
+    <state width="1878" height="341" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586531238039" />
     <state x="277" y="54" key="SettingsEditor" timestamp="1586244595830">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
