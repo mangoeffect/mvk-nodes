@@ -11,7 +11,7 @@ int main()
 {
     std::cout<<"blob detection"<<std::endl;
     Ptr<mv::BlobDetect> blobdetect = mv::BlobDetect::CreateInstance();
-    cv::Mat img = cv::imread("F:\\Code\\machine-vision-algorithms-library\\test\\image\\blob.jpg");
+    cv::Mat img = cv::imread("../../../test/image/blob.jpg");
     if(img.empty())
         return  -1;
     blobdetect->Init(img);

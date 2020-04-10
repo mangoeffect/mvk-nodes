@@ -9,7 +9,7 @@ int main()
 {
 
 
-    cv::Mat img = cv::imread("F:\\Code\\machine-vision-algorithms-library\\test\\image\\blob.jpg", 0);
+    cv::Mat img = cv::imread("../../../test/image/blob.jpg", 0);
     cv::Ptr<mv::Caliper> caliper = mv::Caliper::CreateInstance(cv::Point2d(80, 60), 100, 0);
     caliper->Init(img);
     caliper->SetParam();
