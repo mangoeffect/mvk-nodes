@@ -7,8 +7,8 @@
 
 | 算子 | 进度 | 介绍 |
 | --- | --- | ---- |
-| blob分析 | 完成 | - |
-| 卡尺工具 | 完成 | - |
+| [blob分析](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/blobdetect) | 完成 | [博客](https://mangoroom.cn/opencv/better-blob-detection-based-on-simepleblobdetector.html) |
+| [卡尺工具](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/caliper) | 完成 | - |
 | 直线拟合 | - | - |
 | 直线查找 | - | - |
 | 圆拟合 | - | - |
