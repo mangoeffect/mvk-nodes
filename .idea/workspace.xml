@@ -27,8 +27,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ae60c9dd-346f-470e-8907-c7075945e1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/ChineseReadme.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/ChineseReadme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linefit/linefit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/linefit/linefit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/linefit/linefit.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/linefit/linefit.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/lib/googletest/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/test/lib/googletest/.clang-format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/lib/googletest/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/test/lib/googletest/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/lib/googletest/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/lib/googletest/.travis.yml" afterDir="false" />
@@ -467,7 +467,7 @@
       <workItem from="1586531258591" duration="2069000" />
       <workItem from="1586566827551" duration="43000" />
       <workItem from="1586656733828" duration="2258000" />
-      <workItem from="1586698124630" duration="3127000" />
+      <workItem from="1586698124630" duration="7276000" />
     </task>
     <servers />
   </component>
