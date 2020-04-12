@@ -464,7 +464,8 @@
       <workItem from="1586529686108" duration="1552000" />
       <workItem from="1586531258591" duration="2069000" />
       <workItem from="1586566827551" duration="43000" />
-      <workItem from="1586656733828" duration="2201000" />
+      <workItem from="1586656733828" duration="2258000" />
+      <workItem from="1586698124630" duration="1297000" />
     </task>
     <servers />
   </component>
@@ -493,26 +494,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586243813299" />
-    <state width="1878" height="276" key="GridCell.Tab.0.bottom" timestamp="1586673813538">
+    <state width="1878" height="276" key="GridCell.Tab.0.bottom" timestamp="1586691822159">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586673813538" />
-    <state width="1878" height="276" key="GridCell.Tab.0.center" timestamp="1586673813538">
+    <state width="1878" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586691822159" />
+    <state width="1878" height="276" key="GridCell.Tab.0.center" timestamp="1586691822158">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586673813538" />
-    <state width="1878" height="276" key="GridCell.Tab.0.left" timestamp="1586673813538">
+    <state width="1878" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586691822158" />
+    <state width="1878" height="276" key="GridCell.Tab.0.left" timestamp="1586691822158">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586673813538" />
-    <state width="1878" height="276" key="GridCell.Tab.0.right" timestamp="1586673813538">
+    <state width="1878" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586691822158" />
+    <state width="1878" height="276" key="GridCell.Tab.0.right" timestamp="1586691822159">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="124" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586245342845" />
-    <state width="1878" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586673813538" />
+    <state width="1878" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586691822159" />
     <state width="1878" height="341" key="GridCell.Tab.1.bottom" timestamp="1586531238040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -537,9 +538,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="490" y="154" width="540" height="524" key="StructurePopup/0.0.1536.824@0.0.1536.824" timestamp="1585728133326" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1585826409086">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1586701281269">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1585826409086" />
+    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1586701281269" />
   </component>
 </project>
