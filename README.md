@@ -1,6 +1,8 @@
 # machine-vision-algorithms-library
 Machine vision algorithms based on opencv
 
+[中文README.md](https://github.com/mangosroom/machine-vision-algorithms-library/blob/master/doc/ChineseReadme.md)
+
 # To do List
 
 | algorithms | status | introduction |
@@ -14,10 +16,15 @@ Machine vision algorithms based on opencv
 | template matching | - | - |
 | N points calibration | - | - |
 | distortion calibration | - | - |
+| calib board calibration | - | - |
+| calibration transfer | - | - |
 | image filtering | - | - |
-
-
-[中文README.md](https://github.com/mangosroom/machine-vision-algorithms-library/blob/master/doc/ChineseReadme.md)
+| location fix | - | - |
+| camera map | - | - |
+| code 1d reader | - | - |
+| code 2d reader | - | - |
+| ocr | - | - |
+| morphological processing | - | - |
 
 
 **License**
