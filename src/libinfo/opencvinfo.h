@@ -21,7 +21,7 @@ namespace mv
     class MVLInfo
     {
     public:
-        explict MVLInfo(): MV_MAJOR_VERSION(0), MV_MINOR_VERSION(1), MV_SUBMINOR_VERSION(1) , MV_VERSION("0.1.1") {}
+        explicit MVLInfo(): MV_MAJOR_VERSION(0), MV_MINOR_VERSION(1), MV_SUBMINOR_VERSION(1) , MV_VERSION("0.1.1") {}
         static cv::Ptr<MVLInfo> CreateInstance();
 
         int GetMajorVersion() const { return  MV_MAJOR_VERSION;}
