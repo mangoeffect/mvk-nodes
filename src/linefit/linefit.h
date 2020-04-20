@@ -54,9 +54,10 @@ namespace  mv
         //---------------------------------------- 输入 | input----------------------------------------------
         std::vector<cv::Point2d> _points;
         FitAlgorithms _fitAlgorithms;
+        std::vector<double> _weigths;
 
         //-----------------------------------------输出 | output---------------------------------------------
-        LineFitResult result;
+        LineFitResult _result;
     };//class LineFit
 
 }//namespace  mv
