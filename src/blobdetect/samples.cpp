@@ -39,6 +39,7 @@ int main()
     }
     cv::Mat im_with_keypoints;
     cv::drawKeypoints( img, kps, im_with_keypoints, Scalar(0,0,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+
     cv::imshow("keypoints", im_with_keypoints );
     cv::waitKey(0);
     sblobdetect.release();
