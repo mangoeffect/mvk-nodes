@@ -34,3 +34,4 @@
 # cmake-debug
 /cmake-build-debug/*
 
+.idea/workspace.xml
