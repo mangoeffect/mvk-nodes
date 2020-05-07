@@ -3,3 +3,9 @@
 *.pdb
 *.lib
 *.exe
+*.ipdb
+*.iobj
+*.ilk
+*.db
+machine-vision-algorithms-library/.vs/machine-vision-algorithms-library/v15/.suo
+*.db-shm
