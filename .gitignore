@@ -1,2 +1,5 @@
 
 *.ipch
+*.pdb
+*.lib
+*.exe
