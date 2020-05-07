@@ -1,0 +1,10 @@
+﻿  caliper_test.cpp
+f:\code\machine-vision-algorithms-library\src\caliper\caliper.h : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+f:\code\machine-vision-algorithms-library\src\caliper\caliper_test.cpp(17): warning C4244: 'initializing': conversion from 'int64' to 'int', possible loss of data
+f:\code\machine-vision-algorithms-library\src\caliper\caliper_test.cpp(19): warning C4244: 'initializing': conversion from 'int64' to 'int', possible loss of data
+  Generating code
+  1 of 605 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  caliper_test.vcxproj -> F:\Code\machine-vision-algorithms-library\machine-vision-algorithms-library\x64\Release\caliper_test.exe

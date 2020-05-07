@@ -1,0 +1,6 @@
+﻿  blobdetect_test.cpp
+f:\code\machine-vision-algorithms-library\src\blobdetect\blobdetect_test.cpp(19): warning C4244: 'initializing': conversion from 'int64' to 'int', possible loss of data
+f:\code\machine-vision-algorithms-library\src\blobdetect\blobdetect_test.cpp(21): warning C4244: 'initializing': conversion from 'int64' to 'int', possible loss of data
+f:\code\machine-vision-algorithms-library\src\blobdetect\blobdetect_test.cpp(31): warning C4244: '=': conversion from 'int64' to 'int', possible loss of data
+f:\code\machine-vision-algorithms-library\src\blobdetect\blobdetect_test.cpp(33): warning C4244: '=': conversion from 'int64' to 'int', possible loss of data
+  blobdetect_test.vcxproj -> F:\Code\machine-vision-algorithms-library\machine-vision-algorithms-library\x64\Debug\blobdetect_test.exe
