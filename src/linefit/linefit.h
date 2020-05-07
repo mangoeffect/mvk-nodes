@@ -42,7 +42,7 @@ namespace  mv
 
         void Run();
 
-        //--------------------------------------拟合算法 | fit algorithms
+        //--------------------------------------拟合算法 | fit algorithms------------------------------------------------
         void FitLineByRegression();
         void FitLineByHuber();
         void FitLineByTukey();
