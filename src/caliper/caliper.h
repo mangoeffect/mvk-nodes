@@ -81,7 +81,7 @@ namespace mv
         //-------------卡尺直线方程---------------------------
         // y = kx + b
 
-        int b;
+        double b;
         std::vector<cv::Point2d> path;       //卡尺路径点集
         std::vector<int> pathPixelValue;     //卡尺路径点集对应像素值
         std::vector<int> pathPixelValueAfterFilter;  //卡尺路径点集对应像素值(滤波处理后）

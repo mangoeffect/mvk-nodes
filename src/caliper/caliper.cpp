@@ -48,7 +48,7 @@ void mv::Caliper::SearchCaliperPath()
     {
         y = i * k + b;
         path.push_back(cv::Point2d(i, y));
-        pathPixelValue.push_back(inputImage.at<uchar>(y, i));
+        pathPixelValue.push_back(inputImage.at<uchar>(static_cast<int>(y), i));
     }
 }//SearchCaliperPath
 
@@ -69,12 +69,12 @@ void mv::Caliper::DifferenceFilter(const size_t &_filterSize)
     pathPixelValueAfterFilter.assign(pathPixelValue.begin(), pathPixelValue.end());
     for (size_t j = _filterSize; j < pathPixelValue.size() - _filterSize; ++j)
     {
-        int sum = 0.0;
+        double sum = 0.0;
         for (size_t i = 0; i < filter.size(); ++i)
         {
             sum += pathPixelValue.at(j - _filterSize + i) * filter.at(i);
         }
-        pathPixelValueAfterFilter.at(j) = sum;
+        pathPixelValueAfterFilter.at(j) = static_cast<int>(sum);
     }
 };//DifferenceFilter
 
@@ -138,7 +138,7 @@ void mv::Caliper::FindExtremePoint()
                         (pathPixelValueAfterFilter.at(i + 1) - pathPixelValueAfterFilter.at(i)))
                   )
                 {
-                    extremePoints.push_back(ExtremPointInfo(path.at(i), i, pathPixelValueAfterFilter.at(i)));
+                    extremePoints.push_back(ExtremPointInfo(path.at(i), static_cast<int>(i), static_cast<int>(pathPixelValueAfterFilter.at(i))));
                 }
             }
             break;
@@ -153,7 +153,7 @@ void mv::Caliper::FindExtremePoint()
                         (pathPixelValueAfterFilter.at(i + 1) - pathPixelValueAfterFilter.at(i)))
                   )
                 {
-                    extremePoints.push_back(ExtremPointInfo(path.at(i), i, pathPixelValueAfterFilter.at(i)));
+                    extremePoints.push_back(ExtremPointInfo(path.at(i), static_cast<int>(i), static_cast<int>(pathPixelValueAfterFilter.at(i))));
                 }
             }
             break;
@@ -168,7 +168,7 @@ void mv::Caliper::FindExtremePoint()
                         (pathPixelValueAfterFilter.at(i + 1) - pathPixelValueAfterFilter.at(i)))
                   )
                 {
-                    extremePoints.push_back(ExtremPointInfo(path.at(i), i, pathPixelValueAfterFilter.at(i)));
+                    extremePoints.push_back(ExtremPointInfo(path.at(i), static_cast<int>(i), static_cast<int>(pathPixelValueAfterFilter.at(i))));
                 }
             }
             break;

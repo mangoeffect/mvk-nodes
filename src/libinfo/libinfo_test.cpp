@@ -3,12 +3,14 @@
 //
 
 #include "opencvinfo.h"
-#include "opencv2/opencv.hpp"
+
 
 int main()
 {
     mv::OpenCVInfo op;
     op.Print();
+
+	cv::Mat img = cv::Mat(100, 100, CV_8UC1);
 
     return 0;
 }

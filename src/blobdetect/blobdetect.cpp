@@ -41,10 +41,10 @@ void mv::BlobDetect::SetParams(std::string name, float value)
         params.minDistBetweenBlobs = value;
     } else if("filterByColor" == name)
     {
-        params.filterByColor == static_cast<bool>(value);
+        params.filterByColor = static_cast<bool>(value);
     } else if("filterByArea" == name)
     {
-        params.filterByArea == static_cast<bool>(value);
+        params.filterByArea = static_cast<bool>(value);
     } else if("minArea" == name)
     {
         params.minArea = value;
@@ -394,8 +394,8 @@ void mv::BlobDetect::DrawOutline() const
     {
         for (int j = 0; j < result.blobList[i].outline.size(); ++j)
         {
-           int x = result.blobList[i].outline[j].x;
-           int y = result.blobList[i].outline[j].y;
+           int x = static_cast<int>(result.blobList[i].outline[j].x);
+           int y = static_cast<int>(result.blobList[i].outline[j].y);
            img.at<cv::Vec3b>(y,x)[0] = 0;
            img.at<cv::Vec3b>(y,x)[1] = 255;
            img.at<cv::Vec3b>(y,x)[2] = 0;
