@@ -1,4 +1,0 @@
-﻿  caliper.cpp
-f:\code\machine-vision-algorithms-library\src\caliper\caliper.cpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
-f:\code\machine-vision-algorithms-library\src\caliper\caliper.h : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
-  caliper.vcxproj -> F:\Code\machine-vision-algorithms-library\machine-vision-algorithms-library\x64\Debug\caliper.lib

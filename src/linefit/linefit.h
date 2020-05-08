@@ -5,7 +5,13 @@
 #ifndef MACHINE_VISION_LIBRARY_LINEFIT_H
 #define MACHINE_VISION_LIBRARY_LINEFIT_H
 
+//-------------OpenCV----------
 #include "opencv2/opencv.hpp"
+
+//--------------GSL-------------
+#include "gsl/gsl_vector.h"
+#include "gsl/gsl_multimin.h"
+
 
 namespace  mv
 {
@@ -35,26 +41,41 @@ namespace  mv
     class LineFit
     {
     public:
-        explicit LineFit(const std::vector<cv::Point2d>& points, const FitAlgorithms& fitAlgorithms = FitAlgorithms::REGRESSION)
-                :  _points(points), _fitAlgorithms(fitAlgorithms){}
+		explicit LineFit(const std::vector<cv::Point2d>& points, const FitAlgorithms& fitAlgorithms = FitAlgorithms::REGRESSION, const int& maxIter = 100);
+		~LineFit();
 
         static  cv::Ptr<LineFit> CreateInstance(const std::vector<cv::Point2d>& points, const FitAlgorithms& fitAlgorithms = FitAlgorithms::REGRESSION);
 
         void Run();
 
-        //--------------------------------------拟合算法 | fit algorithms------------------------------------------------
-        void FitLineByRegression();
-        void FitLineByHuber();
-        void FitLineByTukey();
-        void FitLineByDrop();
-        void FitLineByGauss();
 
         LineFitResult GetResult() const;
     private:
+
+		//--------------------------------------拟合算法 | fit algorithms------------------------------------------------
+		void FitLineByRegression();
+		void FitLineByHuber();
+		void FitLineByTukey();
+		void FitLineByDrop();
+		void FitLineByGauss();
+
+		//--------------------------------------迭代参数 | iteration parameters------------------------------
+		int _maxIter;									//迭代最大次数
+		static int _outlierThreshold;					//离群阈值，超过此值被判定为离群点
+		gsl_multimin_function _function;				//迭代函数
+		gsl_multimin_fminimizer * _fminimizer;			//迭代优化器
+		gsl_vector *_startPoint;						//迭代算法的初始值
+		gsl_vector *_stepSize;							//迭代算法的初始步长
+		
+
+		void SetStartPoint(const double& a, const double& b);						//设置迭代起始点
+		static double HuberLossFunc(const gsl_vector * v, void * params);		    //目标函数
+		static double TukeyLossFunc(const gsl_vector * v, void * params);
+
         //---------------------------------------- 输入 | input----------------------------------------------
         std::vector<cv::Point2d> _points;
         FitAlgorithms _fitAlgorithms;
-        std::vector<double> _weigths;
+        static std::vector<double> _weigths;
 
         //-----------------------------------------输出 | output---------------------------------------------
         LineFitResult _result;
