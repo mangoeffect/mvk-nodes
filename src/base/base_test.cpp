@@ -113,21 +113,22 @@ double HuberFit::Func(const std::vector<cv::Point2d>& points, std::vector<double
 	{
 		double yi = points.at(i).y;
 		double fi = a * points.at(i).x + b;
-		double dist = std::fabs(yi - fi);
+		double dist = std::abs(yi - fi);
 		// huber loss
 		if (dist <= outlierThreshold)
 		{
-			dist = 0.5 * dist * dist;
 			// 更新权重
 			weights.at(i) = 1;
+			dist = 0.5 * dist * dist;
 		}
 		else
 		{
-			dist = outlierThreshold * dist - 0.5 * outlierThreshold * outlierThreshold;
 			// 更新权重
-			weights.at(i) = outlierThreshold / std::fabs(dist);
+			weights.at(i) = outlierThreshold / std::abs(dist);
+			dist = outlierThreshold * dist - 0.5 * outlierThreshold * outlierThreshold;
+			dist *= weights.at(i);
 		}
-		sum += std::fabs(dist);
+		sum += std::abs(dist);
 	}
 
 	return sum / N;
@@ -135,6 +136,7 @@ double HuberFit::Func(const std::vector<cv::Point2d>& points, std::vector<double
 
 HuberFit::HuberFit()
 {
+
 }
 
 HuberFit::~HuberFit()
@@ -161,18 +163,29 @@ int main()
 	std::cout << a << " " << b << std::endl;
 
 	huber.SetStart({ a, b });
-	huber.SetMaxtIter(3000);
-	//huber.SetStepSize(0.1 * a);
+	huber.SetMaxtIter(300);
+	huber.SetStepSize(0.001 * a);
 
 	bool res = huber.Run(pts, w, { 2 });
    
+	std::vector<double> result;
 	if (res)
 	{
-		std::vector<double> result = huber.GetResult();
+		result = huber.GetResult();
 		std::cout << result.at(0) << " " << result.at(1) << std::endl;
 	}
 
+    result = huber.GetResult();
+	cv::Point2d s1, s2, e1, e2;
+	s1 = s2 = { 100, 100 };
+	e1.x = e2.x = 100 + 300;
+	e1.y = a * e1.x + b;
+	e2.y = result.at(0) * e2.x + result.at(1);
+
 	std::cout << huber.GetIeterNum() << std::endl;
+
+	cv::line(img, s1, e1, cv::Scalar(0, 0, 255), 2);
+	cv::line(img, s2, e2, cv::Scalar(0, 255, 0), 2);
 
 	cv::imshow("base-multimin-test", img);
 	cv::waitKey(0);

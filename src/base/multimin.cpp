@@ -11,7 +11,7 @@ MultiMin::MultiMin()
 {
 	// 参数默认值
 	_maxIter = 100;
-	_learningRate = _stepSize = 0.0001;
+	_learningRate = _stepSize = 0.001;
 	_convergeThreshold = 1e-10;
 	_status = false;
 }
@@ -106,6 +106,8 @@ bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& 
 		{
 			stayConvergeTimes = 0;
 		}
+		
+		lastFuncValue = funcValue;
 
 		if (stayConvergeTimes > 10)
 		{
@@ -115,6 +117,8 @@ bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& 
 		}
 	}
 	std::cout << iterVale.at(0) << " " << iterVale.at(1) << std::endl;
+	_result = iterVale;
+
 	_status = false;
 	return _status;
 }
