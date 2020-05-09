@@ -148,7 +148,7 @@ int main()
 	cv::Mat img = cv::Mat(800, 1000, CV_8UC3, cv::Scalar::all(255));
 
 	std::vector<cv::Point2d> pts;
-	CreateData(pts, PointType::LINE_WITH_OUTLIER);
+	CreateData(pts, PointType::LINE);
 
 	for (size_t i = 0; i < pts.size(); i++)
 	{
@@ -185,7 +185,7 @@ int main()
 	std::cout << huber.GetIeterNum() << std::endl;
 
 	cv::line(img, s1, e1, cv::Scalar(0, 0, 255), 2);
-	cv::line(img, s2, e2, cv::Scalar(0, 255, 0), 2);
+	//cv::line(img, s2, e2, cv::Scalar(0, 255, 0), 2);
 
 	cv::imshow("base-multimin-test", img);
 	cv::waitKey(0);
