@@ -18,6 +18,9 @@
     <ClInclude Include="..\..\src\debugtool\plot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\debugtool\matplotlibcpp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\debugtool\plot.cpp">
