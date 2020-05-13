@@ -22,6 +22,7 @@ namespace mv
 
 		bool Run(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& otherData);
 
+		//----------------------------------------…Ë÷√ Ù–‘ | Set property ---------------------------------------------
 		void SetStart(const std::vector<double>& starts);
 		void SetMaxtIter(const unsigned int& maxIetr);
 		void SetStepSize(const double& stepSize);
