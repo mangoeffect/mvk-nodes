@@ -53,7 +53,7 @@ void MultiMin::CalculateGradient(const std::vector<cv::Point2d>& points, std::ve
 	const std::vector<double>& funcParameters, const std::vector<double>& otherData, std::vector<double>& funcGradient)
 {
 	funcGradient.clear();
-	double h = 1e-5;
+	double h = _stepSize;
 	double gradient = 0;
 	
 	std::vector<double> fhv = funcParameters;
@@ -76,8 +76,11 @@ bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& 
 	std::vector<double> gradient(iterVale.size(), 0);
 
 	double funcValue = 0;				//当前函数值
-	double lastFuncValue = 1e10;		//上一次函数值
+	double lastFuncValue = 1e9;		//上一次函数值
 	int stayConvergeTimes = 0;			//驻留收敛次数
+
+	// 清空收敛记录
+	_lossRecord.clear();
 
 	// 开始迭代
 	_iterationNum = 0;
@@ -107,6 +110,7 @@ bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& 
 			stayConvergeTimes = 0;
 		}
 		
+		_lossRecord.push_back(funcValue);
 		lastFuncValue = funcValue;
 
 		if (stayConvergeTimes > 10)
@@ -116,7 +120,7 @@ bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& 
 			return _status;
 		}
 	}
-	std::cout << iterVale.at(0) << " " << iterVale.at(1) << std::endl;
+	//std::cout << iterVale.at(0) << " " << iterVale.at(1) << std::endl;
 	_result = iterVale;
 
 	_status = false;

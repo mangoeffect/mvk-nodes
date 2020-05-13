@@ -2,13 +2,15 @@
 // Created by mango on 5/08/2020.
 //
 
-//#include"base.h"
 #include"multimin.h"
 #include"opencv2/opencv.hpp"
+#include"matplotlibcpp.h"
 
 #include<iostream>
 
 using namespace mv;
+namespace plt = matplotlibcpp;
+
 
 bool LeastSquareLineFit(const std::vector<cv::Point2d>& points, const std::vector<double>& weights, double&a, double& b);
 
@@ -89,11 +91,11 @@ void CreateData(std::vector<cv::Point2d>& pts, PointType pointType)
 	}
 }
 
-class HuberFit : public MultiMin
+class MultiminTest: public MultiMin
 {
 public:
-	HuberFit();
-	~HuberFit();
+	MultiminTest();
+	~MultiminTest();
 
 	double Func(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const std::vector<double>& otherData) override;
 
@@ -101,7 +103,7 @@ private:
 
 };
 
-double HuberFit::Func(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const std::vector<double>& otherData)
+double MultiminTest::Func(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const std::vector<double>& otherData)
 {
 	int N = points.size();
 	double a = funcParameters.at(0);
@@ -126,7 +128,7 @@ double HuberFit::Func(const std::vector<cv::Point2d>& points, std::vector<double
 			// 更新权重
 			weights.at(i) = outlierThreshold / std::abs(dist);
 			dist = outlierThreshold * dist - 0.5 * outlierThreshold * outlierThreshold;
-			dist *= weights.at(i);
+			//dist *= weights.at(i);
 		}
 		sum += std::abs(dist);
 	}
@@ -134,12 +136,12 @@ double HuberFit::Func(const std::vector<cv::Point2d>& points, std::vector<double
 	return sum / N;
 }
 
-HuberFit::HuberFit()
+MultiminTest::MultiminTest()
 {
 
 }
 
-HuberFit::~HuberFit()
+MultiminTest::~MultiminTest()
 {
 }
 
@@ -148,7 +150,7 @@ int main()
 	cv::Mat img = cv::Mat(800, 1000, CV_8UC3, cv::Scalar::all(255));
 
 	std::vector<cv::Point2d> pts;
-	CreateData(pts, PointType::LINE);
+	CreateData(pts, PointType::LINE_WITH_OUTLIER);
 
 	for (size_t i = 0; i < pts.size(); i++)
 	{
@@ -156,36 +158,43 @@ int main()
 	}
 	std::vector<double> w(pts.size(), 1);
 
-	HuberFit  huber;
+	MultiminTest  multimin;
 	double a, b;
 	LeastSquareLineFit(pts, w, a, b );
 
 	std::cout << a << " " << b << std::endl;
 
-	huber.SetStart({ a, b });
-	huber.SetMaxtIter(300);
-	huber.SetStepSize(0.001 * a);
+	multimin.SetStart({ a, b });
+	multimin.SetMaxtIter(100);
+	multimin.SetStepSize(0.0001);
+	multimin.SetConvergeThreshold(0.0001);
 
-	bool res = huber.Run(pts, w, { 2 });
+	bool res = multimin.Run(pts, w, { 4 });
    
 	std::vector<double> result;
 	if (res)
 	{
-		result = huber.GetResult();
+		result = multimin.GetResult();
 		std::cout << result.at(0) << " " << result.at(1) << std::endl;
 	}
 
-    result = huber.GetResult();
+    result = multimin.GetResult();
 	cv::Point2d s1, s2, e1, e2;
 	s1 = s2 = { 100, 100 };
 	e1.x = e2.x = 100 + 300;
 	e1.y = a * e1.x + b;
 	e2.y = result.at(0) * e2.x + result.at(1);
 
-	std::cout << huber.GetIeterNum() << std::endl;
+	std::cout << multimin.GetIeterNum() << std::endl;
 
 	cv::line(img, s1, e1, cv::Scalar(0, 0, 255), 2);
-	//cv::line(img, s2, e2, cv::Scalar(0, 255, 0), 2);
+	cv::line(img, s2, e2, cv::Scalar(0, 255, 0), 2);
+
+	std::vector<double> loss = multimin.GetLossRecord();
+
+	plt::plot(loss);
+	plt::show();
+	
 
 	cv::imshow("base-multimin-test", img);
 	cv::waitKey(0);

@@ -7,6 +7,8 @@
 
 #include "opencv2/core/core.hpp"
 
+
+
 #include <vector>
 
 namespace mv
@@ -26,6 +28,8 @@ namespace mv
 		void SetLearningRate(const double& learningRate);
 		void SetConvergeThreshold(const double& convergeThreshold);
 
+		//----------------------------------------获取属性 | Get property ---------------------------------------------
+		std::vector<double> GetLossRecord() const { return _lossRecord; }
 		std::vector<double> GetResult()const { return _result; }
 		double GetIeterNum() const { return _iterationNum; };
 
@@ -45,6 +49,7 @@ namespace mv
 		unsigned int _iterationNum;						// 运行时迭代次数 | real iteration num in runtime
 		bool _status;									// 迭代状态		| iteration status
 		std::vector<double> _result;
+		std::vector<double> _lossRecord;						// 损失值： 记录迭代收敛过程 | loss value: tracking the iteration
 	};
 
 
