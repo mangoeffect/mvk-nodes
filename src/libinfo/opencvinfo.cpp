@@ -1,6 +1,12 @@
-//
-// Created by mango on 3/20/2020.
-//
+
+/**
+* @file opencvinfo.cpp
+* @brief OpenCV信息相关
+* @details -
+* @author 芒果
+* @date 2020年3月20日
+* @version 1.0.0
+*/
 
 #include "opencvinfo.h"
 

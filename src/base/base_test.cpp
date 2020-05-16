@@ -91,6 +91,23 @@ void CreateData(std::vector<cv::Point2d>& pts, PointType pointType)
 	}
 }
 
+enum  class FitAlgorithms
+{
+	//        Algorithm 拟合直线算法
+	//
+	//        'regression' 标准的最小二乘拟合
+	//        'huber' 加权最小二乘拟合，通过Huber方法减小离群点的影响
+	//        'tukey' 加权最小二乘拟合，通过Tukey方法减小离群点的影响
+	//        'drop'：加权的最小二乘法拟合，异常值的影响被消除
+	//        'gauss'：加权的最小二乘法拟合，异常值的影响被减小基于最逼近线上的所有其轮廓点的平均值和距离标准方差
+	REGRESSION = 0,
+	HUBER,
+	TUKEY,
+	DROP,
+	GAUSS
+};//enum  class FitAlgorithms
+
+
 class MultiminTest: public MultiMin
 {
 public:
@@ -100,16 +117,40 @@ public:
 	double Func(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const std::vector<double>& otherData) override;
 
 private:
+	double HuberLoss(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const double& outlierThreshold);
+	double MAELoss(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters);
 
+	FitAlgorithms _fitAlgorithms;
 };
 
-double MultiminTest::Func(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const std::vector<double>& otherData)
+
+double MultiminTest::MAELoss(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters)
 {
-	int N = points.size();
+	int N = static_cast<int>(points.size());
+
 	double a = funcParameters.at(0);
 	double b = funcParameters.at(1);
-	double outlierThreshold = otherData.at(0);
+	//MAELoss
+	double sum = 0;
+	for (int i = 0; i < N; i++)
+	{
+		double yi = points.at(i).y;
+		double fi = a * points.at(i).x + b;
+		double dist = std::abs(yi - fi);
 
+		sum += dist;
+	}
+
+	return sum / N;
+}//MAELoss
+
+double MultiminTest::HuberLoss(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const double& outlierThreshold)
+{
+	int N = static_cast<int>(points.size());
+
+	double a = funcParameters.at(0);
+	double b = funcParameters.at(1);
+	
 	double sum = 0;
 	for (int i = 0; i < N; i++)
 	{
@@ -134,6 +175,32 @@ double MultiminTest::Func(const std::vector<cv::Point2d>& points, std::vector<do
 	}
 
 	return sum / N;
+}//HuberLoss
+
+double MultiminTest::Func(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& funcParameters, const std::vector<double>& otherData)
+{
+	double outlierThreshold = otherData.at(0);
+
+	double sum = 0;
+
+	switch (_fitAlgorithms)
+	{
+	case FitAlgorithms::REGRESSION:
+		break;
+	case FitAlgorithms::HUBER:
+		sum = HuberLoss(points, weights, funcParameters, outlierThreshold);
+		break;
+	case FitAlgorithms::TUKEY:
+		break;
+	case FitAlgorithms::DROP:
+		break;
+	case FitAlgorithms::GAUSS:
+		break;
+	default:
+		break;
+	}
+	
+	return sum;
 }
 
 MultiminTest::MultiminTest()

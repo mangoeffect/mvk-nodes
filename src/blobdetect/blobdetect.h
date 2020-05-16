@@ -2,6 +2,15 @@
 // Created by mango on 3/28/2020.
 //
 
+/**
+* @file blobdetect.h
+* @brief blob检测头文件
+* @details 基于OpenCV SimpleBlobDetector拓展的blob检测算子
+* @author 芒果
+* @date 2020年3月28日
+* @version 1.0.0
+*/
+
 #ifndef MACHINE_VISION_LIBRARY_BLOBDETECT_H
 #define MACHINE_VISION_LIBRARY_BLOBDETECT_H
 
