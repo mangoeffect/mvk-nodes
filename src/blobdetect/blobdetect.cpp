@@ -4,7 +4,7 @@
 * @brief blob源代码文件
 * @details 基于OpenCV SimpleBlobDetector拓展的blob检测算子
 * @author 芒果
-* @date 2020年3月28日
+* @date 2020-3-28
 * @version 1.0.0
 */
 

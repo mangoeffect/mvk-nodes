@@ -4,7 +4,7 @@
 * @brief 卡尺工具源代码文件
 * @details 根据《机器视觉算法与应用》一维边缘点检测原理实现
 * @author 芒果
-* @date 2020年4月2日
+* @date 2020-4-2
 * @version 1.0.0
 */
 #include "caliper.h"

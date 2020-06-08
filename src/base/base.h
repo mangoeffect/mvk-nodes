@@ -1,13 +1,10 @@
-//
-// Created by mango on 5/08/2020.
-//
 
 /**
 * @file base.h
 * @brief 求解多元函数最小值头文件
 * @details 根据梯度下降法迭代逼近的方法求解多元函数局部最小值
 * @author 芒果
-* @date 2020年5月8日
+* @date 2020-5-8
 * @version 1.0.0
 */
 

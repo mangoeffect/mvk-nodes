@@ -4,7 +4,7 @@
 * @brief 直线拟合源文件
 * @details 基于最小二乘、huber、tukey等方法拟合直线
 * @author 芒果
-* @date 2020年4月10日
+* @date 2020-4-10
 * @version 1.0.0
 */
 

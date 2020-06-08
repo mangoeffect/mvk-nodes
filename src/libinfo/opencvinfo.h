@@ -4,7 +4,7 @@
 * @brief OpenCV信息相关
 * @details -
 * @author 芒果
-* @date 2020年3月20日
+* @date 2020-3-20
 * @version 1.0.0
 */
 
