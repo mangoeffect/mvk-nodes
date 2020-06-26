@@ -9,9 +9,9 @@ Machine vision algorithms based on opencv
 | --- | --- | ---- |
 | [blob analysis](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/blobdetect) | complete | [blog](https://mangoroom.cn/opencv/better-blob-detection-based-on-simepleblobdetector.html) |
 | [caliper tool](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/caliper) | complete | - |
-| line fit | - | - |
+| [line fit](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/linefit) | - | [blog](https://mangoroom.cn/opencv/mean-absolute-error-line-fit.html) |
 | line search | - | - |
-| circle fit | - | - |
+| [circle fit] | - | [blog](https://mangoroom.cn/opencv/mean-absolute-error-circle-fit.html) |
 | circle search | - | - |
 | template matching | - | - |
 | N points calibration | - | - |

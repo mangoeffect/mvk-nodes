@@ -9,9 +9,9 @@
 | --- | --- | ---- |
 | [blob分析](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/blobdetect) | 完成 | [博客](https://mangoroom.cn/opencv/better-blob-detection-based-on-simepleblobdetector.html) |
 | [卡尺工具](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/caliper) | 完成 | - |
-| 直线拟合 | - | - |
+| [直线拟合](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/linefit) | - | [博客]((https://mangoroom.cn/opencv/mean-absolute-error-line-fit.html) |
 | 直线查找 | - | - |
-| 圆拟合 | - | - |
+| 圆拟合 | - | [博客](https://mangoroom.cn/opencv/mean-absolute-error-circle-fit.html) |
 | 圆查找 | - | - |
 | 模板匹配 | - | - |
 | N点标定 | - | - |
