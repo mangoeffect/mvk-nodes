@@ -50,7 +50,7 @@ namespace mv
 		unsigned int _iterationNum;						// 运行时迭代次数 | real iteration num in runtime
 		bool _status;									// 迭代状态		| iteration status
 		std::vector<double> _result;
-		std::vector<double> _lossRecord;						// 损失值： 记录迭代收敛过程 | loss value: tracking the iteration
+		std::vector<double> _lossRecord;				// 损失值： 记录迭代收敛过程 | loss value: tracking the iteration
 	};
 
 
