@@ -1,5 +1,5 @@
 # for src
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.12)
 
 add_subdirectory(libinfo)
 add_subdirectory(blobdetect)

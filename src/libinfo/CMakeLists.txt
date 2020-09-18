@@ -1,16 +1,32 @@
-cmake_minimum_required(VERSION 3.2)
-project(libinfo C CXX)
+cmake_minimum_required(VERSION 3.12)
+project(libinfo)
 
-set(SOURCE_FILES opencvinfo.h opencvinfo.cpp samples.cpp)
+aux_source_directory(. CURRENT_DIR_SRCS)
 
-link_libraries(${OpenCV_LIBS})
+if(BUILD_DYNAMIC_LIB)
+  add_library(${PROJECT_NAME} SHARED  ${CURRENT_DIR_SRCS})
+else()
+  add_library(${PROJECT_NAME} STATIC  ${CURRENT_DIR_SRCS})
+endif()
 
-add_library(libinfo SHARED STATIC ${SOURCE_FILES})
 
-add_executable(libinfosample samples.cpp)
-target_link_libraries(libinfosample libinfo)
+target_link_libraries(${PROJECT_NAME}
+${OpenCV_LIBS}
+${PCL_LIBRARIES}
+${OPENMESH_LIBRARIES})
 
-install(TARGETS libinfo DESTINATION ${DIVISIBLE_INSTALL_LIB_DIR})
-install(FILES opencvinfo.h DESTINATION ${DIVISIBLE_INSTALL_INCLUDE_DIR})
 
+# 安装 include 文件
+install(DIRECTORY ./ DESTINATION include/mvp/${PROJECT_NAME}
+        FILES_MATCHING PATTERN "*.h")
+
+
+# 将库文件，可执行文件，头文件安装到指定目录
+install(TARGETS ${PROJECT_NAME}
+        EXPORT GoodScan3D
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        PUBLIC_HEADER DESTINATION include
+        )
 
