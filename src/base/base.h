@@ -11,6 +11,6 @@
 #ifndef MACHINE_VISION_LIBRARY_BASE_H
 #define MACHINE_VISION_LIBRARY_BASE_H
 
-#include"multimin.h"
+#include "multimin.h"
 
 #endif //MACHINE_VISION_LIBRARY_BASE_H

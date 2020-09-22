@@ -2,127 +2,116 @@
 // Created by mango on 5/08/2020.
 //
 
-#include"multimin.h"
-#include<iostream>
+#include "multimin.h"
+#include <iostream>
 
-using namespace mv;
-
-MultiMin::MultiMin()
+namespace mvp
 {
-	// 参数默认值
-	_maxIter = 100;
-	_learningRate = _stepSize = 0.001;
-	_convergeThreshold = 1e-10;
-	_status = false;
-}
-
-MultiMin::~MultiMin()
-{
-
-}
-
-
-void MultiMin::SetStart(const std::vector<double>& starts)
-{
-	_start = starts;
-}
-
-void MultiMin::SetMaxtIter(const unsigned int& maxIetr)
-{
-	_maxIter = maxIetr;
-}
-
-void MultiMin::SetStepSize(const double& stepSize)
-{
-	_stepSize = stepSize;
-	_learningRate = stepSize;
-}
-
-void MultiMin::SetLearningRate(const double& learningRate)
-{
-	_learningRate = learningRate;
-	_stepSize = learningRate;
-}
-
-void MultiMin::SetConvergeThreshold(const double& convergeThreshold)
-{
-	_convergeThreshold = convergeThreshold;
-}
-
-void MultiMin::CalculateGradient(const std::vector<cv::Point2d>& points, std::vector<double>& weights,
-	const std::vector<double>& funcParameters, const std::vector<double>& otherData, std::vector<double>& funcGradient)
-{
-	funcGradient.clear();
-	double h = _stepSize;
-	double gradient = 0;
-	
-	std::vector<double> fhv = funcParameters;
-	for (size_t i = 0; i < funcParameters.size(); i++)
+	MultiMin::MultiMin():max_iter_(100) , start_({0}), step_size_(0.001), converge_threshold_(1e-5)
 	{
-		fhv.at(i) += h;
-		double f = Func(points, weights, funcParameters, otherData);
-		double fh = Func(points, weights, fhv, otherData);
-		// 第i个函数变量方向的梯度
-		gradient = (fh - f) / h;
-		funcGradient.push_back(gradient);
+
 	}
-}
 
-//
-bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& otherData)
-{
-	// 迭代起始位置
-	std::vector<double> iterVale = _start;
-	std::vector<double> gradient(iterVale.size(), 0);
-
-	double funcValue = 0;				//当前函数值
-	double lastFuncValue = 1e9;		//上一次函数值
-	int stayConvergeTimes = 0;			//驻留收敛次数
-
-	// 清空收敛记录
-	_lossRecord.clear();
-
-	// 开始迭代
-	_iterationNum = 0;
-	for (size_t i = 0; i < _maxIter; i++)
+	MultiMin::~MultiMin()
 	{
-		_iterationNum++;
-		// 计算梯度
-		CalculateGradient(points, weights, iterVale, otherData, gradient);
 
-		// 梯度下降公式迭代修正
-		for (size_t j = 0; j < iterVale.size(); j++)
-		{
-			iterVale.at(j) -= _stepSize * gradient.at(j);
-		}
+	}
 
-		// 重新计算当前函数值
-		funcValue = Func(points, weights, iterVale, otherData);
-		
-		double difference = std::abs(funcValue - lastFuncValue);
-		
-		if (difference < _convergeThreshold)
-		{
-			stayConvergeTimes++;
-		}
-		else
-		{
-			stayConvergeTimes = 0;
-		}
-		
-		_lossRecord.push_back(funcValue);
-		lastFuncValue = funcValue;
+	void MultiMin::SetStart(const std::vector<double>& starts)
+	{
+		starts_ = starts;
+	}
 
-		if (stayConvergeTimes > 10)
+	void MultiMin::SetMaxtIter(const unsigned int& max_iter)
+	{
+		max_iter_ = max_iter;
+	}
+
+	void MultiMin::SetStepSize(const double& step_size)
+	{
+		step_size_ = step_size;
+	}
+
+	void MultiMin::SetConvergeThreshold(const double& converge_threshold)
+	{
+		converge_threshold_ = converge_threshold;
+	}
+
+
+    void CalculateGradient(const std::vector<cv::Point2d>& points, std::vector<double>& weights,
+			const std::vector<double>& dependent_variables, const std::vector<double>& other_param, std::vector<double>& function_gradient)
+	{
+		function_gradient.clear();
+		double h = step_size_;
+		double gradient = 0;
+		
+		std::vector<double> fhv = dependent_variables;
+		for (size_t i = 0; i < dependent_variables.size(); i++)
 		{
-			_result = iterVale;
-			_status = true;
-			return _status;
+			fhv.at(i) += h;
+			double f = GetLoss(points, weights, dependent_variables, other_param);
+			double fh = GetLoss(points, weights, fhv, other_param);
+			gradient = (fh - f) / h;
+			function_gradient.push_back(gradient);
 		}
 	}
-	//std::cout << iterVale.at(0) << " " << iterVale.at(1) << std::endl;
-	_result = iterVale;
 
-	_status = false;
-	return _status;
-}
+	//
+	bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& other_param)
+	{
+
+		std::vector<double> iterVale = start_;
+		std::vector<double> gradient(iterVale.size(), 0);
+
+		double funcValue = 0;			
+		double lastFuncValue = 1e9;		
+		int stayConvergeTimes = 0;			
+
+		
+		loss_record_.clear();
+		iteration_count_ = 0;
+
+		for (size_t i = 0; i < max_iter_; i++)
+		{
+			iteration_count_++;
+		
+			CalculateGradient(points, weights, iterVale, other_param, gradient);
+			
+			for (size_t j = 0; j < iterVale.size(); j++)
+			{
+				iterVale.at(j) -= _stepSize * gradient.at(j);
+			}
+
+			
+			funcValue = GetLoss(points, weights, iterVale, other_param);
+			
+			double difference = std::abs(funcValue - lastFuncValue);
+			
+			if (difference < converge_threshold_)
+			{
+				stayConvergeTimes++;
+			}
+			else
+			{
+				stayConvergeTimes = 0;
+			}
+			
+			loss_record_.push_back(funcValue);
+			lastFuncValue = funcValue;
+
+			if (stayConvergeTimes > 10)
+			{
+				result_ = iterVale;
+				status_ = true;
+				return status_;
+			}
+		}
+		
+		result_ = iterVale;
+
+		status_ = false;
+
+		return status_;
+	}
+}//namespace mvp
+
