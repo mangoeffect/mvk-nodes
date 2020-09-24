@@ -15,7 +15,7 @@ enum class OutlierType
 	SINGLE_DIRECTION
 };
 
-// ¹¹ÔìÄâºÏµã
+// æ„é€ æ‹Ÿåˆç‚¹
 void CreatePoints(const cv::Size& planeSize, std::vector<cv::Point2d>& points, const cv::Point2d& lineStart, const int& angle, const size_t& len, const size_t& outlierNum = 10, const size_t& distance = 0, const OutlierType& type = OutlierType::RANDOM);
 
 int main()
@@ -56,7 +56,7 @@ void CreatePoints(const cv::Size& planeSize, std::vector<cv::Point2d>& points, c
 	points.clear();
 	const double PI = std::acos(-1);
 
-	// ´´½¨¾ÛºÏµã
+	// åˆ›å»ºèšåˆç‚¹
 	srand((unsigned)time(nullptr));
 	for (int i = 0; i < len; i++)
 	{
@@ -70,7 +70,7 @@ void CreatePoints(const cv::Size& planeSize, std::vector<cv::Point2d>& points, c
 		}
 	}
 
-	// ´´½¨ÀëÈºµã
+	// åˆ›å»ºç¦»ç¾¤ç‚¹
 
 	switch (type)
 	{

@@ -8,9 +8,8 @@
 int main()
 {
 
-
     cv::Mat img = cv::imread("../../images/blob.jpg", 0);
-    cv::Ptr<mv::Caliper> caliper = mv::Caliper::CreateInstance(cv::Point2d(80, 60), 100, 0);
+    cv::Ptr<mvp::caliper::Caliper> caliper = mvp::caliper::Caliper::CreateInstance(cv::Point2d(80, 60), 100, 0);
     caliper->Init(img);
     caliper->SetParam();
 

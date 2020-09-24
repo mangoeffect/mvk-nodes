@@ -7,7 +7,8 @@
 
 namespace mvp
 {
-	MultiMin::MultiMin():max_iter_(100) , start_({0}), step_size_(0.001), converge_threshold_(1e-5)
+	MultiMin::MultiMin():max_iter_(100) , start_({0}), step_size_(0.001), 
+		gradient_step_size_(1e-4),converge_threshold_(1e-5), stay_converge_times_(10)
 	{
 
 	}
@@ -17,9 +18,9 @@ namespace mvp
 
 	}
 
-	void MultiMin::SetStart(const std::vector<double>& starts)
+	void MultiMin::SetStart(const std::vector<double>& start)
 	{
-		starts_ = starts;
+		start_ = start;
 	}
 
 	void MultiMin::SetMaxtIter(const unsigned int& max_iter)
@@ -37,22 +38,33 @@ namespace mvp
 		converge_threshold_ = converge_threshold;
 	}
 
+	void MultiMin::SetGradientStepSize(const double& gradient_step_size)
+	{
+		gradient_step_size_ = gradient_step_size;
+	}
 
-    void CalculateGradient(const std::vector<cv::Point2d>& points, std::vector<double>& weights,
+	void MultiMin::SetStayConvergeTimes(const unsigned int& stay_converge_times)
+	{
+		stay_converge_times_ = stay_converge_times;
+	}
+
+    void MultiMin::CalculateGradient(const std::vector<cv::Point2d>& points, std::vector<double>& weights,
 			const std::vector<double>& dependent_variables, const std::vector<double>& other_param, std::vector<double>& function_gradient)
 	{
 		function_gradient.clear();
-		double h = step_size_;
+		double h = gradient_step_size_;
 		double gradient = 0;
 		
 		std::vector<double> fhv = dependent_variables;
-		for (size_t i = 0; i < dependent_variables.size(); i++)
+
+		auto len = dependent_variables.size();
+		for (size_t i = 0; i < len; i++)
 		{
 			fhv.at(i) += h;
 			double f = GetLoss(points, weights, dependent_variables, other_param);
 			double fh = GetLoss(points, weights, fhv, other_param);
 			gradient = (fh - f) / h;
-			function_gradient.push_back(gradient);
+			function_gradient.emplace_back(gradient);
 		}
 	}
 
@@ -60,12 +72,12 @@ namespace mvp
 	bool MultiMin::Run(const std::vector<cv::Point2d>& points, std::vector<double>& weights, const std::vector<double>& other_param)
 	{
 
-		std::vector<double> iterVale = start_;
-		std::vector<double> gradient(iterVale.size(), 0);
+		std::vector<double> iter_vale = start_;
+		std::vector<double> gradient(iter_vale.size(), 0);
 
-		double funcValue = 0;			
-		double lastFuncValue = 1e9;		
-		int stayConvergeTimes = 0;			
+		double func_value = 0;			
+		double last_func_value = std::numeric_limits<double>::max();		
+		uint stay_converge_times = 0;			
 
 		
 		loss_record_.clear();
@@ -75,39 +87,38 @@ namespace mvp
 		{
 			iteration_count_++;
 		
-			CalculateGradient(points, weights, iterVale, other_param, gradient);
+			CalculateGradient(points, weights, iter_vale, other_param, gradient);
 			
-			for (size_t j = 0; j < iterVale.size(); j++)
+			for (size_t j = 0; j < iter_vale.size(); j++)
 			{
-				iterVale.at(j) -= _stepSize * gradient.at(j);
+				iter_vale.at(j) -= step_size_ * gradient.at(j);
 			}
 
+			func_value = GetLoss(points, weights, iter_vale, other_param);
 			
-			funcValue = GetLoss(points, weights, iterVale, other_param);
-			
-			double difference = std::abs(funcValue - lastFuncValue);
+			double difference = std::abs(func_value - last_func_value);
 			
 			if (difference < converge_threshold_)
 			{
-				stayConvergeTimes++;
+				stay_converge_times++;
 			}
 			else
 			{
-				stayConvergeTimes = 0;
+				stay_converge_times = 0;
 			}
 			
-			loss_record_.push_back(funcValue);
-			lastFuncValue = funcValue;
+			loss_record_.emplace_back(func_value);
+			last_func_value = func_value;
 
-			if (stayConvergeTimes > 10)
+			if (stay_converge_times > 10)
 			{
-				result_ = iterVale;
+				result_ = iter_vale;
 				status_ = true;
 				return status_;
 			}
 		}
 		
-		result_ = iterVale;
+		result_ = iter_vale;
 
 		status_ = false;
 

@@ -2,13 +2,10 @@
 // Created by mango on 5/08/2020.
 //
 
-#ifndef MACHINE_VISION_LIBRARY_MULTIMIN_H
-#define MACHINE_VISION_LIBRARY_MULTIMIN_H
+#ifndef MVP_MULTIMIN_H
+#define MVP_MULTIMIN_H
 
 #include "opencv2/core/core.hpp"
-
-
-
 #include <vector>
 
 namespace mvp
@@ -54,9 +51,9 @@ namespace mvp
 
         /**
 		 * @brief 设置迭代起点 | Set iteration start points
-		 * @param starts(in) 迭代起点 | iteration start points
+		 * @param start(in) 迭代起点 | iteration start points
 		 */
-		void SetStart(const std::vector<double>& starts);
+		void SetStart(const std::vector<double>& start);
 
 		/**
 		 * @brief 设置最大迭代次数 | Set the maximum  num of iteration
@@ -75,6 +72,20 @@ namespace mvp
 		 * @param converge_threshold(in) 收敛阈值 |  threshold of iteratoin converge
 		 */
 		void SetConvergeThreshold(const double& convergeThreshold);
+
+		/**
+		 * @brief 设置梯度步长 | Set the step size of gradient
+		 * @param gradient_step_size(in) 梯度步长 | step size of gradient
+		 */
+		void SetGradientStepSize(const double& gradient_step_size);
+
+
+		/**
+		 * @brief 设置收敛驻留次数 | Set the stay times of converge
+		 * @param stay_converge_times(in) 驻留次数 | stay times
+		 */
+		void SetStayConvergeTimes(const unsigned int& stay_converge_times);
+
 
 		//----------------------------------------获取属性 | Get property ---------------------------------------------
 		std::vector<double> GetLossRecord() const { return loss_record_; }
@@ -97,7 +108,9 @@ namespace mvp
 		unsigned int max_iter_;							///<  最大迭代次数  | max iteration num
 		std::vector<double> start_;						///<  迭代起点	    | iteration start points
 		double step_size_;								///<  迭代步长	    | iteration step size
-		double converge_threshold_;						///<  收敛阈值      |  converege threshold
+		double gradient_step_size_;                     ///<  梯度步长      | gradient step size
+		double converge_threshold_;						///<  收敛阈值      | converge threshold
+		unsigned int stay_converge_times_;              ///<  收敛驻留次数  | stay converge times
 	
 
 		//------------------------------------------输出 | output---------------------------------------------------
@@ -110,4 +123,4 @@ namespace mvp
 
 }//namespace  mvp
 
-#endif //MACHINE_VISION_LIBRARY_MULTIMIN_H
+#endif //MVP_MULTIMIN_H

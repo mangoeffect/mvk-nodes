@@ -20,13 +20,17 @@ namespace mvp
 {
     namespace caliper
     {
+        /**
+         * @brief 极值点信息
+         */
         struct ExtremPointInfo
         {
+            cv::Point2d pt;                  ///< 极值点像素坐标
+            int ps;                          ///< 极值点在路径中的位置
+            int value;                       ///< 极值
+            double score;                    ///< 得分
+
             ExtremPointInfo(const cv::Point2d& _pt, const int& _ps, const int& _value) : pt(_pt), ps(_ps), value(_value), score(0) {}
-            cv::Point2d pt;                  //极值点像素坐标
-            int ps;                          //极值点在路径中的位置
-            int value;                       //极值
-            double score;                    //得分
         };
 
         // 以得分为条件比较极值点，用于排序
@@ -41,6 +45,9 @@ namespace mvp
             return  ep1.ps > ep2.ps;
         }
 
+        /**
+         * @brief 卡尺工具
+         */ 
         class Caliper
         {
         public:
@@ -97,7 +104,7 @@ namespace mvp
 
             std::vector<ExtremPointInfo> extremePoints;      //极值点
         public:
-            cv::Mat inputImage;
+            cv::Mat input_image_;
             //-------------卡尺结果-------------------------------
             //保留前、中、后三个点,极性最强点(最强点属于三个点之一）,如果找不到统一默认为输入的center坐标点
             struct Result
