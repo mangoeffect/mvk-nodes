@@ -8,85 +8,148 @@
 * @version 1.0.0
 */
 
-#ifndef MACHINE_VISION_LIBRARY_LINEFIT_H
-#define MACHINE_VISION_LIBRARY_LINEFIT_H
+#ifndef MVP_LINEFIT_H
+#define MVP_LINEFIT_H
+
+#include <memory>
+#include <string>
 
 //-------------OpenCV----------
 #include "opencv2/opencv.hpp"
-
-//--------------GSL-------------
-#include "gsl/gsl_vector.h"
-#include "gsl/gsl_multimin.h"
+#include "../ransac/ransac.hpp"
 
 
-namespace  mv
+namespace  mvp
 {
+    /**
+     * @brief 直线拟合算法枚举
+     */
     enum  class FitAlgorithms
     {
-//        Algorithm 拟合直线算法
-//
-//        'regression' 标准的最小二乘拟合
-//        'huber' 加权最小二乘拟合，通过Huber方法减小离群点的影响
-//        'tukey' 加权最小二乘拟合，通过Tukey方法减小离群点的影响
-//        'drop'：加权的最小二乘法拟合，异常值的影响被消除
-//        'gauss'：加权的最小二乘法拟合，异常值的影响被减小基于最逼近线上的所有其轮廓点的平均值和距离标准方差
-        REGRESSION = 0,
-        HUBER,
-        TUKEY,
-        DROP,
-        GAUSS
+        REGRESSION = 0,          ///< 标准的最小二乘拟合
+        HUBER,                   ///< 加权最小二乘拟合，通过Huber方法减小离群点的影响
+        TUKEY,                   ///< 加权最小二乘拟合，通过Tukey方法减小离群点的影响
+        DROP,                    ///< 加权的最小二乘法拟合，异常值的影响被消除
+        GAUSS                    ///< 加权的最小二乘法拟合，异常值的影响被减小基于最逼近线上的所有其轮廓点的平均值和距离标准方差
     };//enum  class FitAlgorithms
 
+    /**
+     * @brief 度量距离类型, 与OpenCV中cv::fitLine方法中定义一致
+     */
+    enum class DistType
+    {
+        DIST_L2 = 0,            
+        DIST_L1 = 1,
+        DISL_L12 = 2,
+        DISL_HUBER = 3,
+    }
+
+    /**
+     * @brief 直线拟合结果，直线描述采用点斜式: y - b = k * (x - a)
+     */
     struct LineFitResult
     {
-        // y = ax + b
-        double a;
-        double b;
+        double a;                ///< 点斜式参数a,对应x
+        double b;                ///< 点斜式参数b,对应y
+        double k;                ///< 点斜式参数k,直线斜率
+        
+        std::vector<cv::Point_>  inliers;     ///< 内点，未被剔除用于拟合
+        std::vector<cv::Point_>  outliers;    ///< 离群点，被剔除未参与拟合
     };//
 
-    class LineFit
+    /**
+     * @brief 直线拟合工具类
+     */
+    class LineFit : public Ransac
     {
     public:
-		explicit LineFit(const std::vector<cv::Point2d>& points, const FitAlgorithms& fitAlgorithms = FitAlgorithms::REGRESSION, const int& maxIter = 100);
-		~LineFit();
+        /**
+         * @brief 默认构造函数
+         */
+        LineFit():outliers_distance_threshold_(3.0),
+                  force_remove_ratio_(0.0),
+                  force_remove_num_(0),
+                  max_iter_num_(100),
+                  dist_type_(DistType::DISL_HUBER)
+        {
 
-        static  cv::Ptr<LineFit> CreateInstance(const std::vector<cv::Point2d>& points, const FitAlgorithms& fitAlgorithms = FitAlgorithms::REGRESSION);
+        }
 
-        void Run();
+        /**
+         * @brief 创建直线拟合工具类
+         */
+        static std::shared_ptr<LineFit> CreateLineFitTool();
+        
+        /**
+         * @brief 设置算法参数
+         * @param json_str(in) json格式的参数
+         * @return 函数状态，负数为执行异常
+         */
+        int SetParam(const std::string& json_str);
+
+        /**
+         * @brief 设置输入坐标点数组
+         * @param point_array(in) 坐标点数据
+         * @return 函数状态，负数为异常
+         */
+        int SetInputPointArray(const std::vector<cv::Point_>& point_array);
+
+        
+        /**
+         * @brief 执行拟合算法
+         * @return 函数状态，负数为异常
+         */
+        int Run();
 
 
-        LineFitResult GetResult() const;
+        int SampleMnimumData() override;
+
+        int FitModel() override;
+
+        int ComputeCurrentInliers() override;
+
+        int RecordBestModel() override;
+
+        int IsGoodEnough() override;
+
+        /**
+         * @brief 设置离群点距离阈值，超过此值则判断为离群点，将其剔除后再拟合
+         * @param threshold(in) 离群点阈值
+         * @return 函数状态，负数为异常
+         */
+        int SetOutliersDistanceThreshold(const double& threshold);
+
+       /**
+         * @brief 设置强制剔除坐标点占比例, 取值范围[0.0, 1.0], 默认值0
+         * @param ratio(in) 剔除坐标点占比例，取值范围[0.0, 1.0], 默认值0
+         * @return 函数状态，负数为异常
+         */
+        int SetForceRemoveRatio(const double& ratio);
+
+       /**
+         * @brief 设置强制剔除坐标点数量, 优先级比force_remove_ratio_高，即若设置了force_remove_num_数则force_remove_ratio_无效,默认至少保留2个点做拟合，取值范围[0， std::numeric_limits<int>::max()]， 默认值0
+         * @param num(in) 剔除点数，取值范围[0， std::numeric_limits<int>::max()]， 默认值0
+         * @return 函数状态，负数为异常
+         */
+        int SetForceRemoveNum(const int& num);
+
+       /**
+         * @brief 设置最大迭代次数
+         * @param num(in) 最大迭代次数，取值范围[1, std::numeric_limits<int>::max()]， 默认值100
+         * @return 函数状态，负数为异常
+         */
+        int SetMaxIterNum(const int& num);
     private:
+       
+         double outliers_distance_threshold_;                             ///< 离群点距离阈值，超过此值则判断为离群点，将其剔除后再拟合,取值范围[0.0,std::numeric_limits<double>::max()], 默认值3.0（像素）
+         double force_remove_ratio_;                                      ///< 根据距离由远到近，强制剔除坐标点占比例, 取值范围[0.0, 1.0], 默认值0
+         int force_remove_num_;                                           ///< 根据距离由远到近，强制剔除坐标点数量, 优先级比force_remove_ratio_高，即若设置了force_remove_num_数则force_remove_ratio_无效,默认至少保留2个点做拟合，取值范围[0， std::numeric_limits<int>::max()]， 默认值0
+         int max_iter_num_;                                               ///< 最大迭代次数，取值范围[1, std::numeric_limits<int>::max()]， 默认值100
+         DistType dist_type_;                                             ///< 度量距离类型, 与OpenCV中cv::fitLine方法中定义一致, 默认huber
 
-		//--------------------------------------拟合算法 | fit algorithms------------------------------------------------
-		void FitLineByRegression();
-		void FitLineByHuber();
-		void FitLineByTukey();
-		void FitLineByDrop();
-		void FitLineByGauss();
-
-		//--------------------------------------迭代参数 | iteration parameters------------------------------
-		int _maxIter;									//迭代最大次数
-		static int _outlierThreshold;					//离群阈值，超过此值被判定为离群点
-		gsl_multimin_function _function;				//迭代函数
-		gsl_multimin_fminimizer * _fminimizer;			//迭代优化器
-		gsl_vector *_startPoint;						//迭代算法的初始值
-		gsl_vector *_stepSize;							//迭代算法的初始步长
-		
-
-		void SetStartPoint(const double& a, const double& b);						//设置迭代起始点
-		static double HuberLossFunc(const gsl_vector * v, void * params);		    //目标函数
-		static double TukeyLossFunc(const gsl_vector * v, void * params);
-
-        //---------------------------------------- 输入 | input----------------------------------------------
-        std::vector<cv::Point2d> _points;
-        FitAlgorithms _fitAlgorithms;
-        static std::vector<double> _weigths;
-
-        //-----------------------------------------输出 | output---------------------------------------------
-        LineFitResult _result;
+         LineFitResult result_;                                           ///< 拟合结果结构体
     };//class LineFit
 
-}//namespace  mv
+}//namespace  mvp
 
 #endif //MACHINE_VISION_LIBRARY_LINEFIT_H

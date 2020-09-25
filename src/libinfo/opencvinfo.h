@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 
-namespace mv
+namespace mvp
 {
     class OpenCVInfo
     {
@@ -51,5 +51,5 @@ namespace mv
         const std::string MV_VERSION;
     };//MVLInfo
 
-}// namespace mv
+}// namespace mvp
 #endif //CMAKE_PROJECT_TEMPLATE_OPENCVINFO_H

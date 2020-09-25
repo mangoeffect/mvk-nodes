@@ -7,9 +7,9 @@
 
 #include "opencv2/opencv.hpp"
 
-namespace mv
+namespace mvp
 {
     // y = f(x), (x,y)
     void Plot(const std::vector<int>& x, const std::vector<int>& y, const std::string& title = "Figure1");
-};//namespace mv
+};//namespace mvp
 #endif //MACHINE_VISION_LIBRARY_PLOT_H
