@@ -16,8 +16,12 @@ if(BUILD_DYNAMIC_LIB)
     endif()
 endif()
 
+
 add_subdirectory(src)
-#add_subdirectory(test)
+option(BUILD_TEST "Build the test cases" ON)
+if(BUILD_TEST)
+    add_subdirectory(test)
+endif()
 
 # 安装Find...cmake文件
 install(DIRECTORY ./cmake DESTINATION ./
