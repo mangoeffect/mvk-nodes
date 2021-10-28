@@ -28,19 +28,24 @@ namespace mvp
         private:
             ObjectCounterResult result_;                         ///< 算法处理结果
         public:
-            ObjectCounterTool
-            (/* args */);
-            ~ObjectCounterTool
-            ();
+
+            /**
+             * @brief 默认构造函数
+             * 
+             */
+            ObjectCounterTool(/* args */);
+
+            /**
+             * @brief 析构函数
+             * 
+             */
+            ~ObjectCounterTool();
             
             /**
              * @brief 创建物体计数工具类实例
              * @return 物体计数工具类实例指针
              */
-            static std::shared_ptr<ObjectCounterTool> CreateObjectCounterTool()
-            {
-                
-            }
+            static std::shared_ptr<ObjectCounterTool> CreateObjectCounterTool();
 
             /**
              * @brief 初始化函数
@@ -70,18 +75,6 @@ namespace mvp
              */
             int PreProcess();
         };
-        
-        ObjectCounterTool
-        ::ObjectCounterTool
-        (/* args */)
-        {
-        }
-        
-        ObjectCounterTool
-        ::~ObjectCounterTool
-        ()
-        {
-        }
          
     }//namespace objectcounter
 }//namespace mvp

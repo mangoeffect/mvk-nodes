@@ -11,10 +11,7 @@ else()
 endif()
 
 
-target_link_libraries(${PROJECT_NAME}
-${OpenCV_LIBS}
-${PCL_LIBRARIES}
-${OPENMESH_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 
 # 安装 include 文件
