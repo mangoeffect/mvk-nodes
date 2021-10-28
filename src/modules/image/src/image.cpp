@@ -16,6 +16,12 @@
 
 namespace mvk
 {
+    Image::Image()
+     : image_impl_(new ImageImpl())
+    {
+
+    }
+
     Image::Image(const unsigned char* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format)
     : image_impl_(new ImageImpl(data, width, height, format))
     {

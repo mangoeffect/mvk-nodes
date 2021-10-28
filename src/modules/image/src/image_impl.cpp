@@ -21,6 +21,11 @@
 
 namespace mvk
 {
+    ImageImpl::ImageImpl()
+    {
+
+    }
+
     ImageImpl::ImageImpl(const unsigned char* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format)
     : width_(width), height_(height)
     { 
@@ -29,9 +34,6 @@ namespace mvk
         {
         case IMAGE_FORMAT::MONO_8_BIT:
             channels_ = 1;
-            break;
-        case IMAGE_FORMAT::BGR_24_BIT:
-            channels_ = 3;
             break;
         case IMAGE_FORMAT::RGB_24_BIT:
             channels_ = 3;
@@ -56,6 +58,7 @@ namespace mvk
 
     int ImageImpl::Read(const std::string& filename,  const IMAGE_FORMAT& format)
     {
+        if(nullptr != data_) {Release();}
         try
         {
             int x  = 0;
@@ -63,11 +66,6 @@ namespace mvk
             int channels = 0;
             switch (format)
             {
-            case IMAGE_FORMAT::BGR_24_BIT:
-            {
-                data_ = stbi_load(filename.c_str(), &x, &y, &channels, 3);
-                break;
-            }
             case IMAGE_FORMAT::MONO_8_BIT:
             {
                 data_ = stbi_load(filename.c_str(), &x, &y, &channels, 1);
@@ -76,6 +74,7 @@ namespace mvk
             case IMAGE_FORMAT::RGB_24_BIT:
             {
                 data_ = stbi_load(filename.c_str(), &x, &y, &channels, 3);
+                break;
             }
             default:
                 assert(false);
@@ -155,7 +154,7 @@ namespace mvk
 
     int ImageImpl::Release()
     {
-        delete data_;
+        delete[] data_;
         data_ = nullptr;
         return 0;
     }

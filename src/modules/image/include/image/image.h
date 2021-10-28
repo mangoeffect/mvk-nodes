@@ -29,7 +29,11 @@ namespace mvk
     private:
         std::shared_ptr<ImageImpl> image_impl_;                         ///< image类实现对象
     public:
-        Image() = delete;
+        /**
+         * @brief 默认构造
+         * 
+         */
+        Image();
 
         /**
          * @brief 构造函数
@@ -88,6 +92,7 @@ namespace mvk
          */
         size_t GetChannel() const;
 
+
         /**
          * @brief 释放图像内存
          * 
@@ -96,7 +101,6 @@ namespace mvk
         int Release();
     };
     
-
 } // namespace mvk
 
 #endif //MVK_IMAGE_H_

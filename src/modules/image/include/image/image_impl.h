@@ -25,7 +25,7 @@ namespace mvk
         size_t channels_{0};                 ///< 图像通道数
         unsigned char* data_{nullptr};       ///< 图像数据
     public:
-        ImageImpl() = delete;
+        ImageImpl();
 
         ~ImageImpl();
 

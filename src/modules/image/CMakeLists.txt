@@ -19,4 +19,5 @@ else()
     add_library(mvk_image SHARED ${Headers} ${Cpps})
 endif()
 
+add_subdirectory(test)
 

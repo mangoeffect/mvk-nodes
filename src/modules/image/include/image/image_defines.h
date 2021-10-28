@@ -22,7 +22,6 @@ namespace mvk
     {
         MONO_8_BIT = 0,                     ///< 单通道8比特灰度图像
         RGB_24_BIT = 1,                     ///< RGB三通道24比特彩色图像
-        BGR_24_BIT = 2                      ///< BGR三通道24比特彩色图像
     };// enum class IMAGE_FORMAT
 
     #ifdef MVK_IMAGE_STATIC_DEFINE
