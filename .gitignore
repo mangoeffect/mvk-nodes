@@ -362,3 +362,6 @@ FodyWeavers.xsd
 
 # build
 build
+
+# install 
+install
