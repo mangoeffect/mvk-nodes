@@ -8,9 +8,10 @@
  * @copyright Copyright (c) 2021
  * 
  */
+#define CATCH_CONFIG_MAIN
+#include "catch2/catch.hpp"
 #include "common/mat.h"
-#include "catch2/catch_test_macros.hpp"
-#include "catch2/catch_session.hpp"
+
 
 TEST_CASE("test instanctiation type", "[mvk_common mat]")
 {
@@ -19,10 +20,5 @@ TEST_CASE("test instanctiation type", "[mvk_common mat]")
 	REQUIRE(int_mat.GetElement(50, 50) == 100);
 }
 
-int main()
-{
-	Catch::Session session;
-	return session.run();
-}
 
 

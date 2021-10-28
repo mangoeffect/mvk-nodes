@@ -45,4 +45,4 @@ else()
     add_library(mvk_common SHARED ${Headers} ${Cpps})
 endif()
 
-
+add_subdirectory(test)
