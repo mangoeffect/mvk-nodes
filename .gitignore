@@ -365,3 +365,6 @@ build
 
 # install 
 install
+
+# vscode setting
+.vscode
