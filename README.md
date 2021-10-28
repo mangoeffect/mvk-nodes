@@ -1,9 +1,11 @@
-# machine-vision-algorithms-library
-Machine vision algorithms based on opencv
+# mv-kit
 
-[中文README.md](https://github.com/mangosroom/machine-vision-algorithms-library/blob/master/doc/ChineseReadme.md)
+machine vision kits, machine vision algorithm implementations for industrial vision projects.
 
-# To do List
+
+[中文概览](https://github.com/mangosroom/machine-vision-algorithms-library/blob/master/doc/ChineseReadme.md)
+
+# Roadmap
 
 | algorithms | status | introduction |
 | --- | --- | ---- |
