@@ -25,7 +25,7 @@ machine vision kits, machine vision algorithm implementations for industrial vis
 | camera map | - | - |
 | Barcode reader | - | - |
 | QR code reader | - | - |
-| ocr | - | - |
+| OCR | - | - |
 | Preprocessing | - | - |
 
 
