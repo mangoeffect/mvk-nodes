@@ -13,7 +13,7 @@ machine vision kits, machine vision algorithm implementations for industrial vis
 | [caliper tool](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/caliper) | complete | - |
 | [line fit](https://github.com/mangosroom/machine-vision-algorithms-library/tree/master/src/linefit) | - | [blog](https://mangoroom.cn/opencv/mean-absolute-error-line-fit.html) |
 | line search | - | - |
-| [circle fit] | - | [blog](https://mangoroom.cn/opencv/mean-absolute-error-circle-fit.html) |
+| circle fit | - | [blog](https://mangoroom.cn/opencv/mean-absolute-error-circle-fit.html) |
 | circle search | - | - |
 | template matching | - | - |
 | N points calibration | - | - |
@@ -23,10 +23,10 @@ machine vision kits, machine vision algorithm implementations for industrial vis
 | image filtering | - | - |
 | location fix | - | - |
 | camera map | - | - |
-| code 1d reader | - | - |
-| code 2d reader | - | - |
+| Barcode reader | - | - |
+| QR code reader | - | - |
 | ocr | - | - |
-| morphological processing | - | - |
+| Preprocessing | - | - |
 
 
 **License**
