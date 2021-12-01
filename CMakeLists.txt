@@ -17,10 +17,14 @@ link_directories( ${PROJECT_SOURCE_DIR}/bin)
 # 选择编译为动态库或静态库
 option(BUILD_STATIC_LIB "Build the library as static library?" OFF)
 
-# catch2
-find_package(Catch2 REQUIRED)
-include(CTest)
-include(ParseAndAddCatchTests)
+# 是否编译测试
+option(BUILD_TEST "Build the test cases?" OFF)
+if(BUILD_TEST)
+    # catch2
+    find_package(Catch2 REQUIRED)
+    include(CTest)
+    include(ParseAndAddCatchTests)
+endif()
 
 # data
 add_definitions(-DDATA="${PROJECT_SOURCE_DIR}/data")
