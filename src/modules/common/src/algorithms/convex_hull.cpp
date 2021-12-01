@@ -9,14 +9,11 @@
  * 
  */
 
-#include "common/algorithms.h"
+#include "common/algorithms.hpp"
 
 namespace mvk
 {
-    int ConvexHull(const std::vector<Point>& points, std::vector<Point>& convex_hull)
-    {
-        return 0;
-    }
+
 } // namespace mvk
 
 

@@ -12,8 +12,8 @@
 #ifndef MVK_ALGORITHMS_H_
 #define MVK_ALGORITHMS_H_
 
-#include "common/points.h"
-#include "common/rotate_rectangle.h"
+#include "common/point.hpp"
+#include "common/rotate_rectangle.hpp"
 
 #include <vector>
 
@@ -26,11 +26,11 @@ namespace mvk
      * @param convex_hull(in) 凸包坐标  
      * @return int 执行错误码
      */
-    int ConvexHull(const std::vector<Point>& points, std::vector<Point>& convex_hull);
+    int ConvexHull(const std::vector<Point2f>& points, std::vector<Point2f>& convex_hull);
 
-    double PolygonArea(const std::vector<Point>& points);
+    double PolygonArea(const std::vector<Point2f>& points);
 
-    int MinRectangle(const std::vector<Point>& points, RotateRectangle& min_rect);
+    int MinRectangle(const std::vector<Point2f>& points, RotateRect& min_rect);
     
 } // namespace mvk
 

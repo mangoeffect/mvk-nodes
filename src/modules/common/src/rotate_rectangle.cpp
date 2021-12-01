@@ -9,51 +9,10 @@
  * 
  */
 
-#include "common/rotate_rectangle.h"
-#include "common/rotate_rectangle_impl.h"
-
+#include "common/rotate_rectangle.hpp"
 namespace mvk
 {
-    RotateRectangle::~RotateRectangle()
-    {
-        
-    }
-
-    RotateRectangle::RotateRectangle(const std::array<Point, 4>& points)
-    : rotate_rectangle_impl_(new RotateRectangleImpl(points))
-    {
-        
-    }
-
-    std::array<Point, 4> RotateRectangle::GetPoints() const
-    {
-        return rotate_rectangle_impl_->GetPoints();
-    }
-
-    Point RotateRectangle::GetCenter() const
-    {
-        return rotate_rectangle_impl_->GetCenter();
-    }
-
-    float RotateRectangle::GetWidth() const
-    {
-        return rotate_rectangle_impl_->GetWidth();
-    }
-
-    float RotateRectangle::GetHeight() const
-    {
-        return rotate_rectangle_impl_->GetHeight();
-    }
-
-    double RotateRectangle::GetArea() const
-    {
-        return rotate_rectangle_impl_->GetArea();
-    }
-
-    double RotateRectangle::GetAngle() const
-    {
-        return rotate_rectangle_impl_->GetAngle();
-    }
+  
 } // namespace mvk
 
 
