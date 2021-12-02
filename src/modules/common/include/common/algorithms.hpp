@@ -29,8 +29,7 @@ namespace mvk
     int ConvexHull(const std::vector<Point2f>& points, std::vector<Point2f>& convex_hull);
 
     double PolygonArea(const std::vector<Point2f>& points);
-
-    int MinRectangle(const std::vector<Point2f>& points, RotateRect& min_rect);
+    
     
 } // namespace mvk
 

@@ -13,10 +13,6 @@
 
 namespace mvk
 {
-    template<typename T>
-    T DotProduct(const Point<T>& p1, const Point<T>& p2)
-    {
-        return p1.x * p2.x + p1.y * p2.y;
-    }
+
 } // namespace mvk
 

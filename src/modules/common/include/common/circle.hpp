@@ -24,8 +24,17 @@ namespace mvk
     {
         Point2f center;                 ///< 圆心
         float radius;                   ///< 半径
+        Circle(const Point2f& center_, const float& radius_)
+        : center(center_), radius(radius_){}
     };
     
+    /**
+     * @brief 计算圆形面积
+     * 
+     * @param circle(in) 圆形 
+     * @return double 
+     */
+    double GetCircleArea(const Circle& circle);
 } // namespace mvk
 
 

@@ -17,9 +17,14 @@
 
 namespace mvk
 {
+    /**
+     * @brief 多边形
+     * 
+     */
+    template<typename T>
     struct Polygon
     {
-        std::vector<Point2f> points;
+        std::vector<Point<T>> points;
     };
     
 } // namespace mvk

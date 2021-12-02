@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.12)
 
 project(mv-kit)
 
+set (CMAKE_CXX_STANDARD 20)
+
+
 #设定安装目录
 set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install/")
 

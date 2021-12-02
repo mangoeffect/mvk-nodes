@@ -10,14 +10,14 @@
  */
 
 #include "common/rectangle.hpp"
+#include <algorithm>
 
 namespace mvk
 {
-    Point2f GetRectCenter(const Rect& rect)
-    {
-        return Point2f(0.5f * (rect.topleft.x + rect.bottomright.x), 
-                       0.5f * (rect.topleft.y + rect.bottomright.y));
-    }
+
+
+
+
 } // namespace mvk
 
 

@@ -10,10 +10,14 @@
  */
 
 #include "common/circle.hpp"
+#include <numbers>
 
 namespace mvk
 {
-    
+    double GetCircleArea(const Circle& circle)
+    {
+        return std::numbers::pi * circle.radius * circle.radius;
+    }
 } // namespace mvk
 
 

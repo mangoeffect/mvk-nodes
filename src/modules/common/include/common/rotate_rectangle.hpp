@@ -21,9 +21,10 @@ namespace mvk
      * @brief 旋转矩形
      * 
      */
+    template<typename T = float>
     struct RotateRect
     {
-        std::array<Point2f, 4> points;
+        std::array<Point<T>, 4> points;
     };
     
 } // namespace mvk
