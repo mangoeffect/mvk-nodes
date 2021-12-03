@@ -10,6 +10,8 @@
  */
 
 #include "common/mat.hpp"
+#include <cstring>
+
 namespace mvk
 {
     Matrix::Matrix()
