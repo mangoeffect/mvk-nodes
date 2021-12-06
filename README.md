@@ -1,4 +1,4 @@
-# mv-kit
+# mvk-nodes
 
 machine vision kits, machine vision algorithm implementations for industrial vision projects.
 
