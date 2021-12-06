@@ -31,4 +31,4 @@ machine vision kits, machine vision algorithm implementations for industrial vis
 
 **License**
 
-[MIT](https://github.com/mangosroom/machine-vision-algorithms-library/blob/master/LICENSE)
+[ Apache-2.0 License](https://github.com/mangosroom/machine-vision-algorithms-library/blob/master/LICENSE)
