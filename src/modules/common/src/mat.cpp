@@ -143,7 +143,13 @@ namespace mvk
    Matrix<T> Matrix<T>::Transpose()
    {
        Matrix<T> result(cols_, rows_);
-
+       for(size_t i = 0;  i < rows_; i++)
+       {
+           for(size_t j = 0; j < cols_; j++)
+           {
+               result.At(j, i) = this->At(i, j);
+           }
+       }
        return result;
    }
 
