@@ -1,99 +1,157 @@
-﻿/**
+﻿
+/**
  * @file mat.cpp
  * @author mango (2321544362@qq.com)
  * @brief 
  * @version 0.1
- * @date 2021-08-23
+ * @date 2021-09-07
  * 
  * @copyright Copyright (c) 2021
  * 
  */
 
 #include "common/mat.hpp"
-#include <cstring>
+#include <cassert>
 
 namespace mvk
 {
-    Matrix::Matrix()
-    {
+   template<typename T>
+   Matrix<T>::Matrix(const size_t rows, const size_t cols)
+   : rows_(rows), cols_(cols), value_(rows, std::vector<T>(cols, 0))
+   {
+       assert(rows > 0 &&  cols > 0 && "Invalied parameter rows or cols");
+   }
 
-    }                
+   template<typename T>
+   Matrix<T>::Matrix(std::initializer_list<std::initializer_list<T>> data_list)
+   {
 
-    Matrix::Matrix(const size_t& rows,
-                   const size_t& cols,
-                   const MatType& type)
-    {
+   }
 
-    }
+   template<typename T>
+   Matrix<T>::Matrix(const Matrix<T>& matrix)
+   {
 
-    Matrix::Matrix(const size_t& rows,
-            const size_t& cols,
-            const MatType& type,
-            const unsigned char* data)
-    {
+   }
 
-    }
+   template<typename T>
+   Matrix<T>& Matrix<T>::operator = (const Matrix<T>& matrix)
+   {
 
+   }
 
-    Matrix& Matrix::operator = (const Matrix& other)
-    {
-        return *this;
-    }
+   template<typename T>
+   Matrix<T>::Matrix(const Matrix<T>&& matrix)
+   {
 
-    Matrix Matrix::Clone() const
-    {
-        unsigned char* data = new unsigned char[data_size_];
-        std::memcpy(data, data_, data_size_);
-        return Matrix(rows_, cols_, type_, data);
-    }
+   }
 
-    Matrix Matrix::Zero(const size_t& rows,
-                       const size_t& cols,
-                       const MatType& type)
-    {
-        Matrix  zero;
-        return zero;
-    }
+   template<typename T>
+   Matrix<T>& Matrix<T>::operator = (const Matrix<T>&& matrix)
+   {
 
-    void Matrix::Release()
-    {
-        data_size_ = rows_ = cols_ = 0;
-        delete [] data_;
-        data_ = nullptr;
-    }
+   }
 
-    Matrix::~Matrix()
-    {
-       Release();
-    }
+        
+   template<typename T>
+   inline T& Matrix<T>::At(const size_t rows, const size_t cols)
+   {
+       assert(rows < rows_ && cols < cols_ &&  "Invalied parameter rows or cols");
+       return value_[rows][cols];
+   }
 
-    bool Matrix::IsEmpty() const
-    {
-        return nullptr == data_;
-    }
+   template<typename T>
+   Matrix<T> Matrix<T>::Identity(const size_t size)
+   {
+       assert(size > 0 &&  "Invalied parameter size");
+       Matrix<T> mat(size, size);
+       for(size_t i = 0; i < size; i++)
+       {
+           for(size_t j = 0; j < size; j++)
+           {
+               mat.At(i,j) = (i == j ? 1 : 0);
+           }
+       }
+       return mat;
+   }
 
+   template<typename T>
+   size_t Matrix<T>::Rows() const
+   {
+       return rows_;
+   }
 
-    const unsigned char* Matrix::Ptr(const size_t& rows, const size_t& cols)
-    {
-        return data_ + (rows * this->cols_ + cols) * element_size_;
-    }
+   template<typename T>
+   size_t Matrix<T>::Cols() const
+   {
+       return cols_;
+   }
 
-    template<typename T> inline
-    const T* Matrix::Ptr(const size_t& rows, const size_t& cols)
-    {
-        return static_cast<const T*>(data_ + (rows * this->cols_ + cols) * element_size_);
-    }
+   template<typename T>
+   Matrix<T>  Matrix<T>::operator + (const Matrix<T>& matrix)
+   {
+       assert(rows_ == matrix.Rows() && cols_ == matrix.Cols() && "The tow matrixs must be the same size.");
+       Matrix<T> result(rows_, cols_);
+       for(size_t i = 0; i < rows_; i++)
+       {
+           for(size_t j = 0; j < cols_; j++)
+           {
+               result.At(i, j) = this->At(i, j) + matrix.At(i, j);
+           }
+       }
+       return result;
+   }
 
-    const unsigned char* Matrix::Ptr(const size_t& rows)
-    {
-        return data_ + cols_ * rows * element_size_;
-    }
+   template<typename T>
+   Matrix<T> Matrix<T>::operator - (const Matrix<T>& matrix)
+   {
+       assert(rows_ == matrix.Rows() && cols_ == matrix.Cols() &&  "The tow matrixs must be the same size.");
+       Matrix<T> result(rows_, cols_);
+       for(size_t i = 0; i < rows_; i++)
+       {
+           for(size_t j = 0; j < cols_; j++)
+           {
+               result.At(i, j) = this->At(i, j) - matrix.At(i, j);
+           }
+       }
+       return result;
+   }
 
-    template<typename T> inline
-    const T* Matrix::Ptr(const size_t& rows)
-    {
-        return static_cast<const T*>(data_ + cols_ * rows * element_size_);
-    }
+   template<typename T>
+   Matrix<T> Matrix<T>::operator * (const Matrix<T>& matrix)
+   {
+       assert(cols_ == matrix.Rows() &&  "Matrix A's cols != matrix B' rows.");
+       Matrix<T> result(rows_, matrix.Cols());
+       
+       for(size_t i = 0; i < rows_; i++)
+       {
+           for(size_t j = 0; j < matrix.Rows(); j++)
+           {
+                T temp = 0.0;
+                for(size_t k = 0; k <  cols_; k++)
+                {
+                    temp += this->At(i, k) * matrix.At(k, j);
+                }
+                result.At(i, j) = temp;
+           }
+       }
+
+       return result;
+   }
+
+   template<typename T>
+   Matrix<T> Matrix<T>::Transpose()
+   {
+       Matrix<T> result(cols_, rows_);
+
+       return result;
+   }
+
+   template<typename T>
+   Matrix<T> Matrix<T>::Inverse()
+   {
+       Matrix<T> result(rows_, cols_);
+
+       return result;
+   }
 } // namespace mvk
-
-

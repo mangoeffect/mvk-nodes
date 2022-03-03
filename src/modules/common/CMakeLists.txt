@@ -11,7 +11,8 @@ set(Headers
     ./include/common/rotate_rectangle.hpp 
     ./include/common/line.hpp 
     ./include/common/polygon.hpp 
-    ./include/common/algorithms.hpp)
+    ./include/common/algorithms.hpp
+    ./include/common/common_defines.hpp)
 
 set(Cpps 
     ./src/point.cpp

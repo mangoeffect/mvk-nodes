@@ -35,3 +35,6 @@ add_definitions(-DDATA="${PROJECT_SOURCE_DIR}/data")
 # 添加源代码目录
 add_subdirectory(src)
 
+# 添加测试目录
+add_subdirectory(test)
+

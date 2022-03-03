@@ -14,72 +14,145 @@
 
 #include <memory>
 #include <tuple>
+#include <vector>
+#include <initializer_list>
+
 
 namespace mvk
 {    
-    enum class MatType
-    {
-        MVK_8U = 0,
-        MVK_8S = 1,
-        MVK_16U = 2,
-        MVK_16S = 3,
-        MVK_32U = 4,
-        MVK_32S = 5,
-        MVK_32F = 6,
-        MVK_64F = 7
-    };
-
     /**
-     * @brief 矩形类声明
+     * @brief 矩阵类
      * 
      * @tparam T 
      */
+    template<typename T>
     class Matrix
     {
     private:
-        unsigned char* data_{nullptr};
-        size_t rows_{0};
-        size_t cols_{0};
-        size_t element_size_{0};     ///< 每个元素内存占用大小，单位字节
-        MatType type_;               ///< 矩阵数据类型
-        size_t data_size_{0};        ///< 矩阵元素数据内存占用大小， data_size = element_size * rows * cols
+        std::vector<std::vector<T>> value_;               ///< 矩阵元素值
+        size_t rows_;
+        size_t cols_;
     public:
-        Matrix();                   
+        /**
+         * @brief 虚析构函数
+         * 
+         */
+        virtual ~Matrix();
 
-        Matrix(const size_t& rows,
-               const size_t& cols,
-               const MatType& type);
+        /**
+         * @brief 构造函数
+         * 
+         * @param rows(in) 矩阵行数
+         * @param cols(in) 矩阵列数
+         */
+        Matrix(const size_t rows, const size_t cols);
 
-        Matrix(const size_t& rows,
-               const size_t& cols,
-               const MatType& type,
-               const unsigned char* data);
+        /**
+         * @brief 初始化列表构造函数
+         * 
+         */
+        Matrix(std::initializer_list<std::initializer_list<T>> data_list);
 
-        Matrix& operator = (const Matrix& other);
+        /**
+         * @brief 拷贝构造函数
+         * 
+         * @param matrix(in) 另一个矩阵对象 
+         */
+        Matrix(const Matrix<T>& matrix);
 
-        Matrix Clone() const;
+        /**
+         * @brief 赋值构造
+         * 
+         * @param matrix(in) 另一个矩阵对象 
+         * @return Matrix& 
+         */
+        Matrix& operator = (const Matrix<T>& matrix);
 
-        static Matrix Zero(const size_t& rows,
-                           const size_t& cols,
-                           const MatType& type);
+        /**
+         * @brief 移动语义构造
+         * 
+         * @param matrix 
+         */
+        Matrix(const Matrix<T>&& matrix);
 
-        void Release();
+        /**
+         * @brief 移动语义赋值构造
+         * 
+         * @param matrix(in) 另一个矩阵对象 
+         * @return Matrix& 
+         */
+        Matrix& operator = (const Matrix<T>&& matrix);
 
-        ~Matrix();
+        
+        /**
+         * @brief 获取矩阵元素
+         * 
+         * @param rows(in) 元素位置行标 
+         * @param cols(in) 元素位置列标
+         * @return T 
+         */
+        inline T& At(const size_t rows, const size_t cols);
 
-        bool IsEmpty() const;
+        /**
+         * @brief 单位矩阵
+         * 
+         * @param size(in) 矩阵尺寸 
+         * @return Matrix 
+         */
+        static Matrix Identity(const size_t size);
 
-        const unsigned char* Ptr(const size_t& rows, const size_t& cols);
+        /**
+         * @brief 矩阵行数
+         * 
+         * @return size_t 
+         */
+        size_t Rows() const;
 
-        template<typename T>
-        const T* Ptr(const size_t& rows, const size_t& cols);
+        /**
+         * @brief 矩阵列数
+         * 
+         * @return size_t 
+         */
+        size_t Cols() const;
 
-        const unsigned char* Ptr(const size_t& rows);
+        /**
+         * @brief 矩阵相加
+         * 
+         * @param matrix 
+         * @return Matrix<T> 
+         */
+        Matrix<T> operator + (const Matrix<T>& matrix);
 
-        template<typename T>
-        const T* Ptr(const size_t& rows);
+        /**
+         * @brief 矩阵相减
+         * 
+         * @param matrix 
+         * @return Matrix<T> 
+         */
+        Matrix<T> operator - (const Matrix<T>& matrix);
+
+         /**
+         * @brief 矩阵相乘
+         * 
+         * @param matrix 
+         * @return Matrix<T> 
+         */
+        Matrix<T> operator * (const Matrix<T>& matrix);
+
+        /**
+         * @brief 矩阵转置
+         * 
+         * @return Matrix<T> 
+         */
+        Matrix<T> Transpose();
+
+        /**
+         * @brief 矩阵求逆
+         * 
+         * @return Matrix<T> 
+         */
+        Matrix<T> Inverse();
     };
-
 } // namespace mvk
 
 #endif //MVK_MAT_H_
