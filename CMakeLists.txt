@@ -21,12 +21,17 @@ link_directories( ${PROJECT_SOURCE_DIR}/bin)
 option(BUILD_STATIC_LIB "Build the library as static library?" OFF)
 
 # 是否编译测试
-option(BUILD_TEST "Build the test cases?" OFF)
+option(BUILD_TEST "Build the test cases?" ON)
 if(BUILD_TEST)
     # catch2
-    find_package(Catch2 REQUIRED)
+    Include(FetchContent)
+    FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG        v3.0.0-preview3
+    )
+    FetchContent_MakeAvailable(Catch2)
     include(CTest)
-    include(ParseAndAddCatchTests)
 endif()
 
 # data
