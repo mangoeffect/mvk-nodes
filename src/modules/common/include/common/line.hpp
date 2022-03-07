@@ -31,14 +31,32 @@ namespace mvk
         {
             
         }
+
+        /**
+         * @brief 判断两直线是否垂直
+         *
+         * @param other 
+         * @return true 
+         * @return false 
+         */
+        bool IsOrthogonal(const Line<T>&  other) const;
+
+        /**
+         * @brief 
+         * 
+         * @param other 
+         * @return true 
+         * @return false 
+         */
+        bool IsParallel(const Line<T>& other) const;
     };
 
     template<typename T>
-    bool IsOrthogonal(const Line<T>& l1, const Line<T>& l2)
+    bool Line<T>::IsOrthogonal(const Line<T>&  other) const 
     {
-        Point<T> v1(l1.p1.x - l1.p2.x, l1.p1.y, l1.p2.y);
-        Point<T> v2(l2.p1.x - l2.p2.x, l2.p1.y, l2.p2.y);
-        return DotProduct<T>(v1, v2) == 0;
+        Point<T> v1  = p1 - p2;
+        Point<T> v2 =  other.p1 - other.p2;
+        return v1.Dot(v2) == 0;
     }
     
 } // namespace mvk

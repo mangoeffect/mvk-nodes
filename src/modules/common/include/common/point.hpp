@@ -27,6 +27,30 @@ namespace mvk
         T y;
         Point(): x(0), y(0){}
         Point(const T& x_, const T& y_): x(x_), y(y_){}
+
+        /**
+         * @brief 坐标点乘
+         * 
+         * @param other(in) 另一个
+         * @return T 
+         */
+        T Dot(const Point& other) const;
+
+        /**
+         * @brief 坐标相减
+         * 
+         * @param other(in) 另一个坐标点
+         * @return Point 
+         */
+        Point operator - (const Point& other) const;
+
+        /**
+         * @brief 坐标相加
+         * 
+         * @param other(in) 另一个坐标点
+         * @return Point 
+         */
+        Point operator + (const Point& other) const;
     };
 
     using Point2f = Point<float>;
@@ -34,29 +58,41 @@ namespace mvk
     using Point2i = Point<int>;    
 
     template<typename T>
-    T DotProduct(const Point<T>& p1, const Point<T>& p2)
+    T Point<T>::Dot(const Point& other) const
     {
-        return p1.x * p2.x + p1.y * p2.y;
+        return x * other.x + y * other.y;
+    }
+
+    template<typename T>
+    Point<T> Point<T>::operator - (const Point& other) const
+    {
+        return Point<T>(x - other.x, y - other.y);
+    }
+
+    template<typename T>
+    Point<T> Point<T>::operator + (const Point& other) const
+    {
+        return Point<T>(x + other.x, y + other.y);
     }
 
     /**
-     * @brief 判断直线段ab与ab是否正交，即判断角abc是否为直角
+     * @brief 判断直线段ab与bc是否正交，即判断角abc是否为直角
      * 
      * @tparam T 
-     * @param a 
-     * @param b 
-     * @param c 
+     * @param a(in) 直线段坐标点a 
+     * @param b(in) 直线段坐标点b 
+     * @param c(in) 直线段坐标点c 
      * @return true 
      * @return false 
      */
     template<typename T>
-    bool IsOrthogonal(const Point<T>& a,
-                        const Point<T>& b,
-                        const Point<T>& c)
+    bool IsOrthogonal(const T& a,
+                        const T& b,
+                        const T& c)
     {
-        Point<T> vba((b.x - a.x), (b.y - a.y));
-        Point<T> vbc((b.x - c.x), (b.y - c.y));
-        return DotProduct<T>(vba, vbc) == 0;
+        T vba = b - a;
+        T vbc = b - c;
+        return vba.Dot(vbc) == 0;
     }
     
 } // namespace mvk
