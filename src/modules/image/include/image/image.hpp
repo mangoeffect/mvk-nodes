@@ -9,12 +9,14 @@
  * 
  */
 
-#ifndef MVK_IMAGE_H_
-#define MVK_IMAGE_H_
+#ifndef MVK_IMAGE_HPP_
+#define MVK_IMAGE_HPP_
 
-#include "image/image_defines.h"
+#include "image/image_defines.hpp"
+#include "common/point.hpp"
 #include <string>
 #include <memory>
+#include <array>
 
 namespace mvk
 {
@@ -43,7 +45,26 @@ namespace mvk
          * @param height(in) 图像长度
          * @param format(in) 图像格式类型 
          */
-        Image(const unsigned char* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format);
+        Image(uint8_t* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format);
+
+        /**
+         * @brief 构造函数，构造单通道图像
+         * 
+         * @param width(in) 图像宽度
+         * @param height(in) 图像高度 
+         * @param init_value(in) 像素初始值
+         */
+        Image(const size_t& width, const size_t& height, const uint8_t init_value = 0);
+
+        
+        Image(const size_t& width, const size_t& height, const std::array<uint8_t, 3>& init_value = {0, 0, 0});
+
+        /**
+         * @brief 深拷贝图像
+         * 
+         * @return Image 
+         */
+        Image Copy() const;
         
         ~Image();
 
@@ -69,7 +90,32 @@ namespace mvk
          * 
          * @return char* 数据指针首地址
          */
-        unsigned char* GetData() const;
+        uint8_t* GetData() const;
+        
+        /**
+         * @brief 获取行指针
+         * 
+         * @param rows(in) 行号索引 
+         * @return uint8_t* 
+         */
+        uint8_t* GetRow(const size_t& rows) const;
+
+        /**
+         * @brief 返回像素的坐标指针
+         * 
+         * @param rows 
+         * @param cols 
+         * @return uint8_t* 
+         */
+        uint8_t* GetPixel(const size_t& rows, const size_t& cols) const;
+
+        /**
+         * @brief 返回像素的坐标指针
+         * 
+         * @param p(in) 坐标点 
+         * @return uint8_t* 
+         */
+        uint8_t* GetPixel(const Point2i& p);
 
         /**
          * @brief 获取图像宽度

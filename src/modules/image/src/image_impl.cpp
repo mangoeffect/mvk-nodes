@@ -9,10 +9,11 @@
  * 
  */
 
-#include "image/image_impl.h"
+#include "image/image_impl.hpp"
 
 #include <cassert>
 #include <iostream>
+#include <cstring>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
@@ -26,7 +27,41 @@ namespace mvk
 
     }
 
-    ImageImpl::ImageImpl(const unsigned char* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format)
+    ImageImpl::ImageImpl(const ImageImpl& other)
+    {
+        width_ = other.width_;
+        height_ = other.height_;
+        channels_ = other.channels_;
+        data_ = other.data_;   
+    }
+
+    ImageImpl::ImageImpl(const ImageImpl&& other)
+    {
+        width_ = other.width_;
+        height_ = other.height_;
+        channels_ = other.channels_;
+        data_ = other.data_;   
+    }
+        
+    ImageImpl& ImageImpl::operator = (const ImageImpl& other)
+    {
+        width_ = other.width_;
+        height_ = other.height_;
+        channels_ = other.channels_;
+        data_ = other.data_;   
+        return *this;
+    }
+
+    ImageImpl& ImageImpl::operator = (const ImageImpl&& other)
+    {
+        width_ = other.width_;
+        height_ = other.height_;
+        channels_ = other.channels_;
+        data_ = other.data_;   
+        return *this;
+    }
+
+    ImageImpl::ImageImpl(uint8_t* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format)
     : width_(width), height_(height)
     { 
         //通道数
@@ -41,12 +76,7 @@ namespace mvk
         default:
             assert(false);
         }
-        //申请内存
-        size_t data_len = width_ * height_ * channels_;
-        data_ = new unsigned char[data_len];
-
-        //拷贝数据
-        std::memcpy(data_, data, data_len);
+        data_ = data;
     }
 
     
@@ -69,6 +99,7 @@ namespace mvk
             case IMAGE_FORMAT::MONO_8_BIT:
             {
                 data_ = stbi_load(filename.c_str(), &x, &y, &channels, 1);
+                channels = 1;
                 break;
             }
             case IMAGE_FORMAT::RGB_24_BIT:
@@ -130,9 +161,21 @@ namespace mvk
     }
 
 
-    unsigned char* ImageImpl::GetData() const
+    uint8_t* ImageImpl::GetData() const
     {
         return data_;
+    }
+
+    uint8_t* ImageImpl::GetRow(const size_t& rows) const
+    {
+        assert(rows < height_ && "Rows must less than image height.");
+        return data_ + rows * width_ * channels_;
+    }
+
+    uint8_t* ImageImpl::GetPixel(const size_t& rows, const size_t& cols) const
+    {   
+        assert(rows < height_ && cols < width_);
+        return GetRow(rows)+ cols * channels_;
     }
 
 

@@ -9,10 +9,10 @@
  * 
  */
 
-#ifndef MVK_IMAGE_IMPL_H_
-#define MVK_IMAGE_IMPL_H_
+#ifndef MVK_IMAGE_IMPL_HPP_
+#define MVK_IMAGE_IMPL_HPP_
 
-#include "image/image_defines.h"
+#include "image/image_defines.hpp"
 #include <string>
 
 namespace mvk
@@ -23,7 +23,7 @@ namespace mvk
         size_t width_{0};                    ///< 图像宽度
         size_t height_{0};                   ///< 图像高度
         size_t channels_{0};                 ///< 图像通道数
-        unsigned char* data_{nullptr};       ///< 图像数据
+        uint8_t* data_{nullptr};             ///< 图像数据
     public:
         ImageImpl();
 
@@ -37,8 +37,37 @@ namespace mvk
          * @param height(in) 图像长度
          * @param format(in) 图像格式类型 
          */
-        ImageImpl(const unsigned char* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format);
+        ImageImpl(uint8_t* data, const size_t& width, const size_t& height, const IMAGE_FORMAT& format);
+
+        /**
+         * @brief Construct a new Image Impl object
+         * 
+         * @param other 
+         */
+        ImageImpl(const ImageImpl& other);
+
+        /**
+         * @brief Construct a new Image Impl object
+         * 
+         * @param other 
+         */
+        ImageImpl(const ImageImpl&& other);
         
+        /**
+         * @brief 
+         * 
+         * @param other 
+         * @return ImageImpl& 
+         */
+        ImageImpl& operator = (const ImageImpl& other);
+
+        /**
+         * @brief 
+         * 
+         * @param other 
+         * @return ImageImpl& 
+         */
+        ImageImpl& operator = (const ImageImpl&& other);
 
         /**
          * @brief 读取图像文件
@@ -62,7 +91,24 @@ namespace mvk
          * 
          * @return char* 数据指针首地址
          */
-        unsigned char* GetData() const;
+        uint8_t* GetData() const;
+
+                /**
+         * @brief 获取行指针
+         * 
+         * @param rows(in) 行号索引 
+         * @return uint8_t* 
+         */
+        uint8_t* GetRow(const size_t& rows) const;
+
+        /**
+         * @brief 返回
+         * 
+         * @param rows 
+         * @param cols 
+         * @return uint8_t* 
+         */
+        uint8_t* GetPixel(const size_t& rows, const size_t& cols) const;
 
         /**
          * @brief 获取图像宽度
@@ -96,4 +142,4 @@ namespace mvk
     
 } // namespace mvk
 
-#endif //MVK_IMAGE_IMPL_H_
+#endif //MVK_IMAGE_IMPL_HPP_
