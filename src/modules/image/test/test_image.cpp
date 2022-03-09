@@ -18,6 +18,11 @@ using namespace mvk;
 
 TEST_CASE("test mvk-imgae", "[mvk_image]")
 {
+    //错误路径读取
+    Image error_path;
+    REQUIRE(error_path.Read("", IMAGE_FORMAT::RGB_24_BIT) != 0);
+    REQUIRE(error_path.Read("abc", IMAGE_FORMAT::MONO_8_BIT) != 0);
+    
     //彩色图片读取
     Image rgb_image;
     REQUIRE(rgb_image.GetData() == nullptr);

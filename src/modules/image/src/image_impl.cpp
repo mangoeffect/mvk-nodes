@@ -114,6 +114,12 @@ namespace mvk
             width_ = x;
             height_ = y;
             channels_ = channels;
+            if(x == 0 || y == 0 || channels == 0)
+            {
+                delete[] data_;
+                data_ = nullptr;
+                return -1;
+            }
         }
         catch(const std::exception& e)
         {
