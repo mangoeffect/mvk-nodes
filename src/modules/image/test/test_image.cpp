@@ -95,5 +95,29 @@ TEST_CASE("test mvk-imgae", "[mvk_image]")
     auto rgb2 = rgb1;
     REQUIRE(1 == rgb1_copy.GetPixel(5, 5)[0]);
     REQUIRE(0 == rgb2.GetPixel(5, 5)[0]);
+
+
+    //矩阵构造图像
+    Matrix<uint8_t> mat_100x100(100, 100, 128);
+    for(size_t i = 40; i < 60; i++)
+    {
+        for(size_t j = 40; j < 60; j++)
+        {
+            mat_100x100(i, j) = 0;
+        }
+    }
+    Image mono_mat(mat_100x100, 1);
+    REQUIRE(mono_mat.Save(std::string(DATA) + "/images/mvk_image/mat_100x100.png") == 0);
+
+    Matrix<uint8_t> mat_100x300(100, 300, 0);
+    for(size_t i = 40; i < 60; i++)
+    {
+        for(size_t j = 120; j < 180; j+= 3)
+        {
+            mat_100x300(i, j) = 255; //r
+        }
+    }
+    Image rgb_mat(mat_100x300, 3);
+    REQUIRE(rgb_mat.Save(std::string(DATA) + "/images/mvk_image/rgb_mat.png") == 0);
 }
 

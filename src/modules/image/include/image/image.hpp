@@ -14,6 +14,7 @@
 
 #include "image/image_defines.hpp"
 #include "common/point.hpp"
+#include "common/mat.hpp"
 #include <string>
 #include <memory>
 #include <array>
@@ -58,6 +59,13 @@ namespace mvk
 
         
         Image(const size_t& width, const size_t& height, const std::array<uint8_t, 3>& init_value = {0, 0, 0});
+
+        /**
+         * @brief 构造函数，基于矩阵数据构造图像
+         * 
+         * @param matrix(in) uint8_t数据类型矩阵
+         */
+        Image(const Matrix<uint8_t>& matrix, const size_t channel);
 
         /**
          * @brief 深拷贝图像

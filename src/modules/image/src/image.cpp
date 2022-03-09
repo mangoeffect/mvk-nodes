@@ -50,6 +50,25 @@ namespace mvk
         }
     }
 
+    Image::Image(const Matrix<uint8_t>& matrix, const size_t channel)
+    {
+        assert(channel == 1 || channel == 3);
+        size_t rows = matrix.Rows();
+        size_t cols = matrix.Cols();
+        uint8_t* data = new uint8_t[rows * cols];
+        for(size_t i = 0; i < rows; i++)
+        {
+            std::memcpy(data + i * cols, &matrix(i,0), cols);
+        }
+        if(1 == channel)
+        {
+            image_impl_ = std::make_shared<ImageImpl>(data, cols, rows, IMAGE_FORMAT::MONO_8_BIT);
+        }else
+        {
+            assert(cols % 3 == 0);
+            image_impl_ = std::make_shared<ImageImpl>(data, cols / 3, rows, IMAGE_FORMAT::RGB_24_BIT);
+        }
+    }
 
     Image Image::Copy() const
     {
