@@ -35,6 +35,11 @@ namespace mvk
         size_t cols_;
     public:
         /**
+         * @brief 默认构造
+         * 
+         */
+        Matrix();
+        /**
          * @brief 虚析构函数
          * 
          */
@@ -174,6 +179,13 @@ namespace mvk
          */
         Matrix<T> Inverse();
     };
+
+   template<typename T>
+   Matrix<T>::Matrix()
+   : rows_(0), cols_(0)
+   {
+
+   }
 
    template<typename T>
    Matrix<T>::~Matrix()
