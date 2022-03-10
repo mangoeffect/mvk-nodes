@@ -73,6 +73,19 @@ namespace mvk
          * @return Image 
          */
         Image Copy() const;
+
+
+        /**
+         * @brief 深拷贝图像填充边界
+         * 
+         * @param border_size(in) 填充边界大小
+         * @param border_type(in) 边界类型 
+         * @param const_border(in) 边界数值，边界类型选择常数时生效
+         * @return Image 
+         */
+        Image CopyWithBorder(const size_t border_size, 
+                             const BORDER_TYPE& border_type = BORDER_TYPE::DEFAULT, 
+                             const std::array<uint8_t, 3>& const_border = {0, 0, 0}) const;
         
         ~Image();
 

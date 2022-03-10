@@ -119,5 +119,184 @@ TEST_CASE("test mvk-imgae", "[mvk_image]")
     }
     Image rgb_mat(mat_100x300, 3);
     REQUIRE(rgb_mat.Save(std::string(DATA) + "/images/mvk_image/rgb_mat.png") == 0);
+
+
+    //拷贝边界测试
+    Image img_border(100, 100, 255);
+
+    //上边缘图案
+    img_border.GetPixel(0, 50)[0] = 0;
+    img_border.GetPixel(1, 49)[0] = 0;
+    img_border.GetPixel(1, 50)[0] = 0;
+    img_border.GetPixel(1, 51)[0] = 0;
+    img_border.GetPixel(2, 49)[0] = 0;
+    img_border.GetPixel(2, 51)[0] = 0;
+    img_border.GetPixel(5, 50)[0] = 0;
+
+    //下边缘图案
+    img_border.GetPixel(99, 50)[0] = 0;
+    img_border.GetPixel(98, 49)[0] = 0;
+    img_border.GetPixel(98, 50)[0] = 0;
+    img_border.GetPixel(98, 51)[0] = 0;
+    img_border.GetPixel(97, 49)[0] = 0;
+    img_border.GetPixel(97, 51)[0] = 0;
+    img_border.GetPixel(95, 51)[0] = 0;
+
+    //左边缘图案
+    img_border.GetPixel(48, 0)[0] = 0;
+    img_border.GetPixel(49, 0)[0] = 0;
+    img_border.GetPixel(50, 0)[0] = 0;
+    img_border.GetPixel(51, 0)[0] = 0;    
+    img_border.GetPixel(52, 0)[0] = 0;
+    img_border.GetPixel(49, 1)[0] = 0;
+    img_border.GetPixel(50, 1)[0] = 0;
+    img_border.GetPixel(51, 1)[0] = 0;  
+    img_border.GetPixel(50, 2)[0] = 0;
+
+    //右边缘图案
+    img_border.GetPixel(48, 97)[0] = 0;
+    img_border.GetPixel(49, 97)[0] = 0;
+    img_border.GetPixel(50, 97)[0] = 0;
+    img_border.GetPixel(51, 97)[0] = 0;    
+    img_border.GetPixel(52, 97)[0] = 0;
+    img_border.GetPixel(49, 98)[0] = 0;
+    img_border.GetPixel(50, 98)[0] = 0;
+    img_border.GetPixel(51, 98)[0] = 0;  
+    img_border.GetPixel(50, 99)[0] = 0;
+
+    //保存原图
+    REQUIRE(img_border.Save(std::string(DATA) + "/images/mvk_image/img_border.png") == 0);
+    auto img_border_default_3 = img_border.CopyWithBorder(3);
+    REQUIRE(img_border_default_3.Save(std::string(DATA) + "/images/mvk_image/img_border_default_3.png") == 0);
+
+    auto img_border_default_5 = img_border.CopyWithBorder(5);
+    REQUIRE(img_border_default_5.Save(std::string(DATA) + "/images/mvk_image/img_border_default_5.png") == 0);
+
+    auto img_border_default_7 = img_border.CopyWithBorder(7);
+    REQUIRE(img_border_default_7.Save(std::string(DATA) + "/images/mvk_image/img_border_default_7.png") == 0);
+
+    auto img_border_constant_3 = img_border.CopyWithBorder(3, BORDER_TYPE::CONSTANT, {50, 50, 50});
+    REQUIRE(img_border_constant_3.Save(std::string(DATA) + "/images/mvk_image/img_border_constant_3.png") == 0);
+
+    auto img_border_constant_5 = img_border.CopyWithBorder(5, BORDER_TYPE::CONSTANT, {100,100, 100});
+    REQUIRE(img_border_constant_5.Save(std::string(DATA) + "/images/mvk_image/img_border_constant_5.png") == 0);
+
+    auto img_border_replicate_3 = img_border.CopyWithBorder(3, BORDER_TYPE::REPLICATE);
+    REQUIRE(img_border_replicate_3.Save(std::string(DATA) + "/images/mvk_image/img_border_replicate_3.png") == 0);
+
+    auto img_border_replicate_5 = img_border.CopyWithBorder(5, BORDER_TYPE::REPLICATE);
+    REQUIRE(img_border_replicate_5.Save(std::string(DATA) + "/images/mvk_image/img_border_replicate_5.png") == 0);
+
+    //彩色边界测试
+    Image rgb_border(100, 100, {255,255,255});
+    std::vector<std::array<uint8_t, 3>> rgb{
+        {255, 0, 0},
+        {0, 255, 0},
+        {0, 0, 255}
+    };
+    //上边缘
+    for(int i = 0; i < 5;  i ++)
+    {
+        for(int c = 0; c < 3; c++)
+        {
+            if(i == 0)
+            {
+                rgb_border.GetPixel(i, 50)[c] = rgb[0][c];
+            }
+            else if(i == 1)
+            {
+                rgb_border.GetPixel(i, 47)[c] = rgb[1][c];
+                rgb_border.GetPixel(i, 50)[c] = rgb[1][c];
+                rgb_border.GetPixel(i, 53)[c] = rgb[1][c];
+            }else if(i == 4)
+            {
+                rgb_border.GetPixel(i, 50)[c] = rgb[2][c];
+            }
+        }
+    }
+
+    //下边缘
+    for(int i = 99; i > 95;  i--)
+    {
+        for(int c = 0; c < 3; c++)
+        {
+            if(i == 99)
+            {
+                rgb_border.GetPixel(i, 50)[c] = rgb[0][c];
+                rgb_border.GetPixel(i, 52)[c] = rgb[0][c];
+            }
+            else if(i == 98)
+            {
+                rgb_border.GetPixel(i, 47)[c] = rgb[1][c];
+                rgb_border.GetPixel(i, 53)[c] = rgb[1][c];
+            }else if(i == 96)
+            {
+                rgb_border.GetPixel(i, 50)[c] = rgb[2][c];
+            }
+        }
+    }
+
+    //左边缘
+    for(int i = 0; i < 5;  i ++)
+    {
+        for(int c = 0; c < 3; c++)
+        {
+            if(i == 0)
+            {
+                rgb_border.GetPixel(50, i)[c] = rgb[0][c];
+            }
+            else if(i == 1)
+            {
+                rgb_border.GetPixel(47, i)[c] = rgb[1][c];
+                rgb_border.GetPixel(50, i)[c] = rgb[1][c];
+                rgb_border.GetPixel(53, i)[c] = rgb[1][c];
+            }else if(i == 4)
+            {
+                rgb_border.GetPixel(50, i)[c] = rgb[2][c];
+            }
+        }
+    }
+
+    //右边缘
+    for(int i = 96; i < 100;  i ++)
+    {
+        for(int c = 0; c < 3; c++)
+        {
+            if(i == 98)
+            {
+                rgb_border.GetPixel(50, i)[c] = rgb[0][c];
+            }
+            else if(i == 97)
+            {
+                rgb_border.GetPixel(47, i)[c] = rgb[1][c];
+                rgb_border.GetPixel(50, i)[c] = rgb[1][c];
+                rgb_border.GetPixel(53, i)[c] = rgb[1][c];
+            }else if(i == 99)
+            {
+                rgb_border.GetPixel(50, i)[c] = rgb[2][c];
+            }
+        }
+    }
+    REQUIRE(rgb_border.Save(std::string(DATA) + "/images/mvk_image/rgb_border.png") == 0);
+    auto rgb_border_default_3 = rgb_border.CopyWithBorder(3);
+    REQUIRE(rgb_border_default_3.Save(std::string(DATA) + "/images/mvk_image/rgb_border_default_3.png") == 0);
+
+    auto rgb_border_default_5 = rgb_border.CopyWithBorder(5);
+    REQUIRE(rgb_border_default_5.Save(std::string(DATA) + "/images/mvk_image/rgb_border_default_5.png") == 0);
+
+    auto rgb_border_default_7 = rgb_border.CopyWithBorder(7);
+    REQUIRE(rgb_border_default_7.Save(std::string(DATA) + "/images/mvk_image/rgb_border_default_7.png") == 0);
+
+    auto rgb_border_constant_3 = rgb_border.CopyWithBorder(3, BORDER_TYPE::CONSTANT, {155, 188, 0});
+    REQUIRE(rgb_border_constant_3.Save(std::string(DATA) + "/images/mvk_image/rgb_border_constant_3.png") == 0);
+
+    auto rgb_border_constant_5 = rgb_border.CopyWithBorder(5, BORDER_TYPE::CONSTANT, {255, 0, 0});
+    REQUIRE(rgb_border_constant_5.Save(std::string(DATA) + "/images/mvk_image/rgb_border_constant_5.png") == 0);
+
+    auto rgb_border_replicate_3 = rgb_border.CopyWithBorder(3, BORDER_TYPE::REPLICATE);
+    REQUIRE(rgb_border_replicate_3.Save(std::string(DATA) + "/images/mvk_image/rgb_border_replicate_3.png") == 0);
+
+    auto rgb_border_replicate_5 = rgb_border.CopyWithBorder(5, BORDER_TYPE::REPLICATE);
+    REQUIRE(rgb_border_replicate_5.Save(std::string(DATA) + "/images/mvk_image/rgb_border_replicate_5.png") == 0);
 }
 
