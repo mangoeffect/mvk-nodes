@@ -22,7 +22,7 @@ namespace mvk
         size_t window_size = 2 * half_kernel + 1;
         size_t window_area = window_size * window_size;
         //1. 边界扩充
-        auto src_padding = src.CopyWithBorder(border_size);
+        auto src_padding = src.CopyWithBorder(border_size, border_type);
 
         //2. 计算积分图
         Matrix<uint64_t> integral;

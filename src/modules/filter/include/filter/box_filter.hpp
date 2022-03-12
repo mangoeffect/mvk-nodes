@@ -20,10 +20,10 @@ namespace mvk
     /**
     * @brief 方框滤波
     * 
-    * @param src 
-    * @param dst 
-    * @param kernel_size 
-    * @param border_type 
+    * @param src(in) 输入图像 
+    * @param dst(out) 滤波输出图像 
+    * @param kernel_size(in) 滤波核尺寸大小推荐奇数(1, 3, 5)
+    * @param border_type(in) 边缘填充类型
     * @return int 
     */
     int BoxFilter(const Image& src, Image& dst, const size_t kernel_size, const BORDER_TYPE& border_type = BORDER_TYPE::DEFAULT);

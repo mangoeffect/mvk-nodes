@@ -12,5 +12,6 @@
 #ifndef MVK_FILTER_HPP
 
 #include "box_filter.hpp"
+#include "gaussian_filter.hpp"
 
 #endif //MVK_FILTER_HPP
