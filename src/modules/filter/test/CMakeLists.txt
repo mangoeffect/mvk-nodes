@@ -9,4 +9,7 @@ target_link_libraries(${PROJECT_NAME}_box_filter mvk_filter Catch2::Catch2WithMa
 add_executable(${PROJECT_NAME}_gaussian_filter test_gaussian_filter.cpp)
 target_link_libraries(${PROJECT_NAME}_gaussian_filter mvk_filter Catch2::Catch2WithMain)
 
+add_executable(${PROJECT_NAME}_median_filter test_median_filter.cpp)
+target_link_libraries(${PROJECT_NAME}_median_filter mvk_filter Catch2::Catch2WithMain)
+
 
