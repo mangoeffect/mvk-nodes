@@ -14,6 +14,7 @@
 
 #include "common/point.hpp"
 #include "common/rotate_rectangle.hpp"
+#include "common/mat.hpp"
 
 #include <vector>
 
@@ -29,7 +30,9 @@ namespace mvk
     int ConvexHull(const std::vector<Point2f>& points, std::vector<Point2f>& convex_hull);
 
     double PolygonArea(const std::vector<Point2f>& points);
+    
 
+    //int Img2Col(const Image& image, )
 } // namespace mvk
 
 #endif //MVK_ALGORITHMS_H_
