@@ -1,0 +1,31 @@
+language: c
+compiler: clang
+env:
+  global:
+    - secure: "fDuBf8SfmCrImvklI1Opsj1mzEf45E5tckMZaOt6mDCiFT0R0E27x5389ACtc+b0wRZ8kHGaJHfsKksUNImsoP1U8sdBbYCn14XAQ0Ie6dyKHpY4JlmJqeVQ+6t3hXenIHUHEAX3EleUCrJyuxhUF3vtCM9TIuS0hYoUtHP6xN31U9GiBHOEs9LPl3uV3GsHzrGliuNSWaQO7V0B6a8saXSwUyP7eS0oSNxy0LDTfgfKxIA+sgH9j8oqtpJh6T/Cuytv391gZDZ49cT5BWvCyr0aJFW1k/zAmZGO6+wJS9xVf2eBIOeN72mjg05xL4vQ96/YWQIIDVMZM9s7rifZ0gkXVdyf8PSnFVhQjRFK3a7tY4FIZp9UFKaCl9ApYl3VdDq2aVo9a/P6YDii5yLaH4umOsZSjMxeErlHeJZMXhQQxIyfpfn9Zum1qICdFtEZOgZu5YacOcH309MtHOTo3fF0sL/viKSbxpCLYps2BDOfYlumJE9yX4ZqvcchpG38G4gX4WqUsdMiX4gmgTMQe1pL7T9a35gYnnG1AomGO5JkSkiL1XASndKxcHQs424L75E9Vj0J5+gHiHhFDlnenYxInPE/GP1jhNHEEp3pUYHofL6TgVqSk8SJiqNBV2Fk2csdnu0iUsqt69rzdlSLGNLchEtpdXjrrcL1yAD0cw4="
+  matrix:
+    - TARGET=icc
+    - TARGET=clang
+
+os:
+  - linux
+  - osx
+
+matrix:
+  exclude:
+    - os: osx
+      env: TARGET=icc
+
+before_install:
+  - '[[ "X${TARGET}" == "Xicc" ]] && ${TRAVIS_BUILD_DIR}/install-icc.sh || true'
+
+script:
+  - source ~/.bashrc
+  - mkdir build
+  - cd build
+  - env CC=${TARGET} cmake ..
+  - cmake --build .
+  - ctest --verbose
+
+after_script:
+  - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software || true'

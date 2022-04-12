@@ -43,7 +43,7 @@ find_package(xsimd REQUIRED)
 if(xsimd_FOUND)
     include_directories(${xsimd_INCLUDE_DIRS})
     # 各个平台指令集优化
-    set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/3rdparty/cmake-optimize-architecture-flag/Modules)
+    set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/3rdparty/cmake_optimize_architecture/Modules)
     include(CMakeHostSystemInformationExtra)
     include(GetCPUSIMDFeatures)
     include(CMakeCompilerMachineOption)
