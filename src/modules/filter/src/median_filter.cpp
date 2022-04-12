@@ -14,6 +14,9 @@
 #include <cassert>
 #include <iostream>
 
+#include "xsimd/xsimd.hpp"
+#include "omp.h"
+
 namespace mvk
 {
     int MedianFilter(const Image& src,
@@ -35,6 +38,7 @@ namespace mvk
         int channels = src_padding.GetChannel();
         int mid_flag = kernel_size * kernel_size / 2;
 
+        #pragma omp parallel for
         for(int i = half_size; i < rows - half_size; i++)
         {
             std::vector<std::vector<int>> hist(channels, std::vector<int>(256, 0));
@@ -77,6 +81,157 @@ namespace mvk
                         }
                     }
                 }
+            }
+        }
+        return 0;
+    }
+
+    template<typename T>
+    inline void SwapSort(T& a, T& b)
+    {
+        auto min = xsimd::min(a, b);
+        auto max = xsimd::max(a, b);
+        a                   = min;
+        b                   = max;
+    }
+
+    
+    int MedianFilter3x3(Image& src, Image& dst)
+    {
+        //参数检查
+        if(src.GetData() == nullptr){ return -1; }
+        int rows = src.GetHeight();
+        int cols = src.GetWidth();
+
+        //边界只有1无需扩充边界
+        dst = src.Copy();
+
+        //遍历进行中值滤波
+        constexpr std::size_t simd_size = xsimd::simd_type<uint8_t>::size;
+        int vec_size = cols - (cols - 2) % simd_size - 2;
+
+        #pragma omp parallel for
+        for(int i = 1; i < rows - 1; i++)
+        {
+            for(int j = 1; j < vec_size; j += simd_size)
+            {
+                auto P0 = xsimd::load_unaligned(src.GetPixel(i , j));
+                auto P1 = xsimd::load_unaligned(src.GetPixel(i - 1, j));
+                auto P2 = xsimd::load_unaligned(src.GetPixel(i - 1, j +1));
+
+                auto P3 = xsimd::load_unaligned(src.GetPixel(i, j -1));
+                auto P4 = xsimd::load_unaligned(src.GetPixel(i, j));
+                auto P5 = xsimd::load_unaligned(src.GetPixel(i, j +1));
+
+                auto P6 = xsimd::load_unaligned(src.GetPixel(i + 1, j -1));
+                auto P7 = xsimd::load_unaligned(src.GetPixel(i + 1, j));
+                auto P8 = xsimd::load_unaligned(src.GetPixel(i + 1, j +1));
+
+                //比较交换获取中值
+                SwapSort(P1, P2);		SwapSort(P4, P5);		SwapSort(P7, P8);
+                SwapSort(P0, P1);		SwapSort(P3, P4);		SwapSort(P6, P7);
+                SwapSort(P1, P2);		SwapSort(P4, P5);		SwapSort(P7, P8);
+                SwapSort(P0, P3);		SwapSort(P5, P8);		SwapSort(P4, P7);
+                SwapSort(P3, P6);		SwapSort(P1, P4);		SwapSort(P2, P5);
+                SwapSort(P4, P7);		SwapSort(P4, P2);		SwapSort(P6, P4);
+                SwapSort(P4, P2);
+
+                //保存结果
+                P4.store_unaligned(dst.GetPixel(i, j));
+            }
+
+            for(int j = vec_size; j < cols - 1; j++)
+            {
+                uint8_t P0 = src.GetPixel(i - 1, j - 1)[0];
+                uint8_t P1 = src.GetPixel(i - 1, j)[0];
+                uint8_t P2 = src.GetPixel(i - 1, j + 1)[0];
+
+                uint8_t P3 = src.GetPixel(i, j - 1)[0];
+                uint8_t P4 = src.GetPixel(i, j)[0];
+                uint8_t P5 = src.GetPixel(i, j + 1)[0];
+
+                uint8_t P6 = src.GetPixel(i + 1, j - 1)[0];
+                uint8_t P7 = src.GetPixel(i + 1, j)[0];
+                uint8_t P8 = src.GetPixel(i + 1, j + 1)[0];
+
+                if (P1 > P2) std::swap(P1, P2);
+                if (P4 > P5) std::swap(P4, P5);
+                if (P7 > P8) std::swap(P7, P8);
+                if (P0 > P1) std::swap(P0, P1);
+                if (P3 > P4) std::swap(P3, P4);
+                if (P6 > P7) std::swap(P6, P7);
+                if (P1 > P2) std::swap(P1, P2);
+                if (P4 > P5) std::swap(P4, P5);
+                if (P7 > P8) std::swap(P7, P8);
+                if (P0 > P3) std::swap(P0, P3);
+                if (P5 > P8) std::swap(P5, P8);
+                if (P4 > P7) std::swap(P4, P7);
+                if (P3 > P6) std::swap(P3, P6);
+                if (P1 > P4) std::swap(P1, P4);
+                if (P2 > P5) std::swap(P2, P5);
+                if (P4 > P7) std::swap(P4, P7);
+                if (P4 > P2) std::swap(P4, P2);
+                if (P6 > P4) std::swap(P6, P4);
+                if (P4 > P2) std::swap(P4, P2);
+                
+                dst.GetPixel(i , j)[0] = P4;
+            }
+        }
+        return 0;
+    }
+
+    int MedianFilter3x34(const Image& src, Image& dst)
+    {
+        //参数检查
+        if(src.GetData() == nullptr){ return -1; }
+        int rows = src.GetHeight();
+        int cols = src.GetWidth();
+
+        //边界只有1无需扩充边界
+        dst = src.Copy();
+
+        //遍历进行中值滤波
+        //int simd_size = 32; //avx2-uchar
+        //int vec_size = cols - (cols - 1) % simd_size;
+
+        for(int i = 1; i < rows - 1; i++)
+        {
+            for(int j = 1; j < cols - 1; j++)
+            {
+                uint8_t P0 = src.GetPixel(i - 1, j - 1)[0];
+                uint8_t P1 = src.GetPixel(i - 1, j)[0];
+                uint8_t P2 = src.GetPixel(i - 1, j + 1)[0];
+
+                uint8_t P3 = src.GetPixel(i, j - 1)[0];
+                uint8_t P4 = src.GetPixel(i, j)[0];
+                uint8_t P5 = src.GetPixel(i, j + 1)[0];
+
+                uint8_t P6 = src.GetPixel(i + 1, j - 1)[0];
+                uint8_t P7 = src.GetPixel(i + 1, j)[0];
+                uint8_t P8 = src.GetPixel(i + 1, j + 1)[0];
+
+                
+                if (P1 > P2) std::swap(P1, P2);
+                if (P4 > P5) std::swap(P4, P5);
+                if (P7 > P8) std::swap(P7, P8);
+                if (P0 > P1) std::swap(P0, P1);
+                if (P3 > P4) std::swap(P3, P4);
+                if (P6 > P7) std::swap(P6, P7);
+                if (P1 > P2) std::swap(P1, P2);
+                if (P4 > P5) std::swap(P4, P5);
+                if (P7 > P8) std::swap(P7, P8);
+                if (P0 > P3) std::swap(P0, P3);
+                if (P5 > P8) std::swap(P5, P8);
+                if (P4 > P7) std::swap(P4, P7);
+                if (P3 > P6) std::swap(P3, P6);
+                if (P1 > P4) std::swap(P1, P4);
+                if (P2 > P5) std::swap(P2, P5);
+                if (P4 > P7) std::swap(P4, P7);
+                if (P4 > P2) std::swap(P4, P2);
+                if (P6 > P4) std::swap(P6, P4);
+                if (P4 > P2) std::swap(P4, P2);
+
+                dst.GetPixel(i , j)[0] = P4;
             }
         }
         return 0;

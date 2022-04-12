@@ -32,4 +32,9 @@ TEST_CASE("test mvk-filter median-filter", "[mvk-filter]")
     Image mono_medianfilter_7x7;
     REQUIRE(MedianFilter(mono, mono_medianfilter_7x7, 7) == 0);
     REQUIRE(mono_medianfilter_7x7.Save(std::string(DATA) + "/images/mvk_filter/mono_medianfilter_7x7.png") == 0);
+
+    //测试3x3滤波
+    Image mono_medianfilter_fast3x3;
+    REQUIRE(MedianFilter3x3(mono, mono_medianfilter_fast3x3) == 0);
+    REQUIRE(mono_medianfilter_fast3x3.Save(std::string(DATA) + "/images/mvk_filter/mono_medianfilter_fast3x3.png") == 0);
 }
