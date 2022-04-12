@@ -19,6 +19,9 @@ link_directories( ${PROJECT_SOURCE_DIR}/bin)
 
 # 选择编译为动态库或静态库
 option(BUILD_STATIC_LIB "Build the library as static library?" OFF)
+if(BUILD_STATIC_LIB)
+    add_definitions(-DBUILD_STATIC_LIB -DBUILD_STATIC_LIB_)
+endif()
 
 # 是否编译测试
 option(BUILD_TEST "Build the test cases?" ON)
@@ -32,6 +35,20 @@ if(BUILD_TEST)
     )
     FetchContent_MakeAvailable(Catch2)
     include(CTest)
+endif()
+
+#xsimd
+set(xsimd_DIR "3rdparty/xsimd/lib/cmake/xsimd")
+find_package(xsimd REQUIRED)
+if(xsimd_FOUND)
+    include_directories(${xsimd_INCLUDE_DIRS})
+    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+        if(NOT CMAKE_CXX_FLAGS MATCHES "-march")
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+        endif()
+    endif()
+else()
+    message(FATAL_ERROR "xsimd not found!")
 endif()
 
 # data
