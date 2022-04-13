@@ -13,6 +13,8 @@
 #define MVK_FILTER_MEDIAN_FILTER_HPP_
 
 #include "image/image.hpp"
+#include "filter/filter_defines.hpp"
+
 
 namespace mvk
 {
@@ -25,7 +27,7 @@ namespace mvk
      * @param border_type(in) 边缘填充类型 
      * @return int 
      */
-    int MedianFilter(const Image& src,
+    MVK_FILTER_EXPORT int MedianFilter(const Image& src,
                      Image& dst,
                      const size_t kernel_size,
                      const BORDER_TYPE& border_type = BORDER_TYPE::DEFAULT);
@@ -37,7 +39,7 @@ namespace mvk
      * @param dst(out) 输出图像
      * @return int 
      */
-    int MedianFilter3x3(Image& src, Image& dst);
+    MVK_FILTER_EXPORT int MedianFilter3x3(Image& src, Image& dst);
 }//namespace mvk
 
 #endif //MVK_FILTER_MEDIAN_FILTER_HPP_

@@ -14,10 +14,12 @@
 
 #include "common/mat.hpp"
 #include "image/image.hpp"
+#include "filter/filter_defines.hpp"
+
 
 namespace mvk
 {
-    int ComputeIntegral(const Image& src, Matrix<uint64_t>& integral);
+    MVK_FILTER_EXPORT int ComputeIntegral(const Image& src, Matrix<uint64_t>& integral);
 }//namespace mvk
 
 #endif //MVK_FILTER_INTEGRAL_IMAGE_HPP_

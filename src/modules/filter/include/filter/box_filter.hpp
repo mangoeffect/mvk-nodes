@@ -14,6 +14,7 @@
 
 #include "image/image.hpp"
 #include "common/common_defines.hpp"
+#include "filter/filter_defines.hpp"
 
 namespace mvk
 {
@@ -26,7 +27,7 @@ namespace mvk
     * @param border_type(in) 边缘填充类型
     * @return int 
     */
-    int BoxFilter(const Image& src, Image& dst, const size_t kernel_size, const BORDER_TYPE& border_type = BORDER_TYPE::DEFAULT);
+    MVK_FILTER_EXPORT int BoxFilter(const Image& src, Image& dst, const size_t kernel_size, const BORDER_TYPE& border_type = BORDER_TYPE::DEFAULT);
 }//
 
 #endif //MVK_FILTER_BOX_FILTER_HPP_

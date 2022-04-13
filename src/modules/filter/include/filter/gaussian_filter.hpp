@@ -13,6 +13,8 @@
 #define MVK_FILTER_GAUSSIAN_FILTER_HPP_
 
 #include "image/image.hpp"
+#include "filter/filter_defines.hpp"
+
 
 namespace mvk
 {
@@ -27,7 +29,7 @@ namespace mvk
      * @param border_type(in) 边缘填充类型 
      * @return int 
      */
-    int GaussianFilter(const Image& src, 
+    MVK_FILTER_EXPORT int GaussianFilter(const Image& src, 
                        Image& dst, const size_t kernel_size, 
                        const double sigma_x = 0.0,
                        const double sigma_y = 0.0,
