@@ -41,4 +41,13 @@ TEST_CASE("test mvk-filter median-filter", "[mvk-filter]")
     Image rgb_medianfilter_fast3x3;
     REQUIRE(MedianFilter3x3(rgb_img, rgb_medianfilter_fast3x3) == 0);
     REQUIRE(rgb_medianfilter_fast3x3.Save(std::string(DATA) + "/images/mvk_filter/rgb_medianfilter_fast3x3.png") == 0);
+
+    //测试5x5滤波
+    Image mono_medianfilter_fast5x5;
+    REQUIRE(MedianFilter5x5(mono, mono_medianfilter_fast5x5) == 0);
+    REQUIRE(mono_medianfilter_fast5x5.Save(std::string(DATA) + "/images/mvk_filter/mono_medianfilter_fast5x5.png") == 0);
+
+    Image rgb_medianfilter_fast5x5;
+    REQUIRE(MedianFilter5x5(rgb_img, rgb_medianfilter_fast5x5) == 0);
+    REQUIRE(rgb_medianfilter_fast5x5.Save(std::string(DATA) + "/images/mvk_filter/rgb_medianfilter_fast5x5.png") == 0);
 }

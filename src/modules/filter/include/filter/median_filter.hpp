@@ -40,6 +40,15 @@ namespace mvk
      * @return int 
      */
     MVK_FILTER_EXPORT int MedianFilter3x3(Image& src, Image& dst);
+
+    /**
+     * @brief 5x5范围的小半径中值滤波，做特殊效率优化
+     * 
+     * @param src(in) 输入图像
+     * @param dst(out) 输出图像
+     * @return int 
+     */
+    MVK_FILTER_EXPORT int MedianFilter5x5(Image& src, Image& dst);
 }//namespace mvk
 
 #endif //MVK_FILTER_MEDIAN_FILTER_HPP_

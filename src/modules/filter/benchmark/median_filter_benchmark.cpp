@@ -44,6 +44,28 @@ int main(int argc, char** argv)
         std::cout <<std::to_string(len) + "x" + std::to_string(wid) + " cost "<< std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << " ms." << std::endl;
     }
 
+ 
+    std::cout << "-------------mvk-nodes filter mono median-filter5x5 benchenmark------------------\n";
+    for(auto&& [len, wid]: img_sizes)
+    {
+        Image src(len, wid, 128);
+        Image dst;
+        auto t0 = std::chrono::system_clock::now();
+        MedianFilter5x5(src, dst);
+        auto t1 = std::chrono::system_clock::now();
+        std::cout <<std::to_string(len) + "x" + std::to_string(wid) + " cost "<< std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << " ms." << std::endl;
+    }
+
+    std::cout << "-------------mvk-nodes filter rgb median-filter5x5 benchenmark------------------\n";
+    for(auto&& [len, wid]: img_sizes)
+    {
+        Image src(len, wid, {128, 90, 150});
+        Image dst;
+        auto t0 = std::chrono::system_clock::now();
+        MedianFilter5x5(src, dst);
+        auto t1 = std::chrono::system_clock::now();
+        std::cout <<std::to_string(len) + "x" + std::to_string(wid) + " cost "<< std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << " ms." << std::endl;
+    }
     return 0;
 }
 

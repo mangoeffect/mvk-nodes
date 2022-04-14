@@ -96,6 +96,14 @@ namespace mvk
         b                   = max;
     }
 
+    inline void Op(uint8_t& a, uint8_t& b)
+    {
+        uint8_t min = std::min(a, b);
+        uint8_t max = std::max(a, b);
+        a = min;
+        b = max;
+    }
+
     
     int MedianFilter3x3(Image& src, Image& dst)
     {
@@ -195,6 +203,156 @@ namespace mvk
                 if (P4 > P2) std::swap(P4, P2);
 
                 *(row_dst + j) = P4;
+            }
+        }
+        return 0;
+    }
+
+    int MedianFilter5x5(Image& src, Image& dst)
+    {
+         //参数检查
+        if(src.GetData() == nullptr){ return -1; }
+        int channel = src.GetChannel();
+        int rows = src.GetHeight();
+        int cols = src.GetWidth() * channel;
+
+        //边界只有1无需扩充边界
+        dst = src.Copy();
+
+        //遍历进行中值滤波
+        constexpr std::size_t simd_size = xsimd::simd_type<uint8_t>::size;
+        int vec_size = cols - (cols - 4 * channel) % simd_size - 4 *channel;
+
+        #pragma omp parallel for
+        for(int i = 2; i < rows - 2; i++)
+        {
+            std::vector<uint8_t*> row_ptr(5, nullptr);
+            row_ptr[0] = src.GetRow(i - 2);
+            row_ptr[1] = src.GetRow(i - 1);
+            row_ptr[2] = src.GetRow(i);
+            row_ptr[3] = src.GetRow(i + 1);
+            row_ptr[4] = src.GetRow(i + 2);
+            uint8_t* row_dst = dst.GetRow(i);
+
+            //simd指令集优化
+            for(int j = 2 * channel; j < vec_size; j += simd_size)
+            {
+                auto p0 = xsimd::load_unaligned(row_ptr[0] + j - 2 * channel);
+                auto p1 = xsimd::load_unaligned(row_ptr[0] + j - channel); 
+                auto p2 = xsimd::load_unaligned(row_ptr[0] + j); 
+                auto p3 = xsimd::load_unaligned(row_ptr[0] + j + channel);
+                auto p4 = xsimd::load_unaligned(row_ptr[0] + j + 2 * channel); 
+ 
+                auto p5 = xsimd::load_unaligned(row_ptr[1] + j - 2 * channel);
+                auto p6 = xsimd::load_unaligned(row_ptr[1] + j - channel); 
+                auto p7 = xsimd::load_unaligned(row_ptr[1] + j); 
+                auto p8 = xsimd::load_unaligned(row_ptr[1] + j + channel);
+                auto p9 = xsimd::load_unaligned(row_ptr[1] + j + 2 * channel); 
+
+                auto p10 = xsimd::load_unaligned(row_ptr[2] + j - 2 * channel);
+                auto p11 = xsimd::load_unaligned(row_ptr[2] + j - channel); 
+                auto p12 = xsimd::load_unaligned(row_ptr[2] + j); 
+                auto p13 = xsimd::load_unaligned(row_ptr[2] + j + channel);
+                auto p14 = xsimd::load_unaligned(row_ptr[2] + j + 2 * channel); 
+
+                auto p15 = xsimd::load_unaligned(row_ptr[3] + j - 2 * channel);
+                auto p16 = xsimd::load_unaligned(row_ptr[3] + j - channel); 
+                auto p17 = xsimd::load_unaligned(row_ptr[3] + j); 
+                auto p18 = xsimd::load_unaligned(row_ptr[3] + j + channel);
+                auto p19 = xsimd::load_unaligned(row_ptr[3] + j + 2 * channel); 
+
+                auto p20 = xsimd::load_unaligned(row_ptr[4] + j - 2 * channel);
+                auto p21 = xsimd::load_unaligned(row_ptr[4] + j - channel); 
+                auto p22 = xsimd::load_unaligned(row_ptr[4] + j); 
+                auto p23 = xsimd::load_unaligned(row_ptr[4] + j + channel);
+                auto p24 = xsimd::load_unaligned(row_ptr[4] + j + 2 * channel); 
+
+                SwapSort(p1, p2); SwapSort(p0, p1); SwapSort(p1, p2); SwapSort(p4, p5); SwapSort(p3, p4);
+                SwapSort(p4, p5); SwapSort(p0, p3); SwapSort(p2, p5); SwapSort(p2, p3); SwapSort(p1, p4);
+                SwapSort(p1, p2); SwapSort(p3, p4); SwapSort(p7, p8); SwapSort(p6, p7); SwapSort(p7, p8);
+                SwapSort(p10, p11); SwapSort(p9, p10); SwapSort(p10, p11); SwapSort(p6, p9); SwapSort(p8, p11);
+                SwapSort(p8, p9); SwapSort(p7, p10); SwapSort(p7, p8); SwapSort(p9, p10); SwapSort(p0, p6);
+                SwapSort(p4, p10); SwapSort(p4, p6); SwapSort(p2, p8); SwapSort(p2, p4); SwapSort(p6, p8);
+                SwapSort(p1, p7); SwapSort(p5, p11); SwapSort(p5, p7); SwapSort(p3, p9); SwapSort(p3, p5);
+                SwapSort(p7, p9); SwapSort(p1, p2); SwapSort(p3, p4); SwapSort(p5, p6); SwapSort(p7, p8);
+                SwapSort(p9, p10); SwapSort(p13, p14); SwapSort(p12, p13); SwapSort(p13, p14); SwapSort(p16, p17);
+                SwapSort(p15, p16); SwapSort(p16, p17); SwapSort(p12, p15); SwapSort(p14, p17); SwapSort(p14, p15);
+                SwapSort(p13, p16); SwapSort(p13, p14); SwapSort(p15, p16); SwapSort(p19, p20); SwapSort(p18, p19);
+                SwapSort(p19, p20); SwapSort(p21, p22); SwapSort(p23, p24); SwapSort(p21, p23); SwapSort(p22, p24);
+                SwapSort(p22, p23); SwapSort(p18, p21); SwapSort(p20, p23); SwapSort(p20, p21); SwapSort(p19, p22);
+                SwapSort(p22, p24); SwapSort(p19, p20); SwapSort(p21, p22); SwapSort(p23, p24); SwapSort(p12, p18);
+                SwapSort(p16, p22); SwapSort(p16, p18); SwapSort(p14, p20); SwapSort(p20, p24); SwapSort(p14, p16);
+                SwapSort(p18, p20); SwapSort(p22, p24); SwapSort(p13, p19); SwapSort(p17, p23); SwapSort(p17, p19);
+                SwapSort(p15, p21); SwapSort(p15, p17); SwapSort(p19, p21); SwapSort(p13, p14); SwapSort(p15, p16);
+                SwapSort(p17, p18); SwapSort(p19, p20); SwapSort(p21, p22); SwapSort(p23, p24); SwapSort(p0, p12);
+                SwapSort(p8, p20); SwapSort(p8, p12); SwapSort(p4, p16); SwapSort(p16, p24); SwapSort(p12, p16);
+                SwapSort(p2, p14); SwapSort(p10, p22); SwapSort(p10, p14); SwapSort(p6, p18); SwapSort(p6, p10);
+                SwapSort(p10, p12); SwapSort(p1, p13); SwapSort(p9, p21); SwapSort(p9, p13); SwapSort(p5, p17);
+                SwapSort(p13, p17); SwapSort(p3, p15); SwapSort(p11, p23); SwapSort(p11, p15); SwapSort(p7, p19);
+                SwapSort(p7, p11); SwapSort(p11, p13); SwapSort(p11, p12);
+
+                //保存结果
+                p12.store_unaligned(row_dst + j);
+            }
+
+            //处理不满足simd优化部分
+            for(int j = vec_size; j < cols - 2 * channel; j++)
+            {
+                auto p0 = *(row_ptr[0] + j - 2 * channel);
+                auto p1 = *(row_ptr[0] + j - channel); 
+                auto p2 = *(row_ptr[0] + j); 
+                auto p3 = *(row_ptr[0] + j + channel);
+                auto p4 = *(row_ptr[0] + j + 2 * channel); 
+ 
+                auto p5 = *(row_ptr[1] + j - 2 * channel);
+                auto p6 = *(row_ptr[1] + j - channel); 
+                auto p7 = *(row_ptr[1] + j); 
+                auto p8 = *(row_ptr[1] + j + channel);
+                auto p9 = *(row_ptr[1] + j + 2 * channel); 
+
+                auto p10 = *(row_ptr[2] + j - 2 * channel);
+                auto p11 = *(row_ptr[2] + j - channel); 
+                auto p12 = *(row_ptr[2] + j); 
+                auto p13 = *(row_ptr[2] + j + channel);
+                auto p14 = *(row_ptr[2] + j + 2 * channel); 
+
+                auto p15 = *(row_ptr[3] + j - 2 * channel);
+                auto p16 = *(row_ptr[3] + j - channel); 
+                auto p17 = *(row_ptr[3] + j); 
+                auto p18 = *(row_ptr[3] + j + channel);
+                auto p19 = *(row_ptr[3] + j + 2 * channel); 
+
+                auto p20 = *(row_ptr[4] + j - 2 * channel);
+                auto p21 = *(row_ptr[4] + j - channel); 
+                auto p22 = *(row_ptr[4] + j); 
+                auto p23 = *(row_ptr[4] + j + channel);
+                auto p24 = *(row_ptr[4] + j + 2 * channel); 
+
+                Op(p1, p2); Op(p0, p1); Op(p1, p2); Op(p4, p5); Op(p3, p4);
+                Op(p4, p5); Op(p0, p3); Op(p2, p5); Op(p2, p3); Op(p1, p4);
+                Op(p1, p2); Op(p3, p4); Op(p7, p8); Op(p6, p7); Op(p7, p8);
+                Op(p10, p11); Op(p9, p10); Op(p10, p11); Op(p6, p9); Op(p8, p11);
+                Op(p8, p9); Op(p7, p10); Op(p7, p8); Op(p9, p10); Op(p0, p6);
+                Op(p4, p10); Op(p4, p6); Op(p2, p8); Op(p2, p4); Op(p6, p8);
+                Op(p1, p7); Op(p5, p11); Op(p5, p7); Op(p3, p9); Op(p3, p5);
+                Op(p7, p9); Op(p1, p2); Op(p3, p4); Op(p5, p6); Op(p7, p8);
+                Op(p9, p10); Op(p13, p14); Op(p12, p13); Op(p13, p14); Op(p16, p17);
+                Op(p15, p16); Op(p16, p17); Op(p12, p15); Op(p14, p17); Op(p14, p15);
+                Op(p13, p16); Op(p13, p14); Op(p15, p16); Op(p19, p20); Op(p18, p19);
+                Op(p19, p20); Op(p21, p22); Op(p23, p24); Op(p21, p23); Op(p22, p24);
+                Op(p22, p23); Op(p18, p21); Op(p20, p23); Op(p20, p21); Op(p19, p22);
+                Op(p22, p24); Op(p19, p20); Op(p21, p22); Op(p23, p24); Op(p12, p18);
+                Op(p16, p22); Op(p16, p18); Op(p14, p20); Op(p20, p24); Op(p14, p16);
+                Op(p18, p20); Op(p22, p24); Op(p13, p19); Op(p17, p23); Op(p17, p19);
+                Op(p15, p21); Op(p15, p17); Op(p19, p21); Op(p13, p14); Op(p15, p16);
+                Op(p17, p18); Op(p19, p20); Op(p21, p22); Op(p23, p24); Op(p0, p12);
+                Op(p8, p20); Op(p8, p12); Op(p4, p16); Op(p16, p24); Op(p12, p16);
+                Op(p2, p14); Op(p10, p22); Op(p10, p14); Op(p6, p18); Op(p6, p10);
+                Op(p10, p12); Op(p1, p13); Op(p9, p21); Op(p9, p13); Op(p5, p17);
+                Op(p13, p17); Op(p3, p15); Op(p11, p23); Op(p11, p15); Op(p7, p19);
+                Op(p7, p11); Op(p11, p13); Op(p11, p12);
+
+                *(row_dst + j) = p12;
             }
         }
         return 0;
