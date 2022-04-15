@@ -10,7 +10,7 @@
 - ubuntu 20.04 lts
 - gcc 9.3
 
-## 中值滤波性3x3
+## 中值滤波3x3
 
 ```
 ------------opencv mono median-filter3x3 benchmark-------------
@@ -65,6 +65,39 @@
 ```
 
 ![median-filter3x3-benchmark](./doc/median-filter3x3-benchmark.png)
+
+## 阈值化处理
+
+### 二值化
+
+```
+-------------mvk-nodes filter threshold benchenmark------------------
+640x480 cost 0.0908 ms.
+1280x720 cost 0.1711 ms.
+1280x960 cost 0.2034 ms.
+1920x1080 cost 0.4087 ms.
+1600x1200 cost 0.4867 ms.
+2048x1536 cost 0.9005 ms.
+2592x1944 cost 1.0191 ms.
+3264x2448 cost 1.5688 ms.
+3840x2160 cost 1.5972 ms.
+4224x3168 cost 2.6267 ms.
+5344x4106 cost 4.1337 ms.
+
+------------opencv mono median-filter3x3 benchmark-------------
+640x480 cost 0.134 ms.
+1280x720 cost 0.0793 ms.
+1280x960 cost 0.0732 ms.
+1920x1080 cost 0.1653 ms.
+1600x1200 cost 0.1183 ms.
+2048x1536 cost 0.3897 ms.
+2592x1944 cost 0.5908 ms.
+3264x2448 cost 0.987 ms.
+3840x2160 cost 1.0167 ms.
+4224x3168 cost 1.6279 ms.
+5344x4106 cost 2.7114 ms.
+```
+![threshold-benchmark](./doc/threshold-benchmark.png)
 
 注：opencv版本为4.5.4
 
