@@ -13,6 +13,7 @@
 #define MVK_CIRCLE_H_
 
 #include "common/point.hpp"
+#include "common/common_defines.hpp"
 
 namespace mvk
 {    
@@ -34,7 +35,7 @@ namespace mvk
      * @param circle(in) 圆形 
      * @return double 
      */
-    double GetCircleArea(const Circle& circle);
+    MVK_COMMON_EXPORT double GetCircleArea(const Circle& circle);
 } // namespace mvk
 
 
