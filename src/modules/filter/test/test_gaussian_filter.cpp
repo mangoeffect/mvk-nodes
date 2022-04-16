@@ -33,16 +33,16 @@ TEST_CASE("test mvk-filter gaussian-filter","mvk-filter")
         mono_200x200.GetPixel(y, x)[0] = static_cast<uint8_t>(normal_dist(gen));
     }
 
-    REQUIRE(mono_200x200.Save(std::string(DATA) + "/images/mvk_filter/mono_200x200.png") == 0);
+    REQUIRE(mono_200x200.Save("mono_200x200.png") == 0);
 
     Image mono_gaussian_1x1, mono_gaussian_3x3, mono_gaussian_5x5;
     REQUIRE(GaussianFilter(mono_200x200, mono_gaussian_1x1, 1) == 0);
     REQUIRE(GaussianFilter(mono_200x200, mono_gaussian_3x3, 3) == 0);
     REQUIRE(GaussianFilter(mono_200x200, mono_gaussian_5x5, 5) == 0);
 
-    REQUIRE(mono_gaussian_1x1.Save(std::string(DATA) + "/images/mvk_filter/mono_gaussian_1x1.png") == 0);
-    REQUIRE(mono_gaussian_3x3.Save(std::string(DATA) + "/images/mvk_filter/mono_gaussian_3x3.png") == 0);
-    REQUIRE(mono_gaussian_5x5.Save(std::string(DATA) + "/images/mvk_filter/mono_gaussian_5x5.png") == 0);
+    REQUIRE(mono_gaussian_1x1.Save("mono_gaussian_1x1.png") == 0);
+    REQUIRE(mono_gaussian_3x3.Save("mono_gaussian_3x3.png") == 0);
+    REQUIRE(mono_gaussian_5x5.Save("mono_gaussian_5x5.png") == 0);
 
     Image rgb_200x200(200, 200, {128, 128, 128});
     for(int i = 0; i < 100; i++)
@@ -59,14 +59,14 @@ TEST_CASE("test mvk-filter gaussian-filter","mvk-filter")
     REQUIRE(GaussianFilter(rgb_200x200, rgb_gaussian_3x3, 3) == 0);
     REQUIRE(GaussianFilter(rgb_200x200, rgb_gaussian_5x5, 5) == 0);
 
-    REQUIRE(rgb_gaussian_1x1.Save(std::string(DATA) + "/images/mvk_filter/rgb_gaussian_1x1.png") == 0);
-    REQUIRE(rgb_gaussian_3x3.Save(std::string(DATA) + "/images/mvk_filter/rgb_gaussian_3x3.png") == 0);
-    REQUIRE(rgb_gaussian_5x5.Save(std::string(DATA) + "/images/mvk_filter/rgb_gaussian_5x5.png") == 0);
+    REQUIRE(rgb_gaussian_1x1.Save("rgb_gaussian_1x1.png") == 0);
+    REQUIRE(rgb_gaussian_3x3.Save("rgb_gaussian_3x3.png") == 0);
+    REQUIRE(rgb_gaussian_5x5.Save("rgb_gaussian_5x5.png") == 0);
 
     Image rgb_img;
     Image rgb_img_gaussian_9x9;
     std::string rgb_path = std::string(DATA) + "/images/mvk_filter/512X512_lena_rgb.png";
     REQUIRE(rgb_img.Read(rgb_path, IMAGE_FORMAT::RGB_24_BIT) == 0);
     REQUIRE(GaussianFilter(rgb_img, rgb_img_gaussian_9x9, 9) == 0);
-    REQUIRE(rgb_img_gaussian_9x9.Save(std::string(DATA) + "/images/mvk_filter/rgb_img_gaussian_9x9.png") == 0);
+    REQUIRE(rgb_img_gaussian_9x9.Save("rgb_img_gaussian_9x9.png") == 0);
 }

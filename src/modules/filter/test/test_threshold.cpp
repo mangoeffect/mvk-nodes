@@ -23,6 +23,6 @@ TEST_CASE("test mvk-filter threshold", "[mvk-filter]")
     //二值化
     Image binary;
     REQUIRE(Threshold(mono, binary, 128, THRESHOLD_TYPE::THRESH_BINARY) == 0);
-    REQUIRE(binary.Save(std::string(DATA) + "/images/mvk_filter/binary.png") == 0);
+    REQUIRE(binary.Save("binary.png") == 0);
 
 }
