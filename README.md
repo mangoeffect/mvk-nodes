@@ -116,7 +116,7 @@
 | distortion calibration | - | - |
 | calib board calibration | - | - |
 | calibration transfer | - | - |
-| image filtering | box-filter、gaussion-filter、median-filter | - |
+| image filtering | box-filter、gaussion-filter、median-filter、threshold | - |
 | location fix | - | - |
 | camera map | - | - |
 | Barcode reader | - | - |

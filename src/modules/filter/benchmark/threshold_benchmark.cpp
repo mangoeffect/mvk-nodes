@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 {
     std::vector<std::tuple<size_t, size_t>> img_sizes = {{640, 480}, {1280, 720}, {1280, 960}, {1920, 1080}, {1600, 1200}, {2048, 1536}, {2592, 1944}, {3264, 2448}, {3840, 2160}, {4224, 3168}, {5344, 4106}};
     std::ofstream out_csv;
-    out_csv.open("threshold-benchmark2.csv", std::ios::out); 
+    out_csv.open("mvk-threshold-benchmark.csv", std::ios::out); 
 
     std::cout << "-------------mvk-nodes filter threshold benchenmark------------------\n";
     for(auto&& [len, wid]: img_sizes)
