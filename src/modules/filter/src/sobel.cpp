@@ -23,7 +23,9 @@ namespace mvk
         int rows = src.GetHeight();
         int cols = src.GetWidth();
 
-        dst = src.Copy();
+        //g构造dst
+        uint8_t* data = new uint8_t[rows * cols];
+        dst = Image(data, rows, cols, IMAGE_FORMAT::MONO_8_BIT);
 
         constexpr std::size_t simd_size = xsimd::simd_type<float>::size;
         int vec_size1 = cols - (cols - 2) % simd_size - 2;
@@ -72,6 +74,9 @@ namespace mvk
             float* ty_ptr1 = ty + cols * i;
             float* ty_ptr2 = ty + cols * (i + 1);
 
+            float* gx_ptr = &Gx(i, 0);
+            float* gy_ptr = &Gy(i, 0);
+            
             for(int j = 0; j < vec_size2; j += simd_size)
             {
                  // sxy 1 2 1
@@ -79,13 +84,13 @@ namespace mvk
                  auto v_tx1 = xsimd::load_unaligned(tx_ptr1 + j);
                  auto v_tx2 = xsimd::load_unaligned(tx_ptr2 + j);
                  auto v_gx = (v_tx0 + v_tx1 + v_tx1 + v_tx2) / 3;
-                 v_gx.store_unaligned(&Gx(i, j));
+                 v_gx.store_unaligned(gx_ptr + j);
 
                  // syy -1 0 1
                  auto v_ty0 = xsimd::load_unaligned(ty_ptr0 + j);
                  auto v_ty2 = xsimd::load_unaligned(ty_ptr2 + j);
                  auto v_gy = (v_ty2 - v_ty0) / 3;
-                 v_gy.store_unaligned(&Gy(i, j));
+                 v_gy.store_unaligned(gx_ptr + j);
 
                  //梯度幅值
                  auto v_mag = xsimd::sqrt(v_gx * v_gx + v_gy * v_gy);
@@ -95,9 +100,9 @@ namespace mvk
             for(int j = vec_size2; j < cols; j++)
             {
                 // sxy 1 2 1
-                Gx(i, j) = (tx_ptr0[j] + 2.0 * tx_ptr1[j] + tx_ptr2[j]) / 3.0;
+                gx_ptr[j] = (tx_ptr0[j] + 2.0 * tx_ptr1[j] + tx_ptr2[j]) / 3.0;
                 // syy -1 0 1
-                Gy(i, j) = (ty_ptr2[j] - ty_ptr0[j]) / 3.0;
+                gy_ptr[j] = (ty_ptr2[j] - ty_ptr0[j]) / 3.0;
                 dst_ptr[j] = static_cast<uint8_t>(std::sqrt(Gx(i, j) * Gx(i, j) + Gy(i, j) * Gy(i, j)));
             }
         }
