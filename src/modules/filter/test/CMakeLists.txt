@@ -15,3 +15,6 @@ target_link_libraries(${PROJECT_NAME}_median_filter mvk_filter Catch2::Catch2Wit
 
 add_executable(${PROJECT_NAME}_threshold test_threshold.cpp)
 target_link_libraries(${PROJECT_NAME}_threshold mvk_filter Catch2::Catch2WithMain)
+
+add_executable(${PROJECT_NAME}_sobel test_sobel.cpp)
+target_link_libraries(${PROJECT_NAME}_sobel mvk_filter Catch2::Catch2WithMain)
