@@ -1,0 +1,3 @@
+project(benchmark_common_gemm)
+
+add_executable(benchmark_common_gemm benchmark_common_gemm.cpp)

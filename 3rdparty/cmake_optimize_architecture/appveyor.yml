@@ -1,0 +1,27 @@
+
+environment:
+  matrix:
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    platform: x64
+    GENERATOR: Visual Studio 15 2017 Win64
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    platform: x86
+    GENERATOR: Visual Studio 14 2015
+
+shallow_clone: true
+
+install:
+  - ps: |
+      New-Item -ItemType directory -Path cmake-build-windows
+      Set-Location "$env:APPVEYOR_BUILD_FOLDER\cmake-build-windows"
+      & cmake "-G$env:GENERATOR" .. 2>&1 | %{ "$_" }
+      if ($LastExitCode -ne 0) { write-output "Fails with code:$LastExitCode"; exit 1 }
+      & cmake --build . --config Release 2>&1 | %{ "$_" }
+      if ($LastExitCode -ne 0) { write-output "Fails with code:$LastExitCode"; exit 1 }
+      & ctest --verbose -C Debug
+      if ($LastExitCode -ne 0) { write-output "Fails with code:$LastExitCode"; exit 1 }
+
+build: off
+
+deploy: off
+

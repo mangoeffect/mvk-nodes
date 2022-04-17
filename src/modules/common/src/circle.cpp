@@ -9,34 +9,14 @@
  * 
  */
 
-#include "common/circle.h"
-#include "common/circle_impl.h"
+#include "common/circle.hpp"
+#include "common/common_defines.hpp"
 
 namespace mvk
 {
-    Circle::~Circle()
+    double GetCircleArea(const Circle& circle)
     {
-    }
-
-    Circle::Circle(const Point& center, const float& radius)
-    : circle_impl_(new CircleImpl(center, radius))
-    {
-
-    }
-    
-    double Circle::GetArea() const
-    {
-        return circle_impl_->GetArea();
-    }
-
-    float Circle::GetRadius() const
-    {
-        return circle_impl_->GetRadius();
-    }
-
-    Point Circle::GetCenter() const
-    {
-        return circle_impl_->GetCenter();
+        return MVK_PI * circle.radius * circle.radius;
     }
 } // namespace mvk
 

@@ -1,0 +1,4 @@
+set(CTestTest_CONFIG Debug)
+
+add_subdirectory(CMakeHostSystemInformationExtra)
+add_subdirectory(CMakeCompilerMachineOption)

@@ -1,0 +1,40 @@
+--- /opt/cmake-3.12.0-Linux-x86_64/share/cmake-3.12/Modules/CheckCCompilerFlag.cmake	2018-07-17 20:29:59.000000000 +0900
++++ CheckCCompilerFlag.cmake	2018-11-15 21:40:16.442425885 +0900
+@@ -40,6 +40,28 @@
+    set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
+    set(CMAKE_REQUIRED_DEFINITIONS "${_FLAG}")
+ 
++   if("${_FLAG}" STREQUAL "-mfma")
++       # Compiling with FMA3 support may fail only at the assembler level.
++       # In that case we need to have such an instruction in the test code
++       set(_c_code "#include <immintrin.h>
++          __m128 foo(__m128 x) { return _mm_fmadd_ps(x, x, x); }
++          int main() { return 0; }")
++   elseif("${_FLAG}" STREQUAL "-march=knl"
++          OR "${_FLAG}" STREQUAL "-march=skylake-avx512"
++          OR "${_FLAG}" STREQUAL "/arch:AVX512"
++          OR "${_FLAG}" STREQUAL "/arch:KNL"
++          OR "${_FLAG}" MATCHES "^-mavx512.")
++       # Make sure the intrinsics are there
++       set(_c_code "#include <immintrin.h>
++      __m512 foo(__m256 v) {
++        return _mm512_castpd_ps(_mm512_insertf64x4(_mm512_setzero_pd(), _mm256_castps_pd(v), 0x0));
++      }
++      __m512i bar() { return _mm512_setzero_si512(); }
++      int main() { return 0; }")
++   else()
++       set(_c_code " int main() { return 0; }")
++   endif()
++
+    # Normalize locale during test compilation.
+    set(_CheckCCompilerFlag_LOCALE_VARS LC_ALL LC_MESSAGES LANG)
+    foreach(v ${_CheckCCompilerFlag_LOCALE_VARS})
+@@ -47,7 +69,7 @@
+      set(ENV{${v}} C)
+    endforeach()
+    CHECK_COMPILER_FLAG_COMMON_PATTERNS(_CheckCCompilerFlag_COMMON_PATTERNS)
+-   CHECK_C_SOURCE_COMPILES("int main(void) { return 0; }" ${_RESULT}
++   CHECK_C_SOURCE_COMPILES("${_c_code}" ${_RESULT}
+      # Some compilers do not fail with a bad flag
+      FAIL_REGEX "command line option .* is valid for .* but not for C" # GNU
+      ${_CheckCCompilerFlag_COMMON_PATTERNS}

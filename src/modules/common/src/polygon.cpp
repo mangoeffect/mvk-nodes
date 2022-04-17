@@ -9,34 +9,9 @@
  * 
  */
 
-#include "common/polygon.h"
-#include "common/polygon_impl.h"
+#include "common/polygon.hpp"
 
 namespace mvk
 {
-    Polygon::Polygon(const std::vector<Point>& points, const bool& sorted)
-    : polygon_impl_(new PolygonImpl(points, sorted))
-    {
-
-    }
     
-    Polygon::~Polygon()
-    {
-
-    }
-
-    Point Polygon::GetCentroid() const
-    {
-        return polygon_impl_->GetCentroid();
-    }
-
-    double Polygon::GetArea() const
-    {
-        return polygon_impl_->GetArea();
-    }
-
-    int Polygon::GetConvexHull(std::vector<Point>& convex_hull) const
-    {
-        return polygon_impl_->GetConvexHull(convex_hull);
-    }
 } // namespace mvk

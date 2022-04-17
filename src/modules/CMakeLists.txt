@@ -1,6 +1,7 @@
 ﻿include_directories(./common/include)
 include_directories(./image/include)
-#add_subdirectory(calipers)
+add_subdirectory(caliper)
 add_subdirectory(common)
 add_subdirectory(image)
 add_subdirectory(lines_detection)
+add_subdirectory(filter)

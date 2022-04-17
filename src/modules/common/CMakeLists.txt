@@ -4,45 +4,37 @@ include_directories(./src)
 
 
 set(Headers 
-    ./include/common/points.h
-    ./include/common/points_impl.h
-    ./include/common/rectangle.h
-    ./include/common/rectangle_impl.h
-    ./include/common/circle.h
-    ./include/common/circle_impl.h
-    ./include/common/mat.h
-    ./include/common/mat_impl.h
-    ./include/common/rotate_rectangle.h 
-    ./include/common/rotate_rectangle_impl.h
-    ./include/common/line.h 
-    ./include/common/line_impl.h
-    ./include/common/polygon.h 
-    ./include/common/polygon_impl.h
-    ./include/common/algorithms.h)
+    ./include/common/point.hpp
+    ./include/common/rectangle.hpp
+    ./include/common/circle.hpp
+    ./include/common/mat.hpp
+    ./include/common/rotate_rectangle.hpp 
+    ./include/common/line.hpp 
+    ./include/common/polygon.hpp 
+    ./include/common/algorithms.hpp
+    ./include/common/common_defines.hpp)
 
 set(Cpps 
-    ./src/points.cpp
-    ./src/points_impl.cpp
+    ./src/point.cpp
     ./src/rectangle.cpp
-    ./src/rectangle_impl.cpp
     ./src/circle.cpp
-    ./src/circle_impl.cpp
     ./src/mat.cpp 
-    ./src/mat_impl.cpp
     ./src/rotate_rectangle.cpp 
-    ./src/rotate_rectangle_impl.cpp
     ./src/line.cpp 
-    ./src/line_impl.cpp
     ./src/polygon.cpp 
-    ./src/polygon_impl.cpp
     ./src/algorithms/convex_hull.cpp)
 
 if(BUILD_STATIC_LIB)
-    add_definitions(-DMVK_COMMON_STATIC_DEFINE -DMVK_COMMON_STATIC_DEFINE_)
+    add_definitions(-DMVK_COMMON_EXPORT "")
     add_library(mvk_common ${Headers} ${Cpps})
 else()
-    add_definitions(-DMVK_COMMON_EXPORTS -DMVK_COMMON_EXPORTS)
     add_library(mvk_common SHARED ${Headers} ${Cpps})
+    target_include_directories(mvk_common PUBLIC ${PROJECT_BINARY_DIR}/exports/)
+    include(GenerateExportHeader)
+    generate_export_header(mvk_common EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/mvk_common_export.hpp)
 endif()
 
-add_subdirectory(test)
+if(BUILD_TEST)
+    add_subdirectory(test)
+    add_subdirectory(benchmark)
+endif()
