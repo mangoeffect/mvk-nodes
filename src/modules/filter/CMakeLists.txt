@@ -27,10 +27,8 @@ else()
     generate_export_header(mvk_filter EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/mvk_filter_export.hpp)
 endif()
 
-find_package(OpenMP REQUIRED)
-
 target_compile_options(mvk_filter PRIVATE ${ARCHITECTURE_FLAG})
-target_link_libraries(mvk_filter mvk_common mvk_image xsimd OpenMP::OpenMP_CXX tbb)
+target_link_libraries(mvk_filter mvk_common mvk_image OpenMP::OpenMP_CXX)
 
 if(BUILD_TEST)
     add_subdirectory(test)
