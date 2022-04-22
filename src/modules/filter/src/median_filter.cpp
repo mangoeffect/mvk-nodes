@@ -12,10 +12,8 @@
 #include "filter/median_filter.hpp"
 #include <vector>
 #include <cassert>
-#include <iostream>
-
-#include "xsimd/xsimd.hpp"
 #include "omp.h"
+#include "opencv2/core/simd_intrinsics.hpp"
 
 namespace mvk
 {
@@ -86,12 +84,10 @@ namespace mvk
         return 0;
     }
 
-    //比较获取两个数字最大最小值
-    template<typename T>
-    inline void SwapSort(T& a, T& b)
+    inline void SwapSort(cv::v_uint8& a, cv::v_uint8& b)
     {
-        auto min = xsimd::min(a, b);
-        auto max = xsimd::max(a, b);
+        auto min = cv::v_min(a, b);
+        auto max = cv::v_max(a, b);
         a                   = min;
         b                   = max;
     }
@@ -128,7 +124,7 @@ namespace mvk
         }
 
         //遍历进行中值滤波
-        constexpr std::size_t simd_size = xsimd::simd_type<uint8_t>::size;
+        int simd_size = cv::v_uint8::nlanes;
         int vec_size = cols - (cols - 2 * channel) % simd_size - 2 *channel;
 
         #pragma omp parallel for
@@ -142,17 +138,17 @@ namespace mvk
             //simd指令集优化
             for(int j = channel; j < vec_size; j += simd_size)
             {
-                auto P0 = xsimd::load_unaligned(row0 + j - channel);
-                auto P1 = xsimd::load_unaligned(row0 + j);
-                auto P2 = xsimd::load_unaligned(row0 + j + channel);
+                auto P0 = cv::vx_load(row0 + j - channel);
+                auto P1 = cv::vx_load(row0 + j);
+                auto P2 = cv::vx_load(row0 + j + channel);
 
-                auto P3 = xsimd::load_unaligned(row1 + j - channel);
-                auto P4 = xsimd::load_unaligned(row1 + j);
-                auto P5 = xsimd::load_unaligned(row1 + j + channel);
+                auto P3 = cv::vx_load(row1 + j - channel);
+                auto P4 = cv::vx_load(row1 + j);
+                auto P5 = cv::vx_load(row1 + j + channel);
 
-                auto P6 = xsimd::load_unaligned(row2 + j - channel);
-                auto P7 = xsimd::load_unaligned(row2 + j);
-                auto P8 = xsimd::load_unaligned(row2 + j + channel);
+                auto P6 = cv::vx_load(row2 + j - channel);
+                auto P7 = cv::vx_load(row2 + j);
+                auto P8 = cv::vx_load(row2 + j + channel);
 
                 //比较交换获取中值
                 SwapSort(P1, P2);		SwapSort(P4, P5);		SwapSort(P7, P8);
@@ -164,7 +160,8 @@ namespace mvk
                 SwapSort(P4, P2);
 
                 //保存结果
-                P4.store_unaligned(row_dst + j);
+                //P4.store_unaligned(row_dst + j);
+                cv::vx_store(row_dst + j, P4);
             }
 
             //处理不满足simd优化部分
@@ -220,7 +217,7 @@ namespace mvk
         dst = src.Copy();
 
         //遍历进行中值滤波
-        constexpr std::size_t simd_size = xsimd::simd_type<uint8_t>::size;
+        constexpr std::size_t simd_size = cv::v_uint8::nlanes;
         int vec_size = cols - (cols - 4 * channel) % simd_size - 4 *channel;
 
         #pragma omp parallel for
@@ -237,35 +234,35 @@ namespace mvk
             //simd指令集优化
             for(int j = 2 * channel; j < vec_size; j += simd_size)
             {
-                auto p0 = xsimd::load_unaligned(row_ptr[0] + j - 2 * channel);
-                auto p1 = xsimd::load_unaligned(row_ptr[0] + j - channel); 
-                auto p2 = xsimd::load_unaligned(row_ptr[0] + j); 
-                auto p3 = xsimd::load_unaligned(row_ptr[0] + j + channel);
-                auto p4 = xsimd::load_unaligned(row_ptr[0] + j + 2 * channel); 
+                auto p0 = cv::vx_load(row_ptr[0] + j - 2 * channel);
+                auto p1 = cv::vx_load(row_ptr[0] + j - channel); 
+                auto p2 = cv::vx_load(row_ptr[0] + j); 
+                auto p3 = cv::vx_load(row_ptr[0] + j + channel);
+                auto p4 = cv::vx_load(row_ptr[0] + j + 2 * channel); 
  
-                auto p5 = xsimd::load_unaligned(row_ptr[1] + j - 2 * channel);
-                auto p6 = xsimd::load_unaligned(row_ptr[1] + j - channel); 
-                auto p7 = xsimd::load_unaligned(row_ptr[1] + j); 
-                auto p8 = xsimd::load_unaligned(row_ptr[1] + j + channel);
-                auto p9 = xsimd::load_unaligned(row_ptr[1] + j + 2 * channel); 
+                auto p5 = cv::vx_load(row_ptr[1] + j - 2 * channel);
+                auto p6 = cv::vx_load(row_ptr[1] + j - channel); 
+                auto p7 = cv::vx_load(row_ptr[1] + j); 
+                auto p8 = cv::vx_load(row_ptr[1] + j + channel);
+                auto p9 = cv::vx_load(row_ptr[1] + j + 2 * channel); 
 
-                auto p10 = xsimd::load_unaligned(row_ptr[2] + j - 2 * channel);
-                auto p11 = xsimd::load_unaligned(row_ptr[2] + j - channel); 
-                auto p12 = xsimd::load_unaligned(row_ptr[2] + j); 
-                auto p13 = xsimd::load_unaligned(row_ptr[2] + j + channel);
-                auto p14 = xsimd::load_unaligned(row_ptr[2] + j + 2 * channel); 
+                auto p10 = cv::vx_load(row_ptr[2] + j - 2 * channel);
+                auto p11 = cv::vx_load(row_ptr[2] + j - channel); 
+                auto p12 = cv::vx_load(row_ptr[2] + j); 
+                auto p13 = cv::vx_load(row_ptr[2] + j + channel);
+                auto p14 = cv::vx_load(row_ptr[2] + j + 2 * channel); 
 
-                auto p15 = xsimd::load_unaligned(row_ptr[3] + j - 2 * channel);
-                auto p16 = xsimd::load_unaligned(row_ptr[3] + j - channel); 
-                auto p17 = xsimd::load_unaligned(row_ptr[3] + j); 
-                auto p18 = xsimd::load_unaligned(row_ptr[3] + j + channel);
-                auto p19 = xsimd::load_unaligned(row_ptr[3] + j + 2 * channel); 
+                auto p15 = cv::vx_load(row_ptr[3] + j - 2 * channel);
+                auto p16 = cv::vx_load(row_ptr[3] + j - channel); 
+                auto p17 = cv::vx_load(row_ptr[3] + j); 
+                auto p18 = cv::vx_load(row_ptr[3] + j + channel);
+                auto p19 = cv::vx_load(row_ptr[3] + j + 2 * channel); 
 
-                auto p20 = xsimd::load_unaligned(row_ptr[4] + j - 2 * channel);
-                auto p21 = xsimd::load_unaligned(row_ptr[4] + j - channel); 
-                auto p22 = xsimd::load_unaligned(row_ptr[4] + j); 
-                auto p23 = xsimd::load_unaligned(row_ptr[4] + j + channel);
-                auto p24 = xsimd::load_unaligned(row_ptr[4] + j + 2 * channel); 
+                auto p20 = cv::vx_load(row_ptr[4] + j - 2 * channel);
+                auto p21 = cv::vx_load(row_ptr[4] + j - channel); 
+                auto p22 = cv::vx_load(row_ptr[4] + j); 
+                auto p23 = cv::vx_load(row_ptr[4] + j + channel);
+                auto p24 = cv::vx_load(row_ptr[4] + j + 2 * channel); 
 
                 SwapSort(p1, p2); SwapSort(p0, p1); SwapSort(p1, p2); SwapSort(p4, p5); SwapSort(p3, p4);
                 SwapSort(p4, p5); SwapSort(p0, p3); SwapSort(p2, p5); SwapSort(p2, p3); SwapSort(p1, p4);
@@ -292,7 +289,7 @@ namespace mvk
                 SwapSort(p7, p11); SwapSort(p11, p13); SwapSort(p11, p12);
 
                 //保存结果
-                p12.store_unaligned(row_dst + j);
+                cv::vx_store(row_dst + j, p12);
             }
 
             //处理不满足simd优化部分

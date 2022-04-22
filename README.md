@@ -121,7 +121,7 @@
 | camera map | - | - |
 | Barcode reader | - | - |
 | QR code reader | - | - |
-| ocr | - | - |
+| OCR | - | - |
 | Preprocessing | - | - |
 
 **License**

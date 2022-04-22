@@ -37,22 +37,11 @@ if(BUILD_TEST)
     include(CTest)
 endif()
 
-#xsimd
-set(xsimd_DIR "3rdparty/xsimd/lib/cmake/xsimd")
-find_package(xsimd REQUIRED)
-if(xsimd_FOUND)
-    include_directories(${xsimd_INCLUDE_DIRS})
-    # 各个平台指令集优化
-    set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/3rdparty/cmake_optimize_architecture/Modules)
-    include(CMakeHostSystemInformationExtra)
-    include(GetCPUSIMDFeatures)
-    include(CMakeCompilerMachineOption)
-    set(TARGET_ARCHITECTURE skylake)
-    cmake_compiler_machine_option(ARCHITECTURE_FLAG ${TARGET_ARCHITECTURE})
-    message(STATUS "Use compiler option: ${ARCHITECTURE_FLAG}")
-else()
-    message(FATAL_ERROR "xsimd not found!")
-endif()
+#OpenMP
+find_package(OpenMP REQUIRED)
+
+#cv_simd
+include_directories(3rdparty/cv_simd)
 
 # data
 add_definitions(-DDATA="${PROJECT_SOURCE_DIR}/data")

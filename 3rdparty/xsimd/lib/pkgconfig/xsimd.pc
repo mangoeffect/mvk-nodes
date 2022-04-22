@@ -1,8 +1,0 @@
-prefix=/home/mango/projects/mvk-nodes/3rdparty/xsimd
-libdir=${prefix}/lib
-includedir=${prefix}/include
-
-Name: xsimd
-Description: xsimd provides a unified means for using SIMD features for library authors..
-Version: 8.0.5
-Cflags: -I${includedir}
