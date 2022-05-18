@@ -13,6 +13,7 @@
 #define MVK_POINT_HPP_
 
 #include <memory>
+#include <cmath>
 
 namespace mvk
 {
@@ -51,6 +52,12 @@ namespace mvk
          * @return Point 
          */
         Point operator + (const Point& other) const;
+
+        /**
+         * @brief 向量归一化
+         * 
+         */
+        void Normalize();
     };
 
     using Point2f = Point<float>;
@@ -74,6 +81,15 @@ namespace mvk
     {
         return Point<T>(x + other.x, y + other.y);
     }
+
+    template<typename T>
+    void Point<T>::Normalize()
+    {
+        T m = std::sqrt(x * x + y * y);
+        x /= m;
+        y /= m;
+    }
+
 
     /**
      * @brief 判断直线段ab与bc是否正交，即判断角abc是否为直角
