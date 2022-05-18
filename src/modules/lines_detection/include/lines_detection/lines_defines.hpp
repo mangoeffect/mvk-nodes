@@ -9,31 +9,11 @@
  * 
  */
 
-#ifndef MVK_LINES_DEFINES_H_
-#define MVK_LINES_DEFINES_H_
+#ifndef MVK_LINES_DEFINES_HPP_
+#define MVK_LINES_DEFINES_HPP_
 
 namespace mvk
 {
-    #ifdef MVK_LINES_STATIC_DEFINE
-    #  define MVK_LINES_EXPORT
-    #  define MVK_LINES_NO_EXPORT
-    #else
-    #  ifndef MVK_LINES_EXPORT
-    #    ifdef MVK_LINES_EXPORTS
-            /* 正在编译 */
-    #      define MVK_LINES_EXPORT __declspec(dllexport)
-    #    else
-            /* 正在使用 */
-    #      define MVK_LINES_EXPORT __declspec(dllimport)
-    #    endif
-    #  endif
-
-    #  ifndef MVK_LINES_NO_EXPORT
-    #    define MVK_LINES_NO_EXPORT 
-    #  endif
-    #endif
-
-
     /**
      * @brief 直线拟合算法枚举
      */

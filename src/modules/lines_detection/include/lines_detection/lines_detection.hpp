@@ -9,13 +9,13 @@
  * 
  */
 
-#ifndef MVK_LINES_DETECTION_H_
-#define MVK_LINES_DETECTION_H_
+#ifndef MVK_LINES_DETECTION_HPP_
+#define MVK_LINES_DETECTION_HPP_
 
-#include "lines_detection/lines_defines.h"
-#include "image/image.h"
-#include "common/rotate_rectangle.h"
-#include "common/line.h"
+#include "lines_detection/lines_defines.hpp"
+#include "image/image.hpp"
+#include "common/rotate_rectangle.hpp"
+#include "common/line.hpp"
 
 #include <vector>
 

@@ -2,8 +2,8 @@
 include_directories(./src)
 
 set(Headers 
-./include/lines_detection/lines_detection.h 
-./include/lines_detection/lines_detection_impl.h 
+./include/lines_detection/lines_detection.hpp 
+./include/lines_detection/lines_detection_impl.hpp 
 )
 
 set(Cpps

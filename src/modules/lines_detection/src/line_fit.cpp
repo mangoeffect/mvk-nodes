@@ -30,6 +30,7 @@ namespace mvk
         
         LineFit::~LineFit()
         {
+            
         }
 
 

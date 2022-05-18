@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef MVK_LINES_DETECTION_IMPL_H_
-#define MVK_LINES_DETECTION_IMPL_H_
+#ifndef MVK_LINES_DETECTION_IMPL_HPP_
+#define MVK_LINES_DETECTION_IMPL_HPP_
 
 #include "lines_detection/lines_defines.h"
 #include "image/image.h"
