@@ -35,6 +35,9 @@ if(BUILD_TEST)
     )
     FetchContent_MakeAvailable(Catch2)
     include(CTest)
+
+    include_directories(./3rdparty/matplotlib)
+    find_package(Python3 COMPONENTS Interpreter Development NumPy REQUIRED)
 endif()
 
 #OpenMP
