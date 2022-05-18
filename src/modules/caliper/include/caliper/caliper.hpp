@@ -9,37 +9,15 @@
  * 
  */
 
-#ifndef MVK_COMMON_CALIPER_HPP_
-#define MVK_COMMON_CALIPER_HPP_
+#ifndef MVK_CALIPER_HPP_
+#define MVK_CALIPER_HPP_
 
-#ifndef BUILD_STATIC_LIB
-    #include "mvk_caliper_export.hpp"
-#endif
+#include "caliper/caliper_defines.hpp"
 
-#include "image/image.hpp"
-#include "common/rotate_rectangle.hpp"
 
 namespace mvk
 {
     class CaliperImpl;
-
-    struct CaliperParameters
-    {
-
-    };
-
-    struct CaliperResult
-    {
-        float length;
-        std::vector<Point2f> extreme_points;
-    };
-
-    enum class CALIPER_MODE
-    {
-        SINGLE_EDGE = 0,
-        DOUBLE_EDGE = 1
-    };
-
     /**
      * @brief 卡尺工具类
      * 
@@ -53,7 +31,7 @@ namespace mvk
 
         void SetInputImage(const Image& image);
 
-        void SetROI(const RotateRect& roi);
+        void SetROI(const RotateRectf& roi);
 
         int Measure();
 
@@ -61,4 +39,4 @@ namespace mvk
     };
 }//namespace mvk
 
-#endif //MVK_COMMON_CALIPER_HPP_
+#endif //MVK_CALIPER_HPP_
