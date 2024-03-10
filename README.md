@@ -10,6 +10,7 @@
 
 1. [有向无环图实现](https://blog.mangoeffect.net/cpp/dag)
 2. [算法Graph框架使用介绍](https://blog.mangoeffect.net/cpp/graph-framework-1)
+3. [RGB转HSV](https://blog.mangoeffect.net/filter/rgb-to-hsv), [代码实现](https://github.com/mangoeffect/mvk-nodes/blob/master/src/modules/core/image.cpp)
 
 </details>
 
