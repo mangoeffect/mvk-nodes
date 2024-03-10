@@ -193,7 +193,6 @@ namespace mvk
     {
         //参数检查
         if(derivative1.size() < 3) {return -1;}
-        assert(derivative1.size() == derivative2.size());
 
         switch (polarity)
         {

@@ -1,9 +1,19 @@
-# mvk-nodes
+# mango
 
-本项目为一个面向工业视觉轻量级常用视觉算法库，实现定位、查找与测量等算子功能。项目国内镜像地址[http://git.mangoroom.cn/mango/mvk-nodes](http://git.mangoroom.cn/mango/mvk-nodes)
+原项目本意是想做一个为一个面向工业视觉轻量级常用视觉算法库，实现定位、查找与测量等算子功能。现在想法改变了，已经早就不接触工业视觉的内容了，但不意味着完全不做了，有兴趣就会研究和实现。本仓库则转化为一个通用算法的实现，内容是包含我本人日常学习了解的算法，就当做一个学习记录。不仅实现算法，还会做性能优化、包括GPU等的异构优化，而且会实现流水线调度。因此，名字也相应改一下。
 
-# 性能表现
+项目国内镜像地址[http://git.mangoroom.cn/mango/mvk-nodes](http://git.mangoroom.cn/mango/mvk-nodes)
 
+<details> <summary>介绍</summary>
+
+## 博客记录
+
+1. [有向无环图实现](https://blog.mangoeffect.net/cpp/dag)
+2. [算法Graph框架使用介绍](https://blog.mangoeffect.net/cpp/graph-framework-1)
+
+</details>
+
+<details> <summary>性能表现</summary>
 ## 测试平台：
 
 - Intel(R) Core(TM) i5-4210M CPU @ 2.60GHz
@@ -101,7 +111,9 @@
 
 注：opencv版本为4.5.4
 
-# 路线图
+</details>
+
+<details> <summary>路线图（待重新规划）</summary>
 
 | 算法模块 | 状态 | 介绍 |
 | --- | --- | ---- |
@@ -123,6 +135,9 @@
 | QR code reader | - | - |
 | OCR | - | - |
 | Preprocessing | - | - |
+
+</details>
+
 
 **License**
 

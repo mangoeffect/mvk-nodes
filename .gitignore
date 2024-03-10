@@ -368,3 +368,7 @@ install
 
 # vscode setting
 .vscode
+
+# clion
+.idea
+cmake-build-debug

@@ -7,7 +7,7 @@ set(Headers
     ./include/common/point.hpp
     ./include/common/rectangle.hpp
     ./include/common/circle.hpp
-    ./include/common/mat.hpp
+        ../core/mat.hpp
     ./include/common/rotate_rectangle.hpp 
     ./include/common/line.hpp 
     ./include/common/polygon.hpp 

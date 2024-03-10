@@ -35,9 +35,10 @@ namespace mvk
      */
     enum class BORDER_TYPE
     {
-        DEFAULT = 0,            ///<默认 镜像， 123 | 321
-        CONSTANT = 1,           ///<常数填充，  123 | ccc
-        REPLICATE = 2,          ///<边界复制,   123 | 333
+        NONE = 0,               ///<不做padding
+        MIRROR = 1,             ///<镜像， 123 | 321
+        CONSTANT = 2,           ///<常数填充，  123 | ccc
+        REPLICATE = 3,          ///<边界复制,   123 | 333
     };
 } // namespace mvk
 
