@@ -37,7 +37,7 @@ if(BUILD_TEST)
     include(CTest)
 
     include_directories(./3rdparty/matplotlib)
-    find_package(Python3 COMPONENTS Interpreter Development NumPy REQUIRED)
+    #find_package(Python3 COMPONENTS Interpreter Development NumPy REQUIRED)
 endif()
 
 #OpenMP
